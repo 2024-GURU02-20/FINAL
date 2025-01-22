@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.android.myapplication"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         viewBinding = true
@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
