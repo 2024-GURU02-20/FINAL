@@ -1,38 +1,24 @@
 package com.android.myapplication.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.android.myapplication.repository.AladinRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AladinViewModel(private val repository: AladinRepository) : ViewModel() {
 
-    fun fetchBestSellers(apiKey: String) {
-        viewModelScope.launch {
-            val response = withContext(Dispatchers.IO) {
-                repository.getBestSellers(apiKey)
-            }
-            // Handle response (e.g., update UI state)
-        }
+    // 베스트셀러 데이터를 반환하는 suspend 함수
+    suspend fun fetchBestSellers(apiKey: String) = withContext(Dispatchers.IO) {
+        repository.getBestSellers(apiKey)
     }
 
-    fun fetchNewReleases(apiKey: String) {
-        viewModelScope.launch {
-            val response = withContext(Dispatchers.IO) {
-                repository.getNewReleases(apiKey)
-            }
-            // Handle response (e.g., update UI state)
-        }
+    // 신간 데이터를 반환하는 suspend 함수
+    suspend fun fetchNewReleases(apiKey: String) = withContext(Dispatchers.IO) {
+        repository.getNewReleases(apiKey)
     }
 
-    fun searchBooks(apiKey: String, keyword: String) {
-        viewModelScope.launch {
-            val response = withContext(Dispatchers.IO) {
-                repository.searchByKeyword(apiKey, keyword)
-            }
-            // Handle response (e.g., update UI state)
-        }
+    // 키워드 검색 결과를 반환하는 suspend 함수
+    suspend fun searchBooks(apiKey: String, keyword: String) = withContext(Dispatchers.IO) {
+        repository.searchByKeyword(apiKey, keyword)
     }
 }
