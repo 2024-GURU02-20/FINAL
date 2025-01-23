@@ -1,23 +1,19 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <!-- 상단 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -25,10 +21,8 @@
                 android:text="Kommentary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginBottom="16dp"/>
+                android:textColor="@color/black" />
 
-            <!-- 두 번째 텍스트 -->
             <TextView
                 android:id="@+id/subtitle"
                 android:layout_width="wrap_content"
@@ -38,29 +32,18 @@
                 android:textColor="#5F5F5F"/>
         </LinearLayout>
 
-
-
         <!-- 검색 -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
-
-        <!-- 빈칸?? 검색에 패딩 넣으면 뭔가 검색창 클릭했을때 움직이길래-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <!-- 프로필 -->
-        <!--    아래 책 아카이빙에는 화살표 있는데 얘는 없길래 LL에 id 넣음... 맞겠지...     -->
+        <!-- 프로필 넘어가기 -->
         <LinearLayout
             android:id="@+id/viewGotoProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/profile_icon"
@@ -73,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
                 android:text="프로필"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -81,17 +63,11 @@
 
         </LinearLayout>
 
-        <!-- 빈칸?? -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp" />
-
         <!-- 책아카이빙 넘어가기 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -105,8 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,12 +110,9 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -161,20 +133,18 @@
         </LinearLayout>
 
 
+
+<!--    이후 .kt에서 레이아웃 매니저로 GridLayoutManager를 설정-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_bestseller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"/>
-
+            android:orientation="horizontal"/>
 
         <!-- 신간 리스트 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -194,20 +164,16 @@
                 android:background="@android:color/transparent" />
         </LinearLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_newbook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"/>
+            android:orientation="horizontal"/>
 
         <!-- 다독왕 선정 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:orientation="horizontal">
 
             <TextView
@@ -231,8 +197,7 @@
             android:id="@+id/recycler_mostread"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"/>
+            android:orientation="horizontal"/>
 
         <!-- 베스트 리뷰 -->
         <TextView
@@ -240,28 +205,22 @@
             android:layout_height="wrap_content"
             android:text="베스트 리뷰"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- 근데 뭐로 넣어야하지 textview? -->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_height="50dp" />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_height="50dp" />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_height="50dp" />
         </LinearLayout>
 
     </LinearLayout>
