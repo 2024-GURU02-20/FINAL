@@ -1,14 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArchiveFragment">
+    tools:context=".ArchiveFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="아카이브" />
+        android:id="@+id/archive_review_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="리뷰 작성"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="21dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="뒤로 가기"
+        android:scaleType="centerInside"
+        android:src="@drawable/_2025_01_23_023248" />
+
+    <ImageButton
+        android:id="@+id/review_book_image"
+        android:layout_width="200dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/archive_review_main"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"  />
+
+    <TextView
+        android:id="@+id/review_book_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_below="@id/archive_review_main"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="책 표지"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/review_starRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/review_book_image"
+        android:layout_marginStart="30dp"
+        android:text="별점"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:layout_marginStart="-10dp"
+        android:layout_below="@id/review_starRate"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="4"
+        android:progressTint="@color/star_filled"
+        android:progressBackgroundTint="@color/star_empty" />
+
+    <TextView
+        android:id="@+id/write_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/ratingBar"
+        android:layout_marginStart="30dp"
+        android:text="책 리뷰"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/reviewInput_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:layout_below="@id/write_review">
+
+        <!-- 작성하기 버튼 -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="115dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="60dp"
+            android:elevation="5dp"
+            android:text="작성하기"
+            android:background="@drawable/button_border_gray"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            android:padding="4dp" />
+
+        <!-- 리뷰 입력란 -->
+        <EditText
+            android:id="@+id/reviewInput"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:elevation="1dp"
+            android:hint="리뷰를 입력하세요"
+            android:background="#EAEAEA"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:inputType="textMultiLine" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/favoriteLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_below="@+id/reviewInput_layout"
+        android:layout_marginStart="30dp"
+        android:text="마음에 드는 한 줄"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/favoriteLine_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:layout_below="@id/favoriteLine">
+
+        <Button
+            android:id="@+id/submitButton_2"
+            android:layout_width="115dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="60dp"
+            android:elevation="5dp"
+            android:text="작성하기"
+            android:background="@drawable/button_border_gray"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            android:padding="4dp" />
+
+        <EditText
+            android:id="@+id/favoriteLineInput"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:elevation="1dp"
+            android:hint="마음에 드는 한 줄을 입력하세요"
+            android:background="#EAEAEA"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:inputType="textMultiLine" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/see_more"
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/favoriteLine_layout"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="85dp"
+        android:background="@drawable/button_border_gray"
+        android:drawableLeft="@drawable/ic_more_icon"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="더보기"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/store_review"
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/favoriteLine_layout"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="210dp"
+        android:background="@drawable/button_border"
+        android:drawableLeft="@drawable/ic_save_icon"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="저장하기"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:textColor="#000000" />
+
+
+</RelativeLayout>
