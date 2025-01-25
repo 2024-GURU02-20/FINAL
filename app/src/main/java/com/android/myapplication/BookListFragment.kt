@@ -1,23 +1,49 @@
 package com.android.myapplication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
+import com.android.myapplication.model.AladinResponse
+import com.android.myapplication.repository.AladinRepository
+import com.android.myapplication.viewmodel.AladinViewModel
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BookListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     lateinit var binding: FragmentBookListBinding
+
+
+    //알라딘 연결 및 객체 참조
+    private lateinit var viewModel: AladinViewModel
+    lateinit var items: AladinResponse
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            // 필요하면 arguments를 처리할 로직 추가
+        }
+
+
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
+//
+//        lifecycleScope.launch {
+//            try {
+//                val response = viewModel.searchBooks(apiKey, searchQuery ?: "") //이렇게 말고 val response안에 나는 다른 값을 넣어야함  (여기서 나는 searchQuery를 사용하고 있지 않기 때문, 책 표지값으로
+//                items = response
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+
 
     }
 
@@ -25,34 +51,56 @@ class BookListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        // FragmentBookListBinding을 사용해 XML 레이아웃 연결
         binding = FragmentBookListBinding.inflate(inflater, container, false)
 
-        binding.search.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-            }
-        })
+
+
+
+
+        // 버튼 클릭 이벤트 설정
+        setupButtonListeners()
 
         return binding.root
     }
 
+    private fun setupButtonListeners() {
+        // btnMoreinfo1 버튼 클릭 시 BestSellerFragment로 이동
+        binding.btnMoreinfo1.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, BestSellerFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
+        // btnMoreinfo2 버튼 클릭 시 NewReleasedFragment로 이동
+        binding.btnMoreinfo2.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, NewReleasedFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        // btnMoreinfo3 버튼 클릭 시 TopReaderPickFragment로 이동
+        binding.btnMoreinfo3.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, TopReaderPickFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        // 추가적인 검색 버튼 클릭 이벤트 (검색 이벤트 추가)
+        binding.search.setOnClickListener {
+            // 검색 버튼 클릭 시 처리할 내용 추가
+        }
+    }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookListFragment().apply {
-                arguments = Bundle().apply {
-                }
+        fun newInstance() = BookListFragment().apply {
+            arguments = Bundle().apply {
+                // 필요한 인자를 여기에 추가
             }
+        }
     }
 }
