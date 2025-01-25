@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchResultFragment"
+    android:id="@+id/search_result">
+<!--    상단바 빼오기 -->
+    <androidx.appcompat.widget.SearchView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/search"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_result_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical" />
+</LinearLayout>
