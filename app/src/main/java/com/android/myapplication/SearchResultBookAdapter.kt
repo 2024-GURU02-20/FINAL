@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.model.AladinResponse
 import com.android.myapplication.model.BookItem
+import com.bumptech.glide.Glide
 
 class SearchResultBookAdapter(
     private val context: Context?,
@@ -26,6 +28,11 @@ class SearchResultBookAdapter(
         val book = bookItems[position]
         holder.titleTextView.text = book.title
         holder.authorTextView.text = book.author
+        context?.let {
+            Glide.with(it)
+                .load(book.cover)
+                .into(holder.coverImageView)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -33,6 +40,7 @@ class SearchResultBookAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val coverImageView: ImageView = itemView.findViewById(R.id.search_result_book_cover)
         val titleTextView: TextView = itemView.findViewById(R.id.search_result_book_title)
         val authorTextView: TextView = itemView.findViewById(R.id.search_result_book_author)
     }
