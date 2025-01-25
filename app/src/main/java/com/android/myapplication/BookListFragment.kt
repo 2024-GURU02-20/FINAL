@@ -40,7 +40,7 @@ class BookListFragment : Fragment() {
 //
 //        lifecycleScope.launch {
 //            try {
-//                val response = viewModel.searchBooks(apiKey, searchQuery ?: "")
+//                val response = viewModel.searchBooks(apiKey, searchQuery ?: "") //이렇게 말고 val response안에 나는 다른 값을 넣어야함  (여기서 나는 searchQuery를 사용하고 있지 않기 때문, 책 표지값으로
 //                items = response
 //            } catch (e: Exception) {
 //                e.printStackTrace()
