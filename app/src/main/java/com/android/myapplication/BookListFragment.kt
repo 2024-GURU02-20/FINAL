@@ -5,17 +5,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
+import com.android.myapplication.model.AladinResponse
+import com.android.myapplication.repository.AladinRepository
+import com.android.myapplication.viewmodel.AladinViewModel
+import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
 
-    private lateinit var binding: FragmentBookListBinding
+    lateinit var binding: FragmentBookListBinding
+
+
+    //알라딘 연결 및 객체 참조
+    private lateinit var viewModel: AladinViewModel
+    lateinit var items: AladinResponse
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             // 필요하면 arguments를 처리할 로직 추가
         }
+
+        val searchQuery = arguments?.getString("search_query")
+
+        binding.search.setQuery(searchQuery, false)
+
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
+
+        lifecycleScope.launch {
+            try {
+                val response = viewModel.searchBooks(apiKey, searchQuery ?: "")
+                items = response
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+
     }
 
     override fun onCreateView(

@@ -6,10 +6,55 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.model.AladinResponse
+import com.android.myapplication.repository.AladinRepository
+import com.android.myapplication.viewmodel.AladinViewModel
+import kotlinx.coroutines.launch
 
 class BestSellerFragment : Fragment() {
+
+
+
+    lateinit var binding: BestSellerFragment
+
+
+    //알라딘 연결 및 객체 참조
+    private lateinit var viewModel: AladinViewModel
+    lateinit var items: AladinResponse
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
+
+//        // 아래의 코드를 통해 api 호출 가능
+//        lifecycleScope.launch {
+//            try {
+//                // fetchBestSellers 호출
+//                val response = viewModel.fetchBestSellers(apiKey)
+//                response.item.forEach { book ->
+//                    println("Title: ${book.title}")
+//                    println("Author: ${book.author}")
+//                    println("Publisher: ${book.publisher}")
+//                    println("ISBN: ${book.isbn}")
+//                    println("----------")
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace() // 에러 처리
+//            }
+//        }
+
+
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
