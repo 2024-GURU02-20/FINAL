@@ -47,6 +47,9 @@ class BookListFragment : Fragment() {
 
     }
 
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +57,21 @@ class BookListFragment : Fragment() {
         // FragmentBookListBinding을 사용해 XML 레이아웃 연결
         binding = FragmentBookListBinding.inflate(inflater, container, false)
 
+
+        // 검색창 누르면 검색 페이지로 이동
+        binding.search.setOnQueryTextFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                // SearchFragment로 전환
+                val searchFragment = SearchFragment()
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.rootlayout, searchFragment)
+                    .addToBackStack(null) // 뒤로 가기 스택 추가
+                    .commit()
+            }
+        }
+
+        return binding.root
 
 
 
