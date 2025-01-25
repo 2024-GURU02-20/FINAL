@@ -27,9 +27,15 @@ class BookListFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentBookListBinding.inflate(inflater, container, false)
-
+        // 검색창 누르면 검색 페이지로 이동
         binding.search.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                val searchFragment: SearchFragment = SearchFragment()
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.rootlayout, searchFragment)
+                    .addToBackStack(null) // 뒤로 가기 스택 추가
+                    .commit()
             }
         })
 
