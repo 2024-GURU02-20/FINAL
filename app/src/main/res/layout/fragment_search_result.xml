@@ -11,7 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/search"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="검색 결과"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_result_recyclerView"
         android:layout_width="match_parent"
