@@ -8,6 +8,7 @@
 <!--   상단바 빼오기 -->
     <androidx.appcompat.widget.SearchView
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        android:id="@+id/search"/>
 <!--    검색 기록 태그 나열-->
 </LinearLayout>

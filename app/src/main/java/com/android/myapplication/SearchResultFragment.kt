@@ -26,16 +26,18 @@ class SearchResultFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        val searchQuery = arguments?.getString("search_query")
+
+        binding.search.setQuery(searchQuery, false)
 
         val apiKey = BuildConfig.ALADIN_API_KEY
-        // 알라딘 api 호출 위해 viewModel 객체 받아오기
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
 
         lifecycleScope.launch {
             try {
-                val response = viewModel.fetchBestSellers(apiKey)
+                val response = viewModel.searchBooks(apiKey, searchQuery ?: "")
                 items = response
             } catch (e: Exception) {
                 e.printStackTrace()
