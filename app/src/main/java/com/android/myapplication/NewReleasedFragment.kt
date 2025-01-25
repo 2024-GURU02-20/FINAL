@@ -5,28 +5,51 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.model.AladinResponse
+import com.android.myapplication.repository.AladinRepository
+import com.android.myapplication.viewmodel.AladinViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewReleasedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewReleasedFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding: BestSellerFragment
+
+
+    //알라딘 연결 및 객체 참조
+    private lateinit var viewModel: AladinViewModel
+    lateinit var items: AladinResponse
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
+
+//        // 아래의 코드를 통해 api 호출 가능
+//        lifecycleScope.launch {
+//            try {
+//                // fetchBestSellers 호출
+//                val response = viewModel.fetchBestSellers(apiKey)
+//                response.item.forEach { book ->
+//                    println("Title: ${book.title}")
+//                    println("Author: ${book.author}")
+//                    println("Publisher: ${book.publisher}")
+//                    println("ISBN: ${book.isbn}")
+//                    println("----------")
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace() // 에러 처리
+//            }
+//        }
+
+
     }
 
     override fun onCreateView(
@@ -37,23 +60,22 @@ class NewReleasedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_new_released, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewReleasedFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewReleasedFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+
+
+//        // RecyclerView 설정
+//        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_bestsellerList)
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        recyclerView.adapter = NewReleased.Adapter() // 어댑터는 아래 구현 필요
+
+        // btnGobackHome 버튼 클릭 시 이전 화면으로 이동
+        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
+        btnGobackHome.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 }
