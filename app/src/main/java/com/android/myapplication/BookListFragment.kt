@@ -1,59 +1,135 @@
 package com.android.myapplication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BookListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+///레트로핏 : 동작 시키게 해주는 라이브러리
+/// 베스트 함수 각각 짜놓음
+// 알라딘 형태 (타입) , 북아이테 ㅁ(타입
+
+//레포지르트 함수 연결
+//
+
+
+
+//        // 알라딘 api key 접근법
+//        val apiKey = BuildConfig.ALADIN_API_KEY
+//        // 알라딘 api 호출 위해 viewModel 객체 받아오기
+//        val apiService = RetrofitClient.aladinApi
+//        val repository = AladinRepository(apiService)
+//        viewModel = AladinViewModel(repository)
+///초기화
+
+//////        // 아래의 코드를 통해 api 호출 가능
+////        lifecycleScope.launch {
+////            try {
+////                // fetchBestSellers 호출
+////                val response = viewModel.fetchBestSellers(apiKey)
+////                response.item.forEach { book ->
+////                    println("Title: ${book.title}")
+////                    println("Author: ${book.author}")
+////                    println("Publisher: ${book.publisher}")
+////                    println("ISBN: ${book.isbn}")
+////                    println("----------")
+////                }
+////            } catch (e: Exception) {
+////                e.printStackTrace() // 에러 처리
+////            }
+////        }
+
+
+
+///class AladinViewModel(private val repository: AladinRepository) : ViewModel() { // 클래스 불러와서
+//
+//    // 베스트셀러 데이터를 반환하는 suspend 함수
+//    suspend fun fetchBestSellers(apiKey: String) = withContext(Dispatchers.IO) {
+//        repository.getBestSellers(apiKey)
+//    }
+//
+//    // 신간 데이터를 반환하는 suspend 함수
+//    suspend fun fetchNewReleases(apiKey: String) = withContext(Dispatchers.IO) {
+//        repository.getNewReleases(apiKey)
+//    }
+//
+//    // 키워드 검색 결과를 반환하는 suspend 함수
+//    suspend fun searchBooks(apiKey: String, keyword: String) = withContext(Dispatchers.IO) {
+//        repository.searchByKeyword(apiKey, keyword)
+//    }
+//}
+
+
+//        // 알라딘 api key 접근법
+//        val apiKey = BuildConfig.ALADIN_API_KEY
+//        // 알라딘 api 호출 위해 viewModel 객체 받아오기
+//        val apiService = RetrofitClient.aladinApi
+//        val repository = AladinRepository(apiService)
+//        viewModel = AladinViewModel(repository)
+//
+//        // 아래의 코드를 통해 api 호출 가능
+//        lifecycleScope.launch {
+//            try {
+//                // fetchBestSellers 호출
+//                val response = viewModel.fetchBestSellers(apiKey)
+//                response.item.forEach { book ->
+//                    println("Title: ${book.title}")
+//                    println("Author: ${book.author}")
+//                    println("Publisher: ${book.publisher}")
+//                    println("ISBN: ${book.isbn}")
+//                    println("----------")
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace() // 에러 처리
+//            }
+//        }
+
+
 class BookListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // XML 레이아웃 연결
         return inflater.inflate(R.layout.fragment_book_list, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // btnMoreinfo1 버튼의 클릭 이벤트 설정
+        val btnMoreinfo1: Button = view.findViewById(R.id.btnMoreinfo1)
+        btnMoreinfo1.setOnClickListener {
+            // BestSellerFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, BestSellerFragment()) // rootlayout은 activity_main.xml의 FrameLayout ID
+                .addToBackStack(null) // 뒤로 가기 시 이전 Fragment로 돌아가기
+                .commit()
+        }
+
+        // btnMoreinfo2 버튼의 클릭 이벤트 설정
+        val btnMoreinfo2: Button = view.findViewById(R.id.btnMoreinfo2)
+        btnMoreinfo2.setOnClickListener {
+            // BestSellerFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, NewReleasedFragment()) // rootlayout은 activity_main.xml의 FrameLayout ID
+                .addToBackStack(null) // 뒤로 가기 시 이전 Fragment로 돌아가기
+                .commit()
+        }
+        // btnMoreinfo3 버튼의 클릭 이벤트 설정
+        val btnMoreinfo3: Button = view.findViewById(R.id.btnMoreinfo3)
+        btnMoreinfo3.setOnClickListener {
+
+            // BestSellerFragment로 전환
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, TopReaderPickFragment()) // rootlayout은 activity_main.xml의 FrameLayout ID
+                .addToBackStack(null) // 뒤로 가기 시 이전 Fragment로 돌아가기
+                .commit()
+        }
     }
 }
