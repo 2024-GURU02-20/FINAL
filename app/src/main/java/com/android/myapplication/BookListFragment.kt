@@ -6,24 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
-import com.android.myapplication.model.AladinResponse
+import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
 
-    lateinit var binding: FragmentBookListBinding
+    // ViewBinding을 통해 XML 레이아웃 파일과 연결
+    private lateinit var binding: FragmentBookListBinding
 
-
-    //알라딘 연결 및 객체 참조
+    // ViewModel 초기화
     private lateinit var viewModel: AladinViewModel
-    lateinit var items: AladinResponse
 
+    // RecyclerView용 어댑터
+    private lateinit var bestSellersAdapter: BestSellersAdapter
+    private lateinit var newReleasesAdapter: NewReleasesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         arguments?.let {
             // 필요하면 arguments를 처리할 로직 추가
@@ -34,29 +38,13 @@ class BookListFragment : Fragment() {
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
-//
-//        lifecycleScope.launch {
-//            try {
-//                val response = viewModel.searchBooks(apiKey, searchQuery ?: "") //이렇게 말고 val response안에 나는 다른 값을 넣어야함  (여기서 나는 searchQuery를 사용하고 있지 않기 때문, 책 표지값으로
-//                items = response
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-
-
     }
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // FragmentBookListBinding을 사용해 XML 레이아웃 연결
         binding = FragmentBookListBinding.inflate(inflater, container, false)
-
 
         // 검색창 누르면 검색 페이지로 이동
         binding.search.setOnQueryTextFocusChangeListener { view, hasFocus ->
@@ -71,19 +59,61 @@ class BookListFragment : Fragment() {
             }
         }
 
-        return binding.root
-
-
-
-
         // 버튼 클릭 이벤트 설정
         setupButtonListeners()
+
+        // RecyclerView 초기화
+        initRecyclerViews()
+
+        // 데이터 로드
+        fetchBooks()
 
         return binding.root
     }
 
+    // RecyclerView 초기화
+    private fun initRecyclerViews() {
+        // 베스트셀러 RecyclerView 설정
+        binding.recyclerBestseller.apply {
+
+            //근데 이거 가로인데 맞아??????
+            layoutManager = GridLayoutManager(context, 1) // 1열 GridLayout
+            bestSellersAdapter = BestSellersAdapter(emptyList()) // 초기값 emptyList
+            adapter = bestSellersAdapter
+        }
+
+        // 신간 리스트 RecyclerView 설정
+        binding.recyclerNewbook.apply {
+            //근데 이거 가로인데 맞아??????
+            layoutManager = GridLayoutManager(context, 1) // 1열 GridLayout
+            newReleasesAdapter = NewReleasesAdapter(emptyList()) // 초기값 emptyList
+            adapter = newReleasesAdapter
+        }
+    }
+
+    // API 호출을 통해 데이터를 가져오는 함수
+    private fun fetchBooks() {
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        lifecycleScope.launch {
+            try {
+                // 베스트셀러 데이터 가져오기
+                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
+                bestSellersAdapter = BestSellersAdapter(bestSellersResponse.item) // 어댑터에 데이터 전달
+                binding.recyclerBestseller.adapter = bestSellersAdapter // 어댑터 연결
+
+                // 신간 리스트 데이터 가져오기
+                val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
+                newReleasesAdapter = NewReleasesAdapter(newReleasesResponse.item) // 어댑터에 데이터 전달
+                binding.recyclerNewbook.adapter = newReleasesAdapter // 어댑터 연결
+            } catch (e: Exception) {
+                e.printStackTrace() // 에러 로그 출력
+            }
+        }
+    }
+
+    // 버튼 클릭 이벤트 설정
     private fun setupButtonListeners() {
-        // btnMoreinfo1 버튼 클릭 시 BestSellerFragment로 이동
+        // "베스트셀러" 더보기 버튼 클릭 시 BestSellerFragment로 이동
         binding.btnMoreinfo1.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, BestSellerFragment())
@@ -91,7 +121,7 @@ class BookListFragment : Fragment() {
                 .commit()
         }
 
-        // btnMoreinfo2 버튼 클릭 시 NewReleasedFragment로 이동
+        // "신간 리스트" 더보기 버튼 클릭 시 NewReleasedFragment로 이동
         binding.btnMoreinfo2.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, NewReleasedFragment())
@@ -99,26 +129,12 @@ class BookListFragment : Fragment() {
                 .commit()
         }
 
-        // btnMoreinfo3 버튼 클릭 시 TopReaderPickFragment로 이동
+        // "다독왕" 더보기 버튼 클릭 시 TopReaderPickFragment로 이동
         binding.btnMoreinfo3.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, TopReaderPickFragment())
                 .addToBackStack(null)
                 .commit()
-        }
-
-        // 추가적인 검색 버튼 클릭 이벤트 (검색 이벤트 추가)
-        binding.search.setOnClickListener {
-            // 검색 버튼 클릭 시 처리할 내용 추가
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = BookListFragment().apply {
-            arguments = Bundle().apply {
-                // 필요한 인자를 여기에 추가
-            }
         }
     }
 }
