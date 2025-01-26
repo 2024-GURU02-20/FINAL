@@ -65,11 +65,6 @@ class BestSellerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // RecyclerView 설정
-//        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_bestsellerList)
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        recyclerView.adapter = BestSellerAdapter() // 어댑터는 아래 구현 필요
-
         // btnGobackHome 버튼 클릭 시 이전 화면으로 이동
         val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
         btnGobackHome.setOnClickListener {
