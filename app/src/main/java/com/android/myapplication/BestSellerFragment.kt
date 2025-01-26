@@ -51,8 +51,6 @@ class BestSellerFragment : Fragment() {
 //                e.printStackTrace() // 에러 처리
 //            }
 //        }
-
-
     }
 
 

@@ -1,3 +1,4 @@
+
 package com.android.myapplication
 
 import android.os.Bundle
@@ -76,16 +77,15 @@ class BookListFragment : Fragment() {
         // 베스트셀러 RecyclerView 설정
         binding.recyclerBestseller.apply {
 
-            //근데 이거 가로인데 맞아??????
-            layoutManager = GridLayoutManager(context, 1) // 1열 GridLayout
+            layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false) // 가로 스크롤
             bestSellersAdapter = BestSellersAdapter(emptyList()) // 초기값 emptyList
             adapter = bestSellersAdapter
         }
 
         // 신간 리스트 RecyclerView 설정
         binding.recyclerNewbook.apply {
-            //근데 이거 가로인데 맞아??????
-            layoutManager = GridLayoutManager(context, 1) // 1열 GridLayout
+
+            layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false) // 가로 스크롤
             newReleasesAdapter = NewReleasesAdapter(emptyList()) // 초기값 emptyList
             adapter = newReleasesAdapter
         }
@@ -138,3 +138,4 @@ class BookListFragment : Fragment() {
         }
     }
 }
+
