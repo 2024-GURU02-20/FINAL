@@ -54,7 +54,7 @@ class NewReleasedFragment : Fragment() {
         newReleasedAdapter = NewReleasedAdapter(emptyList()) { book ->
             // 클릭 이벤트: BookInfoFragment로 이동
             val bookInfoFragment = BookInfoFragment.newInstance(
-                book.cover, book.title, book.author, book.publisher, book.pubDate
+                book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
             )
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, bookInfoFragment)
