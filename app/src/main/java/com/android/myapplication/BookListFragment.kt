@@ -82,6 +82,16 @@ class BookListFragment : Fragment() {
         binding.recyclerNewbook.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
             newReleasedAdapter = NewReleasedAdapter(emptyList())
+            { book ->
+                // 책 클릭 이벤트 처리: BookInfoFragment로 이동
+                val bookInfoFragment = BookInfoFragment.newInstance(
+                    book.cover, book.title, book.author, book.publisher, book.pubDate
+                )
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.rootlayout, bookInfoFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
             adapter = newReleasedAdapter
         }
     }
