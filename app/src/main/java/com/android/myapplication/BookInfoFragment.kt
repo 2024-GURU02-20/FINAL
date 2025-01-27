@@ -5,27 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BookInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var coverUrl: String
+    private lateinit var title: String
+    private lateinit var author: String
+    private lateinit var publisher: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            coverUrl = it.getString(ARG_COVER_URL) ?: ""
+            title = it.getString(ARG_TITLE) ?: ""
+            author = it.getString(ARG_AUTHOR) ?: ""
+            publisher = it.getString(ARG_PUBLISHER) ?: ""
         }
     }
 
@@ -33,26 +30,39 @@ class BookInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book_info, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // UI에 데이터 바인딩
+        val bookCoverImageView: ImageView = view.findViewById(R.id.info_book_cover)
+        val bookTitleTextView: TextView = view.findViewById(R.id.info_book_title)
+        val bookAuthorTextView: TextView = view.findViewById(R.id.info_book_author)
+        val bookPublisherTextView: TextView = view.findViewById(R.id.info_book_publisher)
+
+        // 책 데이터 표시
+        Glide.with(requireContext()).load(coverUrl).into(bookCoverImageView)
+        bookTitleTextView.text = title
+        bookAuthorTextView.text = author
+        bookPublisherTextView.text = publisher
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        private const val ARG_COVER_URL = "cover_url"
+        private const val ARG_TITLE = "title"
+        private const val ARG_AUTHOR = "author"
+        private const val ARG_PUBLISHER = "publisher"
+
+        // BookInfoFragment 생성 메서드
+        fun newInstance(coverUrl: String, title: String, author: String, publisher: String) =
             BookInfoFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_COVER_URL, coverUrl)
+                    putString(ARG_TITLE, title)
+                    putString(ARG_AUTHOR, author)
+                    putString(ARG_PUBLISHER, publisher)
                 }
             }
     }

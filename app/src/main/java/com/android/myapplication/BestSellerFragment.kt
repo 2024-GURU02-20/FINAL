@@ -1,5 +1,6 @@
 package com.android.myapplication
 
+import BestSellerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,6 @@ class BestSellerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // fragment_best_seller.xml 연결
         return inflater.inflate(R.layout.fragment_best_seller, container, false)
     }
 
@@ -45,21 +45,24 @@ class BestSellerFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_bestsellerList)
         setupRecyclerView()
 
-        // "뒤로가기" 버튼 클릭 이벤트
-        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
-        btnGobackHome.setOnClickListener {
-            // 이전 화면으로 돌아가기
-            parentFragmentManager.popBackStack()
-        }
-
         // API 호출 및 데이터 로드
         fetchBestSellers()
     }
 
     private fun setupRecyclerView() {
-        // 3열의 GridLayoutManager 설정
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        bestSellerAdapter = BestSellerAdapter(emptyList())
+
+        // BestSellerAdapter 초기화
+        bestSellerAdapter = BestSellerAdapter(emptyList()) { book ->
+            // 책 클릭 이벤트 처리: BookInfoFragment로 이동
+            val bookInfoFragment = BookInfoFragment.newInstance(
+                book.cover, book.title, book.author, book.publisher
+            )
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, bookInfoFragment)
+                .addToBackStack(null)
+                .commit()
+        }
         recyclerView.adapter = bestSellerAdapter
     }
 
@@ -68,13 +71,10 @@ class BestSellerFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // 베스트셀러 API 호출
-                val response: AladinResponse = viewModel.fetchBestSellers(apiKey)
-
-                // 데이터 업데이트
+                val response = viewModel.fetchBestSellers(apiKey)
                 bestSellerAdapter.updateBooks(response.item)
             } catch (e: Exception) {
-                e.printStackTrace() // 에러 처리
+                e.printStackTrace()
             }
         }
     }
