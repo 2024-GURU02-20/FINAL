@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 
 class BestSellerAdapter(
     private var items: List<BookItem>,
-    private val onItemClick: (BookItem) -> Unit // 클릭 이벤트를 처리하기 위한 람다 전달
+    private val onItemClick: (BookItem) -> Unit
 ) : RecyclerView.Adapter<BestSellerAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,16 +28,14 @@ class BestSellerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = items[position]
 
-        // 책 데이터 바인딩
         holder.bookTitleTextView.text = book.title
         holder.bookAuthorTextView.text = book.author
         Glide.with(holder.itemView.context)
             .load(book.cover)
             .into(holder.bookCoverImageView)
 
-        // 책표지 클릭 이벤트 처리
         holder.itemView.findViewById<LinearLayout>(R.id.moreinfo_bookcover).setOnClickListener {
-            onItemClick(book) // 클릭된 책 데이터를 전달
+            onItemClick(book)
         }
     }
 
@@ -48,3 +46,4 @@ class BestSellerAdapter(
         notifyDataSetChanged()
     }
 }
+

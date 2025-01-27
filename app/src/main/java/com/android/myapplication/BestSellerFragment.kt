@@ -56,7 +56,7 @@ class BestSellerFragment : Fragment() {
         bestSellerAdapter = BestSellerAdapter(emptyList()) { book ->
             // 책 클릭 이벤트 처리: BookInfoFragment로 이동
             val bookInfoFragment = BookInfoFragment.newInstance(
-                book.cover, book.title, book.author, book.publisher
+                book.cover, book.title, book.author, book.publisher, book.pubDate
             )
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, bookInfoFragment)
