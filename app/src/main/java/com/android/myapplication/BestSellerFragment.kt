@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.model.AladinResponse
@@ -17,42 +17,18 @@ import kotlinx.coroutines.launch
 
 class BestSellerFragment : Fragment() {
 
-
-
-    lateinit var binding: BestSellerFragment
-
-
-    //알라딘 연결 및 객체 참조
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var bestSellerAdapter: BestSellerAdapter
     private lateinit var viewModel: AladinViewModel
-    lateinit var items: AladinResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        val apiKey = BuildConfig.ALADIN_API_KEY
+        // ViewModel 초기화
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
-
-//        // 아래의 코드를 통해 api 호출 가능
-//        lifecycleScope.launch {
-//            try {
-//                // fetchBestSellers 호출
-//                val response = viewModel.fetchBestSellers(apiKey)
-//                response.item.forEach { book ->
-//                    println("Title: ${book.title}")
-//                    println("Author: ${book.author}")
-//                    println("Publisher: ${book.publisher}")
-//                    println("ISBN: ${book.isbn}")
-//                    println("----------")
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace() // 에러 처리
-//            }
-//        }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,10 +41,41 @@ class BestSellerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // btnGobackHome 버튼 클릭 시 이전 화면으로 이동
+        // RecyclerView 초기화
+        recyclerView = view.findViewById(R.id.recycler_bestsellerList)
+        setupRecyclerView()
+
+        // "뒤로가기" 버튼 클릭 이벤트
         val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
         btnGobackHome.setOnClickListener {
+            // 이전 화면으로 돌아가기
             parentFragmentManager.popBackStack()
+        }
+
+        // API 호출 및 데이터 로드
+        fetchBestSellers()
+    }
+
+    private fun setupRecyclerView() {
+        // 3열의 GridLayoutManager 설정
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        bestSellerAdapter = BestSellerAdapter(emptyList())
+        recyclerView.adapter = bestSellerAdapter
+    }
+
+    private fun fetchBestSellers() {
+        val apiKey = BuildConfig.ALADIN_API_KEY
+
+        lifecycleScope.launch {
+            try {
+                // 베스트셀러 API 호출
+                val response: AladinResponse = viewModel.fetchBestSellers(apiKey)
+
+                // 데이터 업데이트
+                bestSellerAdapter.updateBooks(response.item)
+            } catch (e: Exception) {
+                e.printStackTrace() // 에러 처리
+            }
         }
     }
 }

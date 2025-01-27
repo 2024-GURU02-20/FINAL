@@ -24,8 +24,8 @@ class BookListFragment : Fragment() {
     private lateinit var viewModel: AladinViewModel
 
     // RecyclerView용 어댑터
-    private lateinit var bestSellersAdapter: BestSellersAdapter
-    private lateinit var newReleasesAdapter: NewReleasesAdapter
+    private lateinit var bestSellerAdapter: BestSellerAdapter
+    private lateinit var newReleasedAdapter: NewReleasedAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -78,16 +78,19 @@ class BookListFragment : Fragment() {
         binding.recyclerBestseller.apply {
 
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false) // 가로 스크롤
-            bestSellersAdapter = BestSellersAdapter(emptyList()) // 초기값 emptyList
-            adapter = bestSellersAdapter
+            bestSellerAdapter = BestSellerAdapter(emptyList()) // 초기값 emptyList
+            adapter = bestSellerAdapter
         }
 
         // 신간 리스트 RecyclerView 설정
         binding.recyclerNewbook.apply {
 
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false) // 가로 스크롤
-            newReleasesAdapter = NewReleasesAdapter(emptyList()) // 초기값 emptyList
-            adapter = newReleasesAdapter
+//            newReleasesAdapter = NewReleasesAdapter(emptyList()) // 초기값 emptyList
+//            adapter = newReleasesAdapter
+            newReleasedAdapter = NewReleasedAdapter(emptyList())
+            adapter = newReleasedAdapter
+
         }
     }
 
@@ -98,13 +101,13 @@ class BookListFragment : Fragment() {
             try {
                 // 베스트셀러 데이터 가져오기
                 val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
-                bestSellersAdapter = BestSellersAdapter(bestSellersResponse.item) // 어댑터에 데이터 전달
-                binding.recyclerBestseller.adapter = bestSellersAdapter // 어댑터 연결
+                bestSellerAdapter = BestSellerAdapter(bestSellersResponse.item) // 어댑터에 데이터 전달
+                binding.recyclerBestseller.adapter = bestSellerAdapter // 어댑터 연결
 
                 // 신간 리스트 데이터 가져오기
                 val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
-                newReleasesAdapter = NewReleasesAdapter(newReleasesResponse.item) // 어댑터에 데이터 전달
-                binding.recyclerNewbook.adapter = newReleasesAdapter // 어댑터 연결
+                newReleasedAdapter = NewReleasedAdapter(newReleasesResponse.item) // 어댑터에 데이터 전달
+                binding.recyclerNewbook.adapter = newReleasedAdapter // 어댑터 연결
             } catch (e: Exception) {
                 e.printStackTrace() // 에러 로그 출력
             }
@@ -136,6 +139,8 @@ class BookListFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
+
     }
 }
 
