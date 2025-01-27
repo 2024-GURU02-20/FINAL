@@ -21,7 +21,8 @@ class BestSellerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // bestseller_bookcover.xml 레이아웃을 inflate
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.bestseller_bookcover, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.moreinfo_book_recyclerview, parent, false)
+
         return ViewHolder(view)
     }
 
