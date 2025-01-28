@@ -161,7 +161,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp" />
 
-    < !-- 읽고 있는 책 이미지 2 -->
+    <!-- 읽고 있는 책 이미지 2 -->
     <ImageButton
         android:id="@+id/RBimage_button_2"
         android:layout_width="80dp"
