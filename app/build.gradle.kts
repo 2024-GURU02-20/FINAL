@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -9,6 +10,10 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    viewBinding {
+        enable = true
     }
 
     defaultConfig {
@@ -48,4 +53,26 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Retrofit 및 OkHttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+    // Material Calendar View
+    implementation("com.prolificinteractive:material-calendarview:1.6.0")
+
+    // Glide (이미지 로드)
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    kapt("com.github.bumptech.glide:compiler:4.15.1")
+
+    // AndroidX Core (필요 시 추가)
+    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
+}
+
+repositories {
+    google()  // Google Maven Repository
+    mavenCentral()  // Maven Central Repository
 }
