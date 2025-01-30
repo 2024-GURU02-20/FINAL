@@ -20,8 +20,10 @@ class BookListFragment : Fragment() {
     private lateinit var viewModel: AladinViewModel
 
     // RecyclerView에서 사용할 Adapter 선언
-    private lateinit var bestSellerAdapter: BestSellerAdapter
-    private lateinit var newReleasedAdapter: NewReleasedAdapter
+//    private lateinit var bestSellerAdapter: BestSellerAdapter
+//    private lateinit var newReleasedAdapter: NewReleasedAdapter
+    private lateinit var bestSeller: BookListAdapter
+    private lateinit var newReleased: BookListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +63,10 @@ class BookListFragment : Fragment() {
 
     // RecyclerView를 초기화하는 함수
     private fun initRecyclerViews() {
-        // 베스트셀러 리스트 RecyclerView 설정
         binding.recyclerBestseller.apply {
+            // 베스트셀러 리스트 RecyclerView 설정
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-            bestSellerAdapter = BestSellerAdapter(emptyList()) { book ->
+            bestSeller = BookListAdapter(emptyList()) { book ->
                 // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
                 val bookInfoFragment = BookInfoFragment.newInstance(
                     book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
@@ -74,14 +76,13 @@ class BookListFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-            adapter = bestSellerAdapter
+            adapter = bestSeller
         }
 
         // 신간 리스트 RecyclerView 설정
         binding.recyclerNewbook.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-            newReleasedAdapter = NewReleasedAdapter(emptyList()) { book ->
-                // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
+            newReleased = BookListAdapter(emptyList()) { book ->
                 val bookInfoFragment = BookInfoFragment.newInstance(
                     book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
                 )
@@ -90,7 +91,7 @@ class BookListFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-            adapter = newReleasedAdapter
+            adapter = newReleased
         }
     }
 
@@ -101,11 +102,11 @@ class BookListFragment : Fragment() {
             try {
                 // 베스트셀러 데이터 가져오기
                 val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
-                bestSellerAdapter.updateBooks(bestSellersResponse.item)
+                bestSeller.updateBooks(bestSellersResponse.item)
 
                 // 신간 리스트 데이터 가져오기
                 val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
-                newReleasedAdapter.updateBooks(newReleasesResponse.item)
+                newReleased.updateBooks(newReleasesResponse.item)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

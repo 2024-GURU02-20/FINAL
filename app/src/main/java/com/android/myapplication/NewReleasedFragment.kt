@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class NewReleasedFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var newReleasedAdapter: NewReleasedAdapter
+    private lateinit var moreInfoAdapter: MoreInfoAdapter
     private lateinit var viewModel: AladinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +54,12 @@ class NewReleasedFragment : Fragment() {
     }
 
     // RecyclerView를 초기화하는 함수
-    private fun setupRecyclerView() {
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout
 
-        // NewReleasedAdapter 초기화
-        newReleasedAdapter = NewReleasedAdapter(emptyList()) { book ->
+
+    private fun setupRecyclerView() {
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        // moreinfoAdapter 초기화
+        moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
             // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
             val bookInfoFragment = BookInfoFragment.newInstance(
                 book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
@@ -68,7 +69,7 @@ class NewReleasedFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-        recyclerView.adapter = newReleasedAdapter
+        recyclerView.adapter = moreInfoAdapter
     }
 
     // API에서 신간 데이터를 가져와 RecyclerView에 업데이트하는 함수
@@ -78,7 +79,7 @@ class NewReleasedFragment : Fragment() {
             try {
                 // API 호출하여 신간 데이터 가져오기
                 val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
-                newReleasedAdapter.updateBooks(newReleasesResponse.item) // 어댑터에 데이터 전달
+                moreInfoAdapter.updateBooks(newReleasesResponse.item) // 어댑터에 데이터 전달
             } catch (e: Exception) {
                 e.printStackTrace()
             }
