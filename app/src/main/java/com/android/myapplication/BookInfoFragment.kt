@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -52,13 +53,22 @@ class BookInfoFragment : Fragment() {
         val bookPubDateTextView: TextView = view.findViewById(R.id.info_book_pub_date) // 발행일
         val bookDescriptionTextView: TextView = view.findViewById(R.id.info_book_description) // 책 소개
 
-        // 데이터 UI에 적용
+        // 데이터 UI에 적용 (Glide를 사용해 책 표지 이미지 설정)
         Glide.with(requireContext()).load(coverUrl).into(bookCoverImageView) // 책 표지 이미지 로드
         bookTitleTextView.text = title // 책 제목
         bookAuthorTextView.text = author // 저자
         bookPublisherTextView.text = publisher // 출판사
         bookPubDateTextView.text = pubDate // 발행일
-        bookDescriptionTextView.text = if (description.isNotBlank()) description else "책 소개가 없습니다." // 책 소개 (없을 경우 기본 문구 표시)
+        bookDescriptionTextView.text = if (description.isNotBlank()) description else "." // 책 소개 (없을 경우 기본 문구 표시 )
+
+        // 뒤로 가기 버튼 클릭 시 BookListFragment로 이동
+        val btnGobackSearch: ImageButton = view.findViewById(R.id.btnGobackSearch)
+        btnGobackSearch.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, BookListFragment()) // BookListFragment로 이동
+                .addToBackStack(null) // 뒤로 가기 버튼으로 다시 BookInfoFragment로 돌아올 수 있도록 설정
+                .commit()
+        }
     }
 
     companion object {
