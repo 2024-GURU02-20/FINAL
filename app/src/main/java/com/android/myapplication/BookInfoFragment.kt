@@ -5,27 +5,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BookInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    // 책 정보를 저장할 변수 선언 (Fragment 간 데이터 전달을 위해 사용)
+    private lateinit var coverUrl: String  // 책 표지 URL
+    private lateinit var title: String  // 책 제목
+    private lateinit var author: String  // 책 저자
+    private lateinit var publisher: String  // 출판사
+    private lateinit var pubDate: String  // 발행일
+    private lateinit var description: String  // 책 소개
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 전달받은 데이터를 arguments에서 꺼내 변수에 저장
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            coverUrl = it.getString(ARG_COVER_URL) ?: "" // 기본값은 빈 문자열
+            title = it.getString(ARG_TITLE) ?: ""
+            author = it.getString(ARG_AUTHOR) ?: ""
+            publisher = it.getString(ARG_PUBLISHER) ?: ""
+            pubDate = it.getString(ARG_PUB_DATE) ?: ""
+            description = it.getString(ARG_DESCRIPTION) ?: ""
         }
     }
 
@@ -33,27 +38,63 @@ class BookInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // fragment_book_info.xml 레이아웃을 inflate(연결)하여 화면에 표시
         return inflater.inflate(R.layout.fragment_book_info, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // XML 레이아웃의 UI 요소들을 가져와 변수에 저장
+        val bookMainTitleTextView: TextView = view.findViewById(R.id.info_book_maintitle) // 상단 제목
+        val bookCoverImageView: ImageView = view.findViewById(R.id.info_book_cover) // 책 표지
+        val bookTitleTextView: TextView = view.findViewById(R.id.info_book_title) // 책 제목
+        val bookAuthorTextView: TextView = view.findViewById(R.id.info_book_author) // 저자
+        val bookPublisherTextView: TextView = view.findViewById(R.id.info_book_publisher) // 출판사
+        val bookPubDateTextView: TextView = view.findViewById(R.id.info_book_pub_date) // 발행일
+        val bookDescriptionTextView: TextView = view.findViewById(R.id.info_book_description) // 책 소개
+
+        // 데이터 UI에 적용 (Glide를 사용해 책 표지 이미지 설정)
+        bookMainTitleTextView.text = title
+        Glide.with(requireContext()).load(coverUrl).into(bookCoverImageView) // 책 표지 이미지 로드
+        bookTitleTextView.text = title // 책 제목
+        bookAuthorTextView.text = author // 저자
+        bookPublisherTextView.text = publisher // 출판사
+        bookPubDateTextView.text = pubDate // 발행일
+        bookDescriptionTextView.text = if (description.isNotBlank()) description else "." // 책 소개 (없을 경우 기본 문구 표시 )
+
+        // 뒤로 가기 버튼 클릭 시 BookListFragment로 이동
+        val btnGobackSearch: ImageButton = view.findViewById(R.id.btnGobackSearch)
+        btnGobackSearch.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, BookListFragment()) // BookListFragment로 이동
+                .addToBackStack(null) // 뒤로 가기 버튼으로 다시 BookInfoFragment로 돌아올 수 있도록 설정
+                .commit()
+        }
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        // 키 값 정의 (데이터 전달을 위한 변수 이름 지정)
+        private const val ARG_COVER_URL = "cover_url"
+        private const val ARG_TITLE = "title"
+        private const val ARG_AUTHOR = "author"
+        private const val ARG_PUBLISHER = "publisher"
+        private const val ARG_PUB_DATE = "pub_date"
+        private const val ARG_DESCRIPTION = "description"
+
+        // BookInfoFragment 인스턴스를 생성하는 메서드 (Fragment에 데이터 전달)
+        fun newInstance(
+            coverUrl: String, title: String, author: String, publisher: String,
+            pubDate: String, description: String
+        ) = BookInfoFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_COVER_URL, coverUrl) // 책 표지 URL 저장
+                putString(ARG_TITLE, title) // 책 제목 저장
+                putString(ARG_AUTHOR, author) // 저자 저장
+                putString(ARG_PUBLISHER, publisher) // 출판사 저장
+                putString(ARG_PUB_DATE, pubDate) // 발행일 저장
+                putString(ARG_DESCRIPTION, description) // 책 소개 저장
             }
+        }
     }
 }
