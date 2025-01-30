@@ -6,21 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
 
     private lateinit var binding: FragmentBookListBinding
     private lateinit var viewModel: AladinViewModel
+
+    // RecyclerView에서 사용할 Adapter 선언
     private lateinit var bestSellerAdapter: BestSellerAdapter
     private lateinit var newReleasedAdapter: NewReleasedAdapter
 
@@ -52,7 +51,6 @@ class BookListFragment : Fragment() {
         // RecyclerView 초기화
         initRecyclerViews()
 
-        // 버튼 클릭 이벤트 설정
         setupButtonListeners()
 
         // API 데이터 로드
@@ -61,12 +59,13 @@ class BookListFragment : Fragment() {
         return binding.root
     }
 
+    // RecyclerView를 초기화하는 함수
     private fun initRecyclerViews() {
-        // 베스트셀러 RecyclerView 설정
+        // 베스트셀러 리스트 RecyclerView 설정
         binding.recyclerBestseller.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
             bestSellerAdapter = BestSellerAdapter(emptyList()) { book ->
-                // 책 클릭 이벤트 처리: BookInfoFragment로 이동
+                // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
                 val bookInfoFragment = BookInfoFragment.newInstance(
                     book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
                 )
@@ -81,9 +80,8 @@ class BookListFragment : Fragment() {
         // 신간 리스트 RecyclerView 설정
         binding.recyclerNewbook.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-            newReleasedAdapter = NewReleasedAdapter(emptyList())
-            { book ->
-                // 책 클릭 이벤트 처리: BookInfoFragment로 이동
+            newReleasedAdapter = NewReleasedAdapter(emptyList()) { book ->
+                // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
                 val bookInfoFragment = BookInfoFragment.newInstance(
                     book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
                 )
@@ -96,15 +94,16 @@ class BookListFragment : Fragment() {
         }
     }
 
+    // API에서 데이터를 가져와 RecyclerView에 업데이트하는 함수
     private fun fetchBooks() {
         val apiKey = BuildConfig.ALADIN_API_KEY
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             try {
-                // 베스트셀러 데이터 로드
+                // 베스트셀러 데이터 가져오기
                 val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
                 bestSellerAdapter.updateBooks(bestSellersResponse.item)
 
-                // 신간 데이터 로드
+                // 신간 리스트 데이터 가져오기
                 val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
                 newReleasedAdapter.updateBooks(newReleasesResponse.item)
             } catch (e: Exception) {
@@ -113,7 +112,9 @@ class BookListFragment : Fragment() {
         }
     }
 
+    // 버튼 클릭 이벤트 설정
     private fun setupButtonListeners() {
+        // "베스트셀러 더보기" 버튼 클릭 시 BestSellerFragment로 이동
         binding.btnMoreinfo1.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, BestSellerFragment())
@@ -121,6 +122,7 @@ class BookListFragment : Fragment() {
                 .commit()
         }
 
+        // "신간 리스트 더보기" 버튼 클릭 시 NewReleasedFragment로 이동
         binding.btnMoreinfo2.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, NewReleasedFragment())
@@ -128,6 +130,7 @@ class BookListFragment : Fragment() {
                 .commit()
         }
 
+        // "다독왕 선정 더보기" 버튼 클릭 시 TopReaderPickFragment로 이동
         binding.btnMoreinfo3.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, TopReaderPickFragment())
