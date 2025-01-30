@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -71,57 +72,18 @@
         android:textStyle="bold"
         android:textColor="#000000"/>
 
-    <!-- '1월, 2025' 버튼 -->
-    <Button
-        android:id="@+id/date_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ReadCalendar"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#eaeaea"
-        android:text="1월, 2025"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <!-- 화살표 이미지 (왼쪽) -->
-    <ImageButton
-        android:id="@+id/left_arrow_button"
-        android:layout_width="20dp"
-        android:layout_height="48dp"
-        android:layout_below="@id/ReadCalendar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="360dp"
-        android:elevation="5dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="이전"
-        android:scaleType="centerInside"
-        android:src="@drawable/_2025_01_23_023248" />
-
-    <!-- 화살표 이미지 (오른쪽) -->
-    <ImageButton
-        android:id="@+id/right_arrow_button"
-        android:layout_width="20dp"
-        android:layout_height="48dp"
-        android:layout_below="@id/ReadCalendar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:elevation="5dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="다음"
-        android:scaleType="centerInside"
-        android:src="@drawable/_2025_01_23_023232" />
-
-    <!-- 캘린더 라이브러리 -->
+        <!-- 캘린더 라이브러리 -->
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_button"
-        app:mcv_showOtherDates="all"
-        app:mcv_selectionColor="@color/teal_200" />
+        android:layout_below="@id/ReadCalendar"
+        app:mcv_calendarMode="month"
+        app:mcv_dynamicHeightEnabled="false"
+        app:mcv_firstDayOfWeek="sunday"
+        app:mcv_selectionColor="@color/teal_200"
+        app:mcv_showOtherDates="none"
+        app:mcv_tileHeight="40dp" />
 
     <!-- 책 추가하기 -->
     <Button

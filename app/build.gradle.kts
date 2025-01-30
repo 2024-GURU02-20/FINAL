@@ -60,7 +60,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     // Material Calendar View
-    implementation("com.prolificinteractive:material-calendarview:1.6.0")
+    implementation("com.prolificinteractive:material-calendarview:1.4.3")
 
     // Glide (이미지 로드)
     implementation("com.github.bumptech.glide:glide:4.15.1")
@@ -70,9 +70,4 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
 
-}
-
-repositories {
-    google()  // Google Maven Repository
-    mavenCentral()  // Maven Central Repository
 }
