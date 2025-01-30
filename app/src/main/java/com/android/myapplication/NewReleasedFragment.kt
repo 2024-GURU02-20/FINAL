@@ -15,7 +15,6 @@ import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import kotlinx.coroutines.launch
 
-
 class NewReleasedFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
@@ -25,7 +24,6 @@ class NewReleasedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ViewModel 초기화
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
@@ -45,14 +43,23 @@ class NewReleasedFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_newreleasedList)
         setupRecyclerView()
 
-        // API 데이터 로드
+        // API 호출 및 데이터 로드
         fetchNewReleases()
+
+        // 뒤로 가기 버튼 클릭 시 이전 화면으로 이동
+        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
+        btnGobackHome.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
+    // RecyclerView를 초기화하는 함수
     private fun setupRecyclerView() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout
+
+        // NewReleasedAdapter 초기화
         newReleasedAdapter = NewReleasedAdapter(emptyList()) { book ->
-            // 클릭 이벤트: BookInfoFragment로 이동
+            // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
             val bookInfoFragment = BookInfoFragment.newInstance(
                 book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
             )
@@ -64,11 +71,12 @@ class NewReleasedFragment : Fragment() {
         recyclerView.adapter = newReleasedAdapter
     }
 
+    // API에서 신간 데이터를 가져와 RecyclerView에 업데이트하는 함수
     private fun fetchNewReleases() {
         val apiKey = BuildConfig.ALADIN_API_KEY
         lifecycleScope.launch {
             try {
-                // 신간 데이터 로드
+                // API 호출하여 신간 데이터 가져오기
                 val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
                 newReleasedAdapter.updateBooks(newReleasesResponse.item) // 어댑터에 데이터 전달
             } catch (e: Exception) {
