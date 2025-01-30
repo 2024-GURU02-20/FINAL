@@ -46,6 +46,7 @@ class BookInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // XML 레이아웃의 UI 요소들을 가져와 변수에 저장
+        val bookMainTitleTextView: TextView = view.findViewById(R.id.info_book_maintitle) // 상단 제목
         val bookCoverImageView: ImageView = view.findViewById(R.id.info_book_cover) // 책 표지
         val bookTitleTextView: TextView = view.findViewById(R.id.info_book_title) // 책 제목
         val bookAuthorTextView: TextView = view.findViewById(R.id.info_book_author) // 저자
@@ -54,6 +55,7 @@ class BookInfoFragment : Fragment() {
         val bookDescriptionTextView: TextView = view.findViewById(R.id.info_book_description) // 책 소개
 
         // 데이터 UI에 적용 (Glide를 사용해 책 표지 이미지 설정)
+        bookMainTitleTextView.text = title
         Glide.with(requireContext()).load(coverUrl).into(bookCoverImageView) // 책 표지 이미지 로드
         bookTitleTextView.text = title // 책 제목
         bookAuthorTextView.text = author // 저자
