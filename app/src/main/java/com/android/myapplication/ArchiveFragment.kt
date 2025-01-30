@@ -5,6 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.android.myapplication.databinding.FragmentArchiveBinding
+import com.android.myapplication.databinding.FragmentSearchResultBinding
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.view.MonthDayBinder
+import com.kizitonwose.calendar.view.ViewContainer
+import java.time.YearMonth
+import java.time.temporal.WeekFields
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,43 +26,45 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ArchiveFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentArchiveBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_archive, container, false)
+        binding = FragmentArchiveBinding.inflate(inflater, container, false)
+
+        binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
+            override fun create(view: View) = DayViewContainer(view)
+
+            override fun bind(container: DayViewContainer, day: CalendarDay) {
+                container.dayText.text = day.date.dayOfMonth.toString()
+            }
+        }
+
+        val currentMonth = YearMonth.now()
+        val startMonth = currentMonth.minusMonths(6) // 6개월 전부터
+        val endMonth = currentMonth.plusMonths(6) // 6개월 후까지
+        val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
+
+        binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
+        binding.calendarView.scrollToMonth(currentMonth) // 현재 월로 이동
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ArciveFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ArchiveFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    class DayViewContainer(view: View) : ViewContainer(view) {
+        val dayText: TextView = view.findViewById(R.id.day_text)
     }
+
+
+
+
+
 }
