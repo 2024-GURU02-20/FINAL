@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId = "com.android.myapplication"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -55,6 +55,9 @@ android {
 }
 
 dependencies {
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-auth")
     implementation("com.github.bumptech.glide:glide:4.15.1")
     kapt("com.github.bumptech.glide:compiler:4.15.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -71,6 +74,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 //    implementation(libs.mediation.test.suite)
+    implementation("com.kizitonwose.calendar:view:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
