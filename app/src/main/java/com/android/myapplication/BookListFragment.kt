@@ -50,6 +50,20 @@ class BookListFragment : Fragment() {
             }
         }
 
+        // 책 아카이빙 버튼 클릭 시 ArchiveFragment로 이동
+        binding.homebtnGotoArchive.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, ArchiveFragment())
+                .commit()
+        }
+
+        // 책 추천 버튼 클릭 시 RecommendFragment로 이동
+        binding.homebtnGotoRecommend.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, RecommendFragment())
+                .commit()
+        }
+
         // RecyclerView 초기화
         initRecyclerViews()
 
