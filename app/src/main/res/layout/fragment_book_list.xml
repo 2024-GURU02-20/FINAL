@@ -80,6 +80,11 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
+
             <!-- 책 아카이빙 버튼 -->
             <LinearLayout
                 android:id="@+id/homebtnGotoArchive"
@@ -109,6 +114,12 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
+
             <!-- 책 추천 버튼 -->
             <LinearLayout
                 android:id="@+id/homebtnGotoRecommend"
@@ -136,7 +147,13 @@
                     android:text="사용자 맞춤형 책 추천"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12sp" />
+
             </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3" />
         </LinearLayout>
 
 
