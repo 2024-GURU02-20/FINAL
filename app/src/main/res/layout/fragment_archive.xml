@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ArchiveFragment"
-    android:id="@+id/archive_page">
+    android:id="@+id/archive">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

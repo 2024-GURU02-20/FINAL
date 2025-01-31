@@ -12,6 +12,7 @@ import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
@@ -50,18 +51,17 @@ class BookListFragment : Fragment() {
             }
         }
 
-        // 책 아카이빙 버튼 클릭 시 ArchiveFragment로 이동
+
+        // 책 아카이빙 버튼 클릭 시 네비게이션 바에서 아카이빙 선택하도록
         binding.homebtnGotoArchive.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, ArchiveFragment())
-                .commit()
+            val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNavigationView.selectedItemId = R.id.archive
         }
 
-        // 책 추천 버튼 클릭 시 RecommendFragment로 이동
+        // 책 추천 버튼 클릭 시  네비게이션 바에서 추천으로 이동
         binding.homebtnGotoRecommend.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, RecommendFragment())
-                .commit()
+            val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNavigationView.selectedItemId = R.id.recommend
         }
 
         // RecyclerView 초기화
