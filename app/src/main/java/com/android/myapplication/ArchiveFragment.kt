@@ -11,6 +11,7 @@ import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
 import com.android.myapplication.DB.User
 import com.android.myapplication.databinding.FragmentArchiveBinding
+import com.android.myapplication.databinding.FragmentSearchBinding
 import com.android.myapplication.databinding.FragmentSearchResultBinding
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.view.MonthDayBinder
@@ -23,9 +24,21 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 
 class ArchiveFragment : Fragment() {
+    private lateinit var binding: FragmentArchiveBinding
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
+        binding = FragmentArchiveBinding.inflate(inflater, container, false)
+        return binding.root
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val database = AppDatabase.getDatabase(requireContext())
         val reviewDao = database.reviewDao()
