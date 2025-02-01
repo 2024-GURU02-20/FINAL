@@ -20,4 +20,5 @@ local.properties
 android/app/google-services.json
 ./android/app/google-services.json
 app/google-service.json
-
+.idea
+.DS_Store
