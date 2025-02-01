@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ArchiveFragment"
-    android:id="@+id/archive">
+    tools:context=".ArchiveFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- '책 아카이빙' 버튼 -->
+    <TextView
+        android:id="@+id/archive_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="책 아카이빙"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="55dp"
+        android:gravity="center"
+        android:elevation="5dp"
+        android:layout_below="@id/archive_main"
+        android:adjustViewBounds="true"
+        android:background="@drawable/round_image"
+        android:scaleType="centerCrop" />
+        <!-- android:src="@drawable/your_profile_image" -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
