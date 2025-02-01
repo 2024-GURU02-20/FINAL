@@ -50,6 +50,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.13"
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -78,6 +81,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 //    implementation(libs.mediation.test.suite)
     implementation("com.kizitonwose.calendar:view:2.5.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
