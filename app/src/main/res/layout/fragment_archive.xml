@@ -45,4 +45,4 @@
         app:cv_dayViewResource="@layout/calendar_day_view"/>
 
 
-</FrameLayout>
+</RelativeLayout>
