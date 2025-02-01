@@ -15,8 +15,15 @@ class CustomProfileView @JvmOverloads constructor(
     private val binding: CustomProfileViewBinding
 
     init {
-        // 뷰 바인딩 초기화
-        binding = CustomProfileViewBinding.inflate(LayoutInflater.from(context), this, true)
+        // XML을 ViewBinding을 통해 연결
+        val inflater = LayoutInflater.from(context)
+        binding = CustomProfileViewBinding.inflate(inflater, this, true)
+    }
+
+    // 외부에서 데이터를 설정할 수 있도록 함수 제공
+    fun setProfile(name: String, imageRes: Int) {
+        binding.profileName.text = name
+        binding.profileImage.setImageResource(imageRes)
     }
 
 

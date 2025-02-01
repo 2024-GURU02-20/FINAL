@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.gms.google-services")
 }
 
 val localProperties = Properties()
@@ -33,6 +34,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         val aladinApiKey: String = localProperties.getProperty("ALADIN_API_KEY") ?: ""
         buildConfigField("String", "ALADIN_API_KEY", "\"$aladinApiKey\"")
+        val webClientID: String = localProperties.getProperty("WEB_CLIENT_ID") ?: ""
+        buildConfigField("String", "WEB_CLIENT_ID", "\"$webClientID\"")
     }
 
     buildTypes {
@@ -61,7 +64,9 @@ android {
 
 dependencies {
     // Firebase 관련
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-auth:21.0.5")
     implementation("com.google.firebase:firebase-auth")
 
     // Glide 관련
@@ -113,3 +118,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+apply(plugin = "com.google.gms.google-services")
