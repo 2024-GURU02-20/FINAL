@@ -34,104 +34,15 @@
         <!-- android:src="@drawable/your_profile_image" -->
 
     <TextView
-        android:id="@+id/ProfileTool"
-        android:layout_width="360dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/archive_main"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:elevation="1dp"
-        android:background="@drawable/textview_border"
-        android:gravity="center"
-        android:paddingStart="10dp"
-        android:paddingEnd="16dp"
-        android:textColor="#000000"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="아카이브" />
 
-    <TextView
-        android:id="@+id/ProfileText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
-        android:layout_below="@id/archive_main"
-        android:layout_marginTop="35.5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="120dp"
-        android:text="프로필"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-
-    <!-- 독서 캘린더 텍스트 -->
-    <TextView
-        android:id="@+id/ReadCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ProfileTool"
-        android:layout_marginTop="25dp"
-        android:text="      독서 캘린더"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-
-    <LinearLayout
+    <com.kizitonwose.calendar.view.CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ReadCalendar"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        app:cv_dayViewResource="@layout/calendar_day_view"/>
 
-        <com.kizitonwose.calendar.view.CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            app:cv_dayViewResource="@layout/calendar_day_view"/>
-    </LinearLayout>
-
-    <!-- 책 추가하기 -->
-    <Button
-        android:id="@+id/addBook"
-        android:layout_width="140dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/ReadCalendar"
-        android:layout_marginTop="300dp"
-        android:layout_marginStart="140dp"
-        android:background="@drawable/addbook_border_black"
-        android:backgroundTint="@null"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="책 추가하기"
-        android:textAlignment="center"
-        android:textSize="14dp"
-        android:textColor="#000000" />
-
-    <!-- 읽고 있는 책 -->
-    <TextView
-        android:id="@+id/ReadingBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/addBook"
-        android:layout_marginTop="10dp"
-        android:text="      읽고 있는 책"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-
-    <!-- 읽고 있는 책 이미지 1 -->
-    <ImageButton
-        android:id="@+id/RBimage_button"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/ReadingBook"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp" />
-
-    <!-- 읽고 있는 책 이미지 2 -->
-    <ImageButton
-        android:id="@+id/RBimage_button_2"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/ReadingBook"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

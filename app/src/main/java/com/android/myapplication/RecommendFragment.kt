@@ -5,55 +5,88 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.model.BookItem
+import com.android.myapplication.repository.AladinRepository
+import com.android.myapplication.viewmodel.AladinViewModel
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecommendFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecommendFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var moreInfoAdapter: MoreInfoAdapter
+    private lateinit var viewModel: AladinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        // ViewModel 초기화
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recommend, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecommendFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecommendFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // RecyclerView 초기화
+        recyclerView = view.findViewById(R.id.recycler_bestseller)
+        setupRecyclerView()
+
+        // API에서 추천 도서 불러오기 (fetchBestSellers 사용)
+        fetchBestSellers()
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout 사용
+        moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
+            val bookInfoFragment = BookInfoFragment.newInstance(
+                book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+            )
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, bookInfoFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+        recyclerView.adapter = moreInfoAdapter
+    }
+
+//    private fun fetchBestSellers() {
+//        val apiKey = BuildConfig.ALADIN_API_KEY
+//        lifecycleScope.launch {
+//            try {
+//                // 추천 목록을 fetchBestSellers()로 가져옴
+//                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
+//                moreInfoAdapter.updateBooks(bestSellersResponse.item) // 어댑터 업데이트
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//    }
+    private fun fetchBestSellers() {
+        val apiKey = BuildConfig.ALADIN_API_KEY
+        lifecycleScope.launch {
+            try {
+                // 베스트셀러 데이터 가져오기
+                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
+
+                // 최대 9개까지만 표시
+                val limitedBooks = bestSellersResponse.item.take(9)
+
+                moreInfoAdapter.updateBooks(limitedBooks) // 어댑터에 데이터 전달
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+        }
     }
 }
