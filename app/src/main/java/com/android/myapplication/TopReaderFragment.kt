@@ -10,12 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.api.RetrofitClient
-import com.android.myapplication.model.AladinResponse
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import kotlinx.coroutines.launch
 
-class TopReaderPickFragment : Fragment() {
+class TopReaderFragment : Fragment() {
 
         private lateinit var recyclerView: RecyclerView
         private lateinit var moreInfoAdapter: MoreInfoAdapter

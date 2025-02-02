@@ -21,8 +21,6 @@ class BookListFragment : Fragment() {
     private lateinit var viewModel: AladinViewModel
 
     // RecyclerView에서 사용할 Adapter 선언
-//    private lateinit var bestSellerAdapter: BestSellerAdapter
-//    private lateinit var newReleasedAdapter: NewReleasedAdapter
     private lateinit var bestSeller: BookListAdapter
     private lateinit var newReleased: BookListAdapter
 
@@ -148,9 +146,11 @@ class BookListFragment : Fragment() {
         // "다독왕 선정 더보기" 버튼 클릭 시 TopReaderPickFragment로 이동
         binding.btnMoreinfo3.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, TopReaderPickFragment())
+                .replace(R.id.rootlayout, TopReaderFragment())
                 .addToBackStack(null)
                 .commit()
         }
     }
 }
+
+

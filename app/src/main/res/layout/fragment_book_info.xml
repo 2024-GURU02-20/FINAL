@@ -23,17 +23,16 @@
                 android:src="@drawable/baseline_arrow_back_ios_new_24"
                 android:background="@android:color/transparent" />
 
-            <TextView
-                android:id="@+id/info_book_maintitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="책 이름"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:id="@+id/info_book_maintitle"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="책 이름"-->
+<!--                android:textSize="18sp"-->
+<!--                android:gravity="center"-->
+<!--                android:textStyle="bold" />-->
         </LinearLayout>
-
         <!-- 책 표지 -->
         <ImageView
             android:id="@+id/info_book_cover"
@@ -42,40 +41,63 @@
             android:layout_gravity="center_horizontal" />
 
 
-        <!--        여기 중간에 있는 바는 뭐지...? -->
-
-
-        <!-- 책 제목 및 정보 -->
-        <TextView
-            android:id="@+id/info_book_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="책 제목"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/info_book_author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="저자"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
+            <!-- 제목 -->
+            <TextView
+                android:id="@+id/info_book_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="책 제목"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/info_book_publisher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="출판사"
-            android:textSize="14sp" />
+            <!-- 작가 -->
+            <TextView
+                android:id="@+id/info_book_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="저자"
+                android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/info_book_pub_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="발행일"
-            android:textSize="14sp"/>
+            <!-- 출판사 및 발행일 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-        <!--        여기 중간에 있는 라인은 뭐지...? -->
+                <TextView
+                    android:id="@+id/info_book_publisher"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="출판사"
+                    android:textSize="14sp"
+                    android:gravity="end" />
+
+<!--                쩜..? -->
+                <TextView
+                    android:text=" • "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/info_book_pub_date"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="발행일"
+                    android:textSize="14sp"
+                   />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <!-- 책 소개 -->
         <TextView
@@ -105,29 +127,81 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner_reviewsort"
+
+            <Button
+                android:id="@+id/btnRvsortRecommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:text="추천순"/>
+
+            <Button
+                android:id="@+id/btnRvsortLatest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최신순"/>
+
+
+<!-- 근데근데 이거 리뷰라서 별점 필요 없는거 아녀?? 책 별점 준거야????  -->
+            <Button
+                android:id="@+id/btnRvsortRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="별점순"/>
         </LinearLayout>
 
-        <!-- 리뷰 3개 뜨는 상자들 -->
+        <!-- 리뷰 목록 (상자 3개) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+<!-- 페이지네이션 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+            <TextView
+                android:id="@+id/tvRvPage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tvRvPage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tvRvPage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:focusable="true"/>
         </LinearLayout>
+
+
+
+
+
+
 
         <!-- 마음에 드는 한 줄 -->
         <LinearLayout
@@ -143,29 +217,79 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spinner_bestlinesort"
+            <Button
+                android:id="@+id/btnBlsortRecommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:text="추천순"/>
+
+            <Button
+                android:id="@+id/btnBlsortLatest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최신순"/>
+
+
+
+
+<!-- 근데근데 이거 리뷰라서 별점 필요 없는거 아녀?? 책 별점 준거야????  -->
+            <Button
+                android:id="@+id/btnBlsortRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="별점순"/>
         </LinearLayout>
 
-        <!-- 마음에 드는 한 줄 3개 뜨는 상자들 -->
+        <!-- 베스트 한줄 목록 (상자 3개) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewBestlines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+
+<!-- 페이지네이션 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
+            <TextView
+                android:id="@+id/tvBlPage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tvBlPage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tvBlPage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:focusable="true"/>
         </LinearLayout>
+
+
 
     </LinearLayout>
 </ScrollView>
