@@ -9,79 +9,87 @@ import android.widget.ImageButton
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import kotlinx.coroutines.launch
 
 class TopReaderFragment : Fragment() {
 
-        private lateinit var recyclerView: RecyclerView
-        private lateinit var moreInfoAdapter: MoreInfoAdapter
-        private lateinit var viewModel: AladinViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var topReaderAdapter: MoreInfoAdapter // 기존 MoreInfoAdapter 사용
+    private lateinit var viewModel: AladinViewModel
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-            val apiService = RetrofitClient.aladinApi
-            val repository = AladinRepository(apiService)
-            viewModel = AladinViewModel(repository)
+        // ViewModel 초기화
+        val apiService = RetrofitClient.aladinApi
+        val repository = AladinRepository(apiService)
+        viewModel = AladinViewModel(repository)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_top_reader_pick, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 뒤로 가기 버튼 설정
+        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
+        btnGobackHome.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            return inflater.inflate(R.layout.fragment_new_released, container, false)
+        // RecyclerView 초기화
+        recyclerView = view.findViewById(R.id.recycler_topreaderList)
+        setupRecyclerView()
+
+        // 다독왕 책 목록 불러오기
+        fetchTopReaderBooks()
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout
+        topReaderAdapter = MoreInfoAdapter(emptyList()) { book ->
+            // 책 클릭 시 BookInfoFragment로 이동
+            val bookInfoFragment = BookInfoFragment.newInstance(
+                book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+            )
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, bookInfoFragment)
+                .addToBackStack(null)
+                .commit()
         }
+        recyclerView.adapter = topReaderAdapter
+    }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+    private fun fetchTopReaderBooks() {
+        val database = AppDatabase.getDatabase(requireContext()) // Room DB 인스턴스 가져오기
+        val reviewDao = database.reviewDao() // ReviewDao 가져오기
 
-            // RecyclerView 초기화
-            recyclerView = view.findViewById(R.id.recycler_newreleasedList)
-            setupRecyclerView()
+        lifecycleScope.launch {
+            try {
+                val topReaderIsbnList = reviewDao.getTopReaderBooks() // 가장 많이 읽은 유저의 ISBN 리스트(10개)
+                val bookList = mutableListOf<BookItem>()
 
-            // API 호출 및 데이터 로드
-            fetchNewReleases()
-
-            // 뒤로 가기 버튼 클릭 시 이전 화면으로 이동
-            val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
-            btnGobackHome.setOnClickListener {
-                parentFragmentManager.popBackStack()
-            }
-        }
-
-        // RecyclerView를 초기화하는 함수
-
-
-        private fun setupRecyclerView() {
-            recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-            // moreinfoAdapter 초기화
-            moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
-                // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
-                val bookInfoFragment = BookInfoFragment.newInstance(
-                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
-                )
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.rootlayout, bookInfoFragment)
-                    .addToBackStack(null)
-                    .commit()
-            }
-            recyclerView.adapter = moreInfoAdapter
-        }
-
-        // API에서 신간 데이터를 가져와 RecyclerView에 업데이트하는 함수
-        private fun fetchNewReleases() {
-            val apiKey = BuildConfig.ALADIN_API_KEY
-            lifecycleScope.launch {
-                try {
-                    // API 호출하여 신간 데이터 가져오기
-                    val newReleasesResponse = viewModel.fetchNewReleases(apiKey)
-                    moreInfoAdapter.updateBooks(newReleasesResponse.item) // 어댑터에 데이터 전달
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                for (isbn in topReaderIsbnList) {
+                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, isbn)
+                    if (response.item.isNotEmpty()) {
+                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                    }
                 }
+
+                topReaderAdapter.updateBooks(bookList) // RecyclerView 업데이트
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
+}
