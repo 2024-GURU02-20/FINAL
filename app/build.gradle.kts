@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("org.jetbrains.kotlin.kapt")
     id("com.google.gms.google-services")
+    id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 val localProperties = Properties()

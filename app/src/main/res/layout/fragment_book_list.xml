@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,30 +9,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 상단 -->
-        <LinearLayout
+        <com.android.myapplication.CustomProfileView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kommentary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="안녕하세요, OOO님!"
-                android:textSize="13sp"
-                android:textColor="#5F5F5F"/>
-        </LinearLayout>
-
+            android:id="@+id/custom_profile_view"/>
         <!-- 검색 -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
