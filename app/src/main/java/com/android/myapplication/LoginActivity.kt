@@ -103,8 +103,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToMain() {
         // 메인 화면으로 이동하는 코드 추가 (예: MainActivity로 이동)
+        Log.d("LoginActivity", "navigateToMain() 실행됨")
         val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        setResult(RESULT_OK)
         finish() // LoginActivity 종료
     }
 }

@@ -1,6 +1,7 @@
 package com.android.myapplication
 
 import BestSellerAdapter
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -137,6 +138,11 @@ class BookListFragment : Fragment() {
                 .replace(R.id.rootlayout, TopReaderPickFragment())
                 .addToBackStack(null)
                 .commit()
+        }
+
+        binding.customProfileView.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }
