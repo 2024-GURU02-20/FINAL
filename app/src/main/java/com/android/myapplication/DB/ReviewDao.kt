@@ -27,4 +27,15 @@ interface ReviewDao {
 
     @Query("DELETE FROM review WHERE reviewId = :id")
     suspend fun deleteReviewById(id: Int)
+
+
+    //은정 추가
+    //가장 많은 리뷰를 남긴 유저를 찾고 해당 유저의 ISBN 12개를 가져옴
+    //LIMIT 12 → 최대 12개만 가져오도록 설정
+    @Query("""
+    SELECT isbn FROM review 
+    WHERE userId = (SELECT userId FROM review GROUP BY userId ORDER BY COUNT(*) DESC LIMIT 1) 
+    LIMIT 12
+""")
+    suspend fun getTopReaderBooks(): List<String>
 }

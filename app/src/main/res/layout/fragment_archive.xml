@@ -31,7 +31,7 @@
         android:adjustViewBounds="true"
         android:background="@drawable/round_image"
         android:scaleType="centerCrop" />
-        <!-- android:src="@drawable/your_profile_image" -->
+    <!-- android:src="@drawable/your_profile_image" -->
 
     <TextView
         android:layout_width="match_parent"
