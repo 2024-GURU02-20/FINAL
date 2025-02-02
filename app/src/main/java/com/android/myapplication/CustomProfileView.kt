@@ -23,7 +23,6 @@ class CustomProfileView @JvmOverloads constructor(
     // 외부에서 데이터를 설정할 수 있도록 함수 제공
     fun setProfile(name: String, imageRes: Int) {
         binding.profileName.text = name
-        binding.profileImage.setImageResource(imageRes)
     }
 
 
