@@ -1,10 +1,12 @@
 package com.android.myapplication
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -43,7 +45,10 @@ class SearchResultFragment : Fragment() {
         binding = FragmentSearchResultBinding.inflate(inflater, container, false)
 
         // SearchView 초기화
-        binding.search.setQuery(searchQuery, false)
+        binding.search.post {
+            binding.search.setQuery(searchQuery, false) // 검색어 설정 (두 번째 인자는 submit 여부)
+            binding.search.clearFocus() // 포커스를 제거해서 UI를 기본 상태로 유지
+        }
 
         binding.customTopBar.onBackClick = {
             parentFragmentManager.popBackStack()

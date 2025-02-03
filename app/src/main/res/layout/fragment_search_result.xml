@@ -23,8 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/search"
-            android:background="@drawable/search_view_bg"
-            android:layout_marginBottom="36dp"/>
+            android:hint="검색어를 입력하세요."
+            android:iconifiedByDefault="false"
+            android:layout_marginBottom="36dp"
+            android:theme="@style/CustomSearchViewStyle"
+            android:background="@drawable/search_view_bg"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchViewStyle">
+        <item name="android:editTextColor">@color/black</item> <!-- 검은색 텍스트 -->
+        <item name="android:textColorHint">@color/gray1</item> <!-- 회색 힌트 -->
+    </style>
+</resources>
