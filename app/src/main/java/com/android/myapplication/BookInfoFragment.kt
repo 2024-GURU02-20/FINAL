@@ -46,8 +46,10 @@ class BookInfoFragment : Fragment() {
         binding = FragmentBookInfoBinding.inflate(inflater, container, false)
 
         binding.customTopBar.onBackClick = {
-            binding.root.findNavController().navigateUp() // 루트 뷰에서 NavController 찾기
+            parentFragmentManager.popBackStack()
         }
+        binding.customTopBar.setTitle("")
+
         return binding.root
     }
 

@@ -42,8 +42,10 @@ class BestSellerFragment : Fragment() {
         binding = FragmentBestSellerBinding.inflate(inflater, container, false
         )
         binding.customTopBar.onBackClick = {
-            findNavController().navigateUp()
+            parentFragmentManager.popBackStack()
         }
+        binding.customTopBar.setTitle("베스트 셀러")
+
         return binding.root
     }
 

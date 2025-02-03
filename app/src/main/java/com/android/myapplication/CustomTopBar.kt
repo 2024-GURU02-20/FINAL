@@ -3,6 +3,7 @@ package com.android.myapplication
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.findFragment
 import com.android.myapplication.databinding.CustomTopBarBinding
@@ -26,6 +27,11 @@ class CustomTopBar @JvmOverloads constructor(
     }
 
     fun setTitle(title: String) {
-        binding.title.text = title
+        if (title == "") {
+            binding.title.visibility = View.GONE
+        } else {
+            binding.title.text = title
+        }
+
     }
 }

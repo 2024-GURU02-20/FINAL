@@ -32,6 +32,12 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
+
+        binding.customTopBar.onBackClick = {
+            parentFragmentManager.popBackStack()
+        }
+        binding.customTopBar.setTitle("검색")
+
         return binding.root
     }
 

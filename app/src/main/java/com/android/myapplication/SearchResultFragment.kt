@@ -45,6 +45,12 @@ class SearchResultFragment : Fragment() {
         // SearchView 초기화
         binding.search.setQuery(searchQuery, false)
 
+        binding.customTopBar.onBackClick = {
+            parentFragmentManager.popBackStack()
+        }
+
+        binding.customTopBar.setTitle("검색")
+
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
