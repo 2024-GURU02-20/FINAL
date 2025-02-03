@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.databinding.FragmentNewReleasedBinding
 import com.android.myapplication.model.AladinResponse
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
@@ -20,6 +21,8 @@ class NewReleasedFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var moreInfoAdapter: MoreInfoAdapter
     private lateinit var viewModel: AladinViewModel
+
+    private lateinit var binding: FragmentNewReleasedBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,14 @@ class NewReleasedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_new_released, container, false)
+
+        binding = FragmentNewReleasedBinding.inflate(inflater, container, false)
+        binding.customTopBar.onBackClick = {
+            parentFragmentManager.popBackStack()
+        }
+        binding.customTopBar.setTitle("신간")
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,12 +55,6 @@ class NewReleasedFragment : Fragment() {
 
         // API 호출 및 데이터 로드
         fetchNewReleases()
-
-        // 뒤로 가기 버튼 클릭 시 이전 화면으로 이동
-        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
-        btnGobackHome.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
     }
 
     // RecyclerView를 초기화하는 함수
