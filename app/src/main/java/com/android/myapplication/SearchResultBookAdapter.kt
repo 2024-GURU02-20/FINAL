@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.model.AladinResponse
 import com.android.myapplication.model.BookItem
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 
 class SearchResultBookAdapter(
     private val context: Context?,
@@ -31,7 +32,13 @@ class SearchResultBookAdapter(
         context?.let {
             Glide.with(it)
                 .load(book.cover)
+                .transform(GranularRoundedCorners(5f, 5f, 5f, 5f))
                 .into(holder.coverImageView)
+
+            Glide.with(it)
+                .load(book.cover)
+                .transform(GranularRoundedCorners(5f, 5f, 5f, 5f))
+                .into(holder.backgroundImageView)
         }
     }
 
@@ -43,5 +50,7 @@ class SearchResultBookAdapter(
         val coverImageView: ImageView = itemView.findViewById(R.id.search_result_book_cover)
         val titleTextView: TextView = itemView.findViewById(R.id.search_result_book_title)
         val authorTextView: TextView = itemView.findViewById(R.id.search_result_book_author)
+        val backgroundImageView: ImageView = itemView.findViewById(R.id.book_background)
+
     }
 }
