@@ -38,6 +38,7 @@ class BookListFragment : Fragment() {
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
+
     }
 
     override fun onCreateView(
@@ -55,6 +56,11 @@ class BookListFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
+        }
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            binding.customProfileView.setData( user.displayName + "님!", "안녕하세요,", user.photoUrl)
         }
 
 
@@ -211,10 +217,7 @@ class BookListFragment : Fragment() {
 
         binding.customProfileView.setOnClickListener {
             val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) {
-                binding.customProfileView.setData( user.displayName + "님!", "안녕하세요,", user.photoUrl)
-
-            } else {
+            if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)
             }

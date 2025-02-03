@@ -3,6 +3,7 @@ package com.android.myapplication
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -26,6 +27,7 @@ class CustomProfileView @JvmOverloads constructor(
     }
 
     fun setData(title: String, subtitle:String, imageUrl: Uri?) {
+        Log.d("로그인 확인", title + subtitle)
         binding.profileTitle.text = title
         binding.profileSubtitle.text = subtitle
         Glide.with(context)
