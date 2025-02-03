@@ -77,7 +77,8 @@ class SearchResultFragment : Fragment() {
 
         // RecyclerView 초기화
         val layoutManager = GridLayoutManager(context, 2)
-        binding.searchResultRecyclerView.layoutManager = layoutManager
+        val recyclerView = binding.searchResultRecyclerView
+        recyclerView.layoutManager = layoutManager
 
         // 비동기로 데이터를 로드하고 RecyclerView 업데이트
         fetchItems()
