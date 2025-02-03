@@ -127,8 +127,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/write_review"
         android:layout_marginStart="28dp"
-        android:background="@drawable/textview_border_gray"
         android:inputType="textMultiLine" />
+<!--        android:background="@drawable/textview_border_gray"-->
 
     <!-- 마음에 드는 한 줄 텍스트 -->
     <TextView
@@ -153,8 +153,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
+<!--        android:background="@drawable/textview_border_green"-->
 
     <!-- 마음에 드는 한 줄 칸 2 -->
     <EditText
@@ -165,8 +165,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
+<!--        android:background="@drawable/textview_border_green"-->
 
 
     <!-- 마음에 드는 한 줄 칸 3 -->
@@ -178,8 +178,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
+<!--        android:background="@drawable/textview_border_green"-->
 
     <Button
         android:id="@+id/store_review"
