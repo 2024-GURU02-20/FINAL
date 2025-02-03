@@ -127,7 +127,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/write_review"
         android:layout_marginStart="28dp"
-        android:background="@drawable/textview_border_dark"
+        android:background="@drawable/textview_border_gray"
         android:inputType="textMultiLine" />
 
     <!-- 마음에 드는 한 줄 텍스트 -->
@@ -153,7 +153,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
+        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
 
     <!-- 마음에 드는 한 줄 칸 2 -->
@@ -165,7 +165,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
+        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
 
 
@@ -178,7 +178,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
+        android:background="@drawable/textview_border_green"
         android:inputType="textMultiLine" />
 
     <Button
