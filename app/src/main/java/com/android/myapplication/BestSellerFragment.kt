@@ -10,7 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.ImageButton
+import androidx.navigation.fragment.findNavController
 import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.databinding.FragmentBestSellerBinding
 import com.android.myapplication.model.AladinResponse
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
@@ -22,6 +24,8 @@ class BestSellerFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var moreInfoAdapter: MoreInfoAdapter
     private lateinit var viewModel: AladinViewModel
+
+    private lateinit var binding: FragmentBestSellerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +39,12 @@ class BestSellerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_best_seller, container, false)
+        binding = FragmentBestSellerBinding.inflate(inflater, container, false
+        )
+        binding.customTopBar.onBackClick = {
+            findNavController().navigateUp()
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,12 +56,6 @@ class BestSellerFragment : Fragment() {
 
         // API 호출 및 데이터 로드
         fetchBestSellers()
-
-        // 뒤로 가기 버튼 클릭 시 이전 화면으로 이동
-        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
-        btnGobackHome.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
     }
 
     private fun setupRecyclerView() {

@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.android.myapplication.databinding.FragmentBookInfoBinding
 import com.bumptech.glide.Glide
 
 class BookInfoFragment : Fragment() {
@@ -19,6 +22,8 @@ class BookInfoFragment : Fragment() {
     private lateinit var publisher: String  // 출판사
     private lateinit var pubDate: String  // 발행일
     private lateinit var description: String  // 책 소개
+
+    private lateinit var binding: FragmentBookInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +43,12 @@ class BookInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // fragment_book_info.xml 레이아웃을 inflate(연결)하여 화면에 표시
-        return inflater.inflate(R.layout.fragment_book_info, container, false)
+        binding = FragmentBookInfoBinding.inflate(inflater, container, false)
+
+        binding.customTopBar.onBackClick = {
+            binding.root.findNavController().navigateUp() // 루트 뷰에서 NavController 찾기
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,14 +72,6 @@ class BookInfoFragment : Fragment() {
         bookPubDateTextView.text = pubDate // 발행일
         bookDescriptionTextView.text = if (description.isNotBlank()) description else "." // 책 소개 (없을 경우 기본 문구 표시 )
 
-        // 뒤로 가기 버튼 클릭 시 BookListFragment로 이동
-        val btnGobackSearch: ImageButton = view.findViewById(R.id.btnGobackSearch)
-        btnGobackSearch.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, BookListFragment()) // BookListFragment로 이동
-                .addToBackStack(null) // 뒤로 가기 버튼으로 다시 BookInfoFragment로 돌아올 수 있도록 설정
-                .commit()
-        }
     }
 
     companion object {
