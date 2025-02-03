@@ -4,29 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".SearchResultFragment"
-    android:id="@+id/search_result">
+    android:id="@+id/search_result"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp">
 
-    <com.android.myapplication.CustomTopBar
-        android:id="@+id/custom_top_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.android.myapplication.CustomTopBar
+            android:id="@+id/custom_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.SearchView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/search"
-        android:background="@drawable/search_view_bg"/>
+        <androidx.appcompat.widget.SearchView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/search"
+            android:background="@drawable/search_view_bg"
+            android:layout_marginBottom="36dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_result_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:nestedScrollingEnabled="false"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체"
+            android:fontFamily="@font/pretendard_variable"
+            android:textSize="17dp"
+            android:textFontWeight="700"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_result_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="false"/>
     </LinearLayout>
 
 </ScrollView>
