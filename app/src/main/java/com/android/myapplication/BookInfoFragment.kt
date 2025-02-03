@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+//import androidx.navigation.findNavController
+//import androidx.navigation.fragment.findNavController
 import com.android.myapplication.databinding.FragmentBookInfoBinding
 import com.bumptech.glide.Glide
 

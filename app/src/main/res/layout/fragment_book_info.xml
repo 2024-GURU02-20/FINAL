@@ -1,276 +1,296 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <!-- 상단 -->
         <com.android.myapplication.CustomTopBar
             android:id="@+id/custom_top_bar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingLeft="28dp"/>
+
+        <!-- 책표지 배경 -->
+        <ImageView
+            android:id="@+id/info_book_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            android:elevation="5dp"/>
+
         <!-- 책 표지 -->
         <ImageView
             android:id="@+id/info_book_cover"
-            android:layout_width="120dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center_horizontal" />
-
+            android:layout_width="152dp"
+            android:layout_height="224dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="112dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_bg"
+            android:elevation="10dp"/>
 
         <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="248dp"
+            android:background="@drawable/bottom_nav_bg"
+            android:orientation="vertical"
+            android:paddingTop="116dp"
+            android:paddingBottom="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <!-- 제목 -->
+                <TextView
+                    android:id="@+id/info_book_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/pretendard_variable"
+                    android:text="책 제목"
+                    android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- 작가 -->
+                <TextView
+                    android:id="@+id/info_book_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/pretendard_variable"
+                    android:text="저자"
+                    android:textColor="@color/gray1"
+                    android:textFontWeight="500"
+                    android:textSize="14sp" />
+
+                <!-- 출판사 및 발행일 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/info_book_publisher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:gravity="end"
+                        android:text="출판사"
+                        android:textColor="#C9C9C9"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <!--                쩜..? -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:gravity="end"
+                        android:text=" • "
+                        android:textColor="#C9C9C9"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/info_book_pub_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:gravity="start"
+                        android:text="발행일"
+                        android:textColor="#C9C9C9"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/addBook"
+                    android:layout_width="136dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_bg"
+                    android:backgroundTint="@color/Primary"
+                    android:text="추가하기"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+
+            <!-- 책 소개 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendard_variable"
+                android:text="책 소개"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/info_book_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#646464"
+                android:textFontWeight="400"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/review_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <!-- 제목 -->
-            <TextView
-                android:id="@+id/info_book_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="책 제목"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <!-- 작가 -->
-            <TextView
-                android:id="@+id/info_book_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저자"
-                android:textSize="14sp"/>
-
-            <!-- 출판사 및 발행일 -->
+            app:layout_constraintTop_toBottomOf="@+id/info_container"
+            android:background="#f5f5f5"
+            android:paddingTop="32dp"
+            android:paddingBottom="44dp"
+            android:paddingHorizontal="28dp">
+            <!-- 리뷰 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:id="@+id/info_book_publisher"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="출판사"
-                    android:textSize="14sp"
-                    android:gravity="end" />
+                    android:layout_weight="1"
+                    android:text="리뷰"
+                    android:fontFamily="@font/pretendard_variable"
+                    android:textFontWeight="700"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-<!--                쩜..? -->
-                <TextView
-                    android:text=" • "
+
+                <RadioGroup
+                    android:id="@+id/toggleGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/info_book_pub_date"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="발행일"
-                    android:textSize="14sp"
-                   />
+                    <!-- 추천순 버튼 -->
+                    <RadioButton
+                        android:id="@+id/btnRecommend"
+                        android:layout_width="46dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/toggle_button_selected"
+                        android:text="추천순"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:textFontWeight="500"
+                        android:textAlignment="center"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:checked="true"
+                        android:button="@null"
+                        android:layout_marginEnd="6dp"/>
+
+                    <!-- 최신순 버튼 -->
+                    <RadioButton
+                        android:id="@+id/btnLatest"
+                        android:layout_width="46dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/toggle_button_unselected"
+                        android:text="최신순"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:textFontWeight="500"
+                        android:textSize="10sp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray1"
+                        android:button="@null"
+                        android:layout_marginEnd="6dp"/>
+
+                    <!-- 별점순 버튼 -->
+                    <RadioButton
+                        android:id="@+id/btnRating"
+                        android:layout_width="46dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/toggle_button_unselected"
+                        android:text="별점순"
+                        android:fontFamily="@font/pretendard_variable"
+                        android:textFontWeight="500"
+                        android:textSize="10sp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray1"
+                        android:button="@null"/>
+                </RadioGroup>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/review_recycler_view"/>
         </LinearLayout>
-
-
-        <!-- 책 소개 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="책 소개"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
-
-        <TextView
-            android:id="@+id/info_book_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!-- 리뷰 -->
         <LinearLayout
+            android:id="@+id/favorite_line_container"
+            app:layout_constraintTop_toBottomOf="@+id/review_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingVertical="50dp"
+            android:paddingHorizontal="28dp">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="리뷰"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-
-            <Button
-                android:id="@+id/btnRvsortRecommend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="추천순"/>
-
-            <Button
-                android:id="@+id/btnRvsortLatest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="최신순"/>
-
-
-<!-- 근데근데 이거 리뷰라서 별점 필요 없는거 아녀?? 책 별점 준거야????  -->
-            <Button
-                android:id="@+id/btnRvsortRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="별점순"/>
-        </LinearLayout>
-
-        <!-- 리뷰 목록 (상자 3개) -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewReviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
-
-<!-- 페이지네이션 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvRvPage1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="14sp"
+                android:fontFamily="@font/pretendard_variable"
+                android:text="마음에 드는 한 줄"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:layout_marginBottom="20dp"/>
 
-            <TextView
-                android:id="@+id/tvRvPage2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginStart="8dp"
-                android:clickable="true"
-                android:focusable="true"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favorite_line_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/tvRvPage3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginStart="8dp"
-                android:clickable="true"
-                android:focusable="true"/>
         </LinearLayout>
-
-
-
-
-
-
-
-        <!-- 마음에 드는 한 줄 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="마음에 드는 한줄"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnBlsortRecommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천순"/>
-
-            <Button
-                android:id="@+id/btnBlsortLatest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="최신순"/>
-
-
-
-
-<!-- 근데근데 이거 리뷰라서 별점 필요 없는거 아녀?? 책 별점 준거야????  -->
-            <Button
-                android:id="@+id/btnBlsortRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="별점순"/>
-        </LinearLayout>
-
-        <!-- 베스트 한줄 목록 (상자 3개) -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewBestlines"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
-
-
-<!-- 페이지네이션 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvBlPage1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <TextView
-                android:id="@+id/tvBlPage2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginStart="8dp"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <TextView
-                android:id="@+id/tvBlPage3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginStart="8dp"
-                android:clickable="true"
-                android:focusable="true"/>
-        </LinearLayout>
-
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
