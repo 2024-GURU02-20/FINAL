@@ -35,6 +35,18 @@ class ArchiveFragment : Fragment() {
     ): View {
         binding = FragmentArchiveBinding.inflate(inflater, container, false)
 
+        binding.addBook.setOnClickListener {
+            requireActivity().runOnUiThread {
+                val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_main_container)
+                if (currentFragment !is SearchFragment) { // 중복 방지
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.archive_main_container, SearchFragment())
+                        .addToBackStack(null)
+                        .commitAllowingStateLoss()
+                }
+            }
+        }
+
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
 
