@@ -32,7 +32,8 @@ class ArchiveFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentArchiveBinding.inflate(inflater, container, false)
 
         binding.addBook.setOnClickListener {
