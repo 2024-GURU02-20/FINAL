@@ -11,26 +11,17 @@
         android:layout_height="match_parent"
         tools:context=".ArchiveFragment">
 
-        <!-- 계정 '안녕하세요 000님' // 검색창에 below 설정 꼭 해주세요 -->
-        <TextView
-            android:id="@+id/ProfileText"
-            android:layout_width="110dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="8dp"
-            android:elevation="5dp"
-            android:text="계정"
-            android:textColor="#000000"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+        <com.android.myapplication.CustomProfileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/custom_profile_view"/>
 
         <!-- 검색창// 월표시에다가 below 설정 꼭 해주세요 -->
         <TextView
             android:id="@+id/SearchTool"
             android:layout_width="354dp"
             android:layout_height="40dp"
-            android:layout_below="@id/ProfileText"
+            android:layout_below="@id/custom_profile_view"
             android:layout_marginStart="29dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
@@ -59,15 +50,6 @@
             android:layout_below="@id/ReadCalendar"
             android:orientation="vertical"
             android:layout_marginTop="15dp">
-
-            <TextView
-                android:id="@+id/monthTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:padding="8dp"/>
 
             <com.kizitonwose.calendar.view.CalendarView
                 android:id="@+id/calendarView"
