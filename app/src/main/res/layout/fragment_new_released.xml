@@ -6,29 +6,10 @@
 
 
     <!-- 상단 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <ImageButton
-            android:id="@+id/btnGobackHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_ios_new_24"
-            android:background="@android:color/transparent" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="신간 리스트"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:textStyle="bold" />
-    </LinearLayout>
-
+    <com.android.myapplication.CustomTopBar
+        android:id="@+id/custom_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_newreleasedList"

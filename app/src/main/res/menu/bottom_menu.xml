@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bookList"
-        android:enabled="true"
-        android:title="책 리스트"/>
-    <item
         android:id="@+id/archive"
         android:enabled="true"
-        android:title="아카이브"/>
+        android:icon="@drawable/archive"
+        android:title="아카이빙"/>
+    <item
+        android:id="@+id/bookList"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="홈"/>
     <item
         android:id="@+id/recommend"
         android:enabled="true"
-        android:title="추천"/>
+        android:icon="@drawable/recommend"
+        android:title="책 추천"/>
 </menu>
