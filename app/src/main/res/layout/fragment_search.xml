@@ -14,6 +14,7 @@
     <androidx.appcompat.widget.SearchView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/search"/>
+        android:id="@+id/search"
+        android:background="@drawable/search_view_bg"/>
 <!--    검색 기록 태그 나열-->
 </LinearLayout>
