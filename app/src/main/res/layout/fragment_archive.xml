@@ -16,9 +16,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/custom_profile_view"/>
 
+
         <!-- 검색창// 월표시에다가 below 설정 꼭 해주세요 -->
-        <TextView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/SearchTool"
+            android:background="@drawable/search_view_bg"
             android:layout_width="354dp"
             android:layout_height="40dp"
             android:layout_below="@id/custom_profile_view"

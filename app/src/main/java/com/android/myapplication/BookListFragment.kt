@@ -58,6 +58,7 @@ class BookListFragment : Fragment() {
             }
         }
 
+        // 로그인 정보 가져와서 띄워주기
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             binding.customProfileView.setData( user.displayName + "님!", "안녕하세요,", user.photoUrl)
