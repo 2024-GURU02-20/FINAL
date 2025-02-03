@@ -40,9 +40,9 @@ class ArchiveFragment : Fragment() {
                 val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_main_container)
                 if (currentFragment !is SearchFragment) { // 중복 방지
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.archive_main_container, SearchFragment())
+                        .replace(R.id.rootlayout, SearchFragment())
                         .addToBackStack(null)
-                        .commitAllowingStateLoss()
+                        .commit()
                 }
             }
         }
