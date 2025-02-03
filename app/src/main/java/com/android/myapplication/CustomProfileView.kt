@@ -5,9 +5,11 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.withStyledAttributes
+import androidx.core.view.isGone
 import com.android.myapplication.R
 import com.android.myapplication.databinding.CustomProfileViewBinding
 import com.bumptech.glide.Glide
@@ -36,5 +38,7 @@ class CustomProfileView @JvmOverloads constructor(
             .error(R.drawable.profile) // 에러 발생 시 기본 이미지
             .circleCrop()
             .into(binding.profileIcon)
+        binding.loginBtn.visibility = View.GONE
+        binding.profileIcon.visibility = View.VISIBLE
     }
 }
