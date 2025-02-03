@@ -5,19 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import kotlinx.coroutines.launch
 
-class RecommendFragment : Fragment() {
+class TopReaderFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var moreInfoAdapter: MoreInfoAdapter
+    private lateinit var topReaderAdapter: MoreInfoAdapter // 기존 MoreInfoAdapter 사용
     private lateinit var viewModel: AladinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,23 +35,30 @@ class RecommendFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_recommend, container, false)
+        return inflater.inflate(R.layout.fragment_top_reader_pick, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 뒤로 가기 버튼 설정
+        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
+        btnGobackHome.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         // RecyclerView 초기화
-        recyclerView = view.findViewById(R.id.recycler_bestseller)
+        recyclerView = view.findViewById(R.id.recycler_topreaderList)
         setupRecyclerView()
 
-        // API에서 추천 도서 불러오기 (fetchBestSellers 사용)
-        fetchBestSellers()
+        // 다독왕 책 목록 불러오기
+        fetchTopReaderBooks()
     }
 
     private fun setupRecyclerView() {
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout 사용
-        moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout
+        topReaderAdapter = MoreInfoAdapter(emptyList()) { book ->
+            // 책 클릭 시 BookInfoFragment로 이동
             val bookInfoFragment = BookInfoFragment.newInstance(
                 book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
             )
@@ -58,32 +67,26 @@ class RecommendFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-        recyclerView.adapter = moreInfoAdapter
+        recyclerView.adapter = topReaderAdapter
     }
 
-//    private fun fetchBestSellers() {
-//        val apiKey = BuildConfig.ALADIN_API_KEY
-//        lifecycleScope.launch {
-//            try {
-//                // 추천 목록을 fetchBestSellers()로 가져옴
-//                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
-//                moreInfoAdapter.updateBooks(bestSellersResponse.item) // 어댑터 업데이트
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-    private fun fetchBestSellers() {
-        val apiKey = BuildConfig.ALADIN_API_KEY
+    private fun fetchTopReaderBooks() {
+        val database = AppDatabase.getDatabase(requireContext()) // Room DB 인스턴스 가져오기
+        val reviewDao = database.reviewDao() // ReviewDao 가져오기
+
         lifecycleScope.launch {
             try {
-                // 베스트셀러 데이터 가져오기
-                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
+                val topReaderIsbnList = reviewDao.getTopReaderBooks() // 가장 많이 읽은 유저의 ISBN 리스트(10개)
+                val bookList = mutableListOf<BookItem>()
 
-                // 최대 9개까지만 표시
-                val limitedBooks = bestSellersResponse.item.take(9)
+                for (isbn in topReaderIsbnList) {
+                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, isbn)
+                    if (response.item.isNotEmpty()) {
+                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                    }
+                }
 
-                moreInfoAdapter.updateBooks(limitedBooks) // 어댑터에 데이터 전달
+                topReaderAdapter.updateBooks(bookList) // RecyclerView 업데이트
             } catch (e: Exception) {
                 e.printStackTrace()
             }

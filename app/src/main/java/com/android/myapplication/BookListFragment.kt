@@ -9,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
+import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
@@ -22,10 +25,12 @@ class BookListFragment : Fragment() {
     private lateinit var viewModel: AladinViewModel
 
     // RecyclerView에서 사용할 Adapter 선언
-//    private lateinit var bestSellerAdapter: BestSellerAdapter
-//    private lateinit var newReleasedAdapter: NewReleasedAdapter
     private lateinit var bestSeller: BookListAdapter
     private lateinit var newReleased: BookListAdapter
+
+    /////
+    private lateinit var topReader: BookListAdapter // 다독왕 책 리스트용 어댑터
+    /////
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +57,19 @@ class BookListFragment : Fragment() {
             }
         }
 
+
+        // 책 아카이빙 버튼 클릭 시 네비게이션 바에서 아카이빙 선택하도록
+        binding.homebtnGotoArchive.setOnClickListener {
+            val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNavigationView.selectedItemId = R.id.archive
+        }
+
+        // 책 추천 버튼 클릭 시  네비게이션 바에서 추천으로 이동
+        binding.homebtnGotoRecommend.setOnClickListener {
+            val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav)
+            bottomNavigationView.selectedItemId = R.id.recommend
+        }
+
         // RecyclerView 초기화
         initRecyclerViews()
 
@@ -59,6 +77,10 @@ class BookListFragment : Fragment() {
 
         // API 데이터 로드
         fetchBooks()
+
+        /////
+        fetchTopReaderBooks() // 다독왕 책 가져오기
+        /////
 
         return binding.root
     }
@@ -95,6 +117,23 @@ class BookListFragment : Fragment() {
             }
             adapter = newReleased
         }
+
+
+        /////
+        // 다독왕 RecyclerView 설정
+        binding.recyclerMostread.apply {
+            layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
+            topReader= BookListAdapter(emptyList()) { book ->
+                val bookInfoFragment = BookInfoFragment.newInstance(
+                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                )
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.rootlayout, bookInfoFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            adapter = topReader
+        }
     }
 
     // API에서 데이터를 가져와 RecyclerView에 업데이트하는 함수
@@ -114,6 +153,35 @@ class BookListFragment : Fragment() {
             }
         }
     }
+
+
+    //////
+    // 다독왕의 책 목록 가져오기
+    //private fun fetchTopReaderBooks() {
+    fun fetchTopReaderBooks() {
+        val database = AppDatabase.getDatabase(requireContext())
+        val reviewDao = database.reviewDao()
+
+        lifecycleScope.launch {
+            try {
+                val topReaderIsbnList = reviewDao.getTopReaderBooks()
+                val bookList = mutableListOf<BookItem>()
+
+                for (isbn in topReaderIsbnList) {
+                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, isbn)
+                    if (response.item.isNotEmpty()) {
+                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                    }
+                }
+
+                topReader.updateBooks(bookList)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+    /////////
+
 
     // 버튼 클릭 이벤트 설정
     private fun setupButtonListeners() {
@@ -136,7 +204,7 @@ class BookListFragment : Fragment() {
         // "다독왕 선정 더보기" 버튼 클릭 시 TopReaderPickFragment로 이동
         binding.btnMoreinfo3.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, TopReaderPickFragment())
+                .replace(R.id.rootlayout, TopReaderFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -154,3 +222,4 @@ class BookListFragment : Fragment() {
         }
     }
 }
+
