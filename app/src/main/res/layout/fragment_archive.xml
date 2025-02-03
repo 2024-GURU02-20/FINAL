@@ -31,32 +31,27 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <!-- 월 표시 -->
-        <TextView
-            android:id="@+id/ReadCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/SearchTool"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="29dp"
-            android:text="2월 2025"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#000000"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ReadCalendar"
+            android:layout_below="@id/custom_profile_view"
             android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="70dp">
+
+            <TextView
+                android:id="@+id/monthTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
 
             <com.kizitonwose.calendar.view.CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="340dp"
-                app:cv_dayViewResource="@layout/calendar_day_view"
-                app:cv_monthHeaderResource="@layout/calendar_month_header"/>
+                app:cv_dayViewResource="@layout/calendar_day_view" />
         </LinearLayout>
 
         <!-- 책 추가하기 -->
@@ -64,11 +59,11 @@
             android:id="@+id/addBook"
             android:layout_width="152dp"
             android:layout_height="32dp"
-            android:layout_below="@id/ReadCalendar"
+            android:layout_below="@id/custom_profile_view"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="381dp"
+            android:layout_marginTop="470dp"
             android:background="@drawable/button_border"
             android:drawablePadding="4dp"
             android:text="책 추가하기"
