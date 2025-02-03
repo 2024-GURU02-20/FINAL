@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,65 +9,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <LinearLayout
+        <com.android.myapplication.CustomProfileView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <!-- 왼쪽 텍스트 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <!-- 여기 이름 옆 님 처리 어케 하지?? -->
-                <!--            리니어 레이아웃 따로 부여?-->
-                <!--             ㄴ 해결-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="안녕하세요,"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvHomeName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="김슈니"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="님!"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- 프로필 아이콘 -->
-            <ImageView
-                android:id="@+id/ivProfile"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/baseline_account_circle_24" />
-
-
-
-        </LinearLayout>
-
-
-
+            android:id="@+id/custom_profile_view"/>
         <!-- 검색 -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
