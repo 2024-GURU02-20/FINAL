@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
@@ -31,6 +32,11 @@ class BookListFragment : Fragment() {
     /////
     private lateinit var topReader: BookListAdapter // 다독왕 책 리스트용 어댑터
     /////
+
+
+    ////////
+    private lateinit var bestReviewAdapter: BestReviewAdapter
+    ////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +94,10 @@ class BookListFragment : Fragment() {
         fetchTopReaderBooks() // 다독왕 책 가져오기
         /////
 
+        /////////
+        fetchTopReviews() // 📌 베스트 리뷰 가져오기 추가
+        /////////
+
         return binding.root
     }
 
@@ -140,6 +150,16 @@ class BookListFragment : Fragment() {
             }
             adapter = topReader
         }
+
+
+        //////
+        binding.recyclerBestReview.apply {
+            layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+            bestReviewAdapter = BestReviewAdapter(emptyList())
+            adapter = bestReviewAdapter
+        }
+        ///////////
+
     }
 
     // API에서 데이터를 가져와 RecyclerView에 업데이트하는 함수
@@ -186,7 +206,32 @@ class BookListFragment : Fragment() {
             }
         }
     }
-    /////////
+    /////
+
+    //////////
+    private fun fetchTopReviews() {
+        val database = AppDatabase.getDatabase(requireContext())
+        val reviewDao = database.reviewDao()
+
+        lifecycleScope.launch {
+            try {
+                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
+                val bookList = mutableListOf<BookItem>()
+
+                for (review in topReviews) {
+                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
+                    if (response.item.isNotEmpty()) {
+                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                    }
+                }
+
+                bestReviewAdapter.updateReviews(bookList) // 어댑터에 데이터 전달
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+    ////////////
 
 
     // 버튼 클릭 이벤트 설정
