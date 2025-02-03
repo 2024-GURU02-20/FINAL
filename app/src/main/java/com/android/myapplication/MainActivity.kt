@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.add(R.id.rootlayout, bookListFragment)
         fragmentTransaction.commit()
 
+        binding.bottomNav.selectedItemId = R.id.bookList
+
 //        // 알라딘 api key 접근법
 //        val apiKey = BuildConfig.ALADIN_API_KEY
 //        // 알라딘 api 호출 위해 viewModel 객체 받아오기
