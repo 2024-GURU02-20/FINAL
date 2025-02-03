@@ -1,6 +1,7 @@
 package com.android.myapplication
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -8,6 +9,8 @@ import android.widget.TextView
 import androidx.core.content.withStyledAttributes
 import com.android.myapplication.R
 import com.android.myapplication.databinding.CustomProfileViewBinding
+import com.bumptech.glide.Glide
+import java.net.URI
 
 class CustomProfileView @JvmOverloads constructor(
     context: Context,
@@ -22,10 +25,13 @@ class CustomProfileView @JvmOverloads constructor(
         binding = CustomProfileViewBinding.inflate(inflater, this, true)
     }
 
-    // 외부에서 데이터를 설정할 수 있도록 함수 제공
-    fun setProfile(name: String, imageRes: Int) {
+    fun setProfile(name: String, imageUrl: Uri?) {
         binding.profileName.text = name
+        Glide.with(context)
+            .load(imageUrl)
+            .placeholder(R.drawable.profile) // 로딩 중 표시할 기본 이미지
+            .error(R.drawable.profile) // 에러 발생 시 기본 이미지
+            .circleCrop()
+            .into(binding.profileIcon)
     }
-
-
 }

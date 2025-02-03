@@ -30,5 +30,6 @@
         android:layout_height="48dp"
         android:background="@drawable/circle"
         android:src="@drawable/profile"
+        android:scaleType="centerCrop"
         android:id="@+id/profile_icon"/>
 </LinearLayout>

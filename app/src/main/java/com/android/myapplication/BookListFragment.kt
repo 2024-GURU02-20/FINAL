@@ -13,6 +13,7 @@ import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
@@ -141,8 +142,15 @@ class BookListFragment : Fragment() {
         }
 
         binding.customProfileView.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                binding.customProfileView.setProfile(user.displayName?:"", user.photoUrl)
+
+            } else {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+            }
+
         }
     }
 }
