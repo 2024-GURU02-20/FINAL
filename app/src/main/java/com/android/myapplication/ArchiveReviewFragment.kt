@@ -48,6 +48,8 @@ class ArchiveReviewFragment : Fragment() {
             }
         }
 
+        // 저장하기 버튼 클릭 -> 저장 완료! Toast 메시지 적용
+
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
 
