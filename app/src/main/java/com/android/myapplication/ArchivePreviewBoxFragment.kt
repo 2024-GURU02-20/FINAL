@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.android.myapplication.databinding.FragmentArchivePreviewBoxBinding
 import com.android.myapplication.databinding.FragmentArchiveReviewBinding
@@ -38,7 +39,10 @@ class ArchivePreviewBoxFragment : Fragment() {
             }
         }
 
-        // 수정하기 버튼 클릭 -> 수정 완료! Toast 메시지 적용
+        // 수정하기 버튼 클릭 -> 수정 완료! Toast 메시지 적용, short = 2초
+        binding.modifyButton.setOnClickListener {
+            Toast.makeText(requireContext(), "수정 완료!", Toast.LENGTH_SHORT).show()
+        }
 
         return binding.root
     }

@@ -197,13 +197,14 @@
             android:inputType="textMultiLine"
             android:background="@drawable/textview_border_green" />
 
+        <!-- 저장하기 버튼 -->
         <Button
-            android:id="@+id/store_review"
+            android:id="@+id/storeButton"
             android:layout_width="152dp"
             android:layout_height="32dp"
             android:layout_below="@id/favoriteLineInput3"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/button_border"
             android:drawablePadding="4dp"
             android:text="저장하기"

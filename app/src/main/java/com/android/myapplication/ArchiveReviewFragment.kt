@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.android.myapplication.ArchiveReviewFragment.DayViewContainer
 import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
@@ -48,7 +49,10 @@ class ArchiveReviewFragment : Fragment() {
             }
         }
 
-        // 저장하기 버튼 클릭 -> 저장 완료! Toast 메시지 적용
+        // 저장하기 버튼 클릭 -> 저장 완료! Toast 메시지 적용, short = 2초
+        binding.storeButton.setOnClickListener {
+            Toast.makeText(requireContext(), "저장 완료!", Toast.LENGTH_SHORT).show()
+        }
 
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
