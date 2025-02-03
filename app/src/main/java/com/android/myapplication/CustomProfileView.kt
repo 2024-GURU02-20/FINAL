@@ -25,8 +25,9 @@ class CustomProfileView @JvmOverloads constructor(
         binding = CustomProfileViewBinding.inflate(inflater, this, true)
     }
 
-    fun setProfile(name: String, imageUrl: Uri?) {
-        binding.profileName.text = name
+    fun setData(title: String, subtitle:String, imageUrl: Uri?) {
+        binding.profileTitle.text = title
+        binding.profileSubtitle.text = subtitle
         Glide.with(context)
             .load(imageUrl)
             .placeholder(R.drawable.profile) // 로딩 중 표시할 기본 이미지
