@@ -1,5 +1,6 @@
 package com.android.myapplication
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -31,15 +32,34 @@ class ArchiveReviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentArchiveReviewBinding.inflate(inflater, container, false)
+
+        binding.ReviewImageView.setOnClickListener {
+            requireActivity().runOnUiThread {
+                val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_review_container)
+                if (currentFragment !is BookInfoFragment) { // 중복 방지
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.rootlayout, BookInfoFragment()) // book_info 화면으로
+                        .addToBackStack(null)
+                        .commit()
+                }
+            }
+        }
 
         binding.calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
 
             override fun bind(container: DayViewContainer, day: CalendarDay) {
+                val currentMonth = YearMonth.now()
                 container.dayText.text = day.date.dayOfMonth.toString()
+
+                if (day.date.year == currentMonth.year && day.date.month == currentMonth.month) {
+                    container.dayText.setTextColor(Color.BLACK) // 현재 월의 날짜
+                } else {
+                    container.dayText.setTextColor(Color.GRAY) // 이전/다음 달의 날짜
+                }
             }
         }
 
@@ -50,6 +70,12 @@ class ArchiveReviewFragment : Fragment() {
 
         binding.calendarView.setup(startMonth, endMonth, firstDayOfWeek)
         binding.calendarView.scrollToMonth(currentMonth) // 현재 월로 이동
+
+        binding.calendarView.monthScrollListener = { month ->
+            val yearMonth = month.yearMonth
+            binding.monthTitle.text = "${yearMonth.year}년 ${yearMonth.monthValue}월"
+        }
+
         return binding.root
     }
 
