@@ -78,20 +78,20 @@
                 android:scaleX="0.3"
                 android:scaleY="0.3" />
 
-            <!-- 더보기 버튼 -->
+            <!-- 추가하기 버튼 -->
             <Button
-                android:id="@+id/moreButton2"
+                android:id="@+id/addButton"
                 android:layout_width="152dp"
                 android:layout_height="32dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:drawablePadding="4dp"
-                android:text="더보기"
+                android:text="추가하기"
                 android:layout_marginTop="400dp"
                 android:layout_marginStart="131dp"
-                android:background="@drawable/button_border_gray"
-                android:textColor="#878787"
+                android:background="@drawable/button_border"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <!-- border line gray -->
@@ -101,6 +101,33 @@
                 android:layout_marginTop="475dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/border_line_gray"/>
+            
+            <!-- 작가의 말 -->
+            <TextView
+                android:id="@+id/writer"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="500dp"
+                android:layout_marginStart="25dp"
+                android:textAlignment="center"
+                android:text="작가의 말"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <!-- 작가의 말 칸 -->
+
+
+            
+            
+            
+            <!-- border line gray -->
+            <View
+                android:layout_width="354dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="650dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/border_line_gray"/>
 
             <!-- 리뷰 텍스트 -->
             <TextView
@@ -108,10 +135,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="500dp"
+                android:layout_marginTop="670dp"
                 android:text="리뷰"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <!-- 책 리뷰 칸 -->
@@ -120,18 +147,10 @@
                 android:layout_width="354dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="540dp"
+                android:layout_marginTop="710dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/textview_border_gray"
                 android:inputType="textMultiLine" />
-
-            <!-- border line gray -->
-            <View
-                android:layout_width="354dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="689dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/border_line_gray"/>
 
             <!-- 마음에 드는 한 줄 텍스트 -->
             <TextView
@@ -139,10 +158,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="730dp"
+                android:layout_marginTop="835dp"
                 android:text="마음에 드는 한 줄"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <!-- 마음에 드는 한 줄 칸 1 -->
@@ -151,7 +170,7 @@
                 android:layout_width="354dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="770dp"
+                android:layout_marginTop="875dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/textview_border_green"
                 android:inputType="textMultiLine" />
@@ -162,27 +181,10 @@
                 android:layout_width="354dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="865dp"
+                android:layout_marginTop="970dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/textview_border_green"
                 android:inputType="textMultiLine" />
-
-            <!-- 수정하기 버튼 -->
-            <Button
-                android:id="@+id/modifyButton"
-                android:layout_width="152dp"
-                android:layout_height="32dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:drawablePadding="4dp"
-                android:text="수정하기"
-                android:layout_marginTop="990dp"
-                android:layout_marginStart="131dp"
-                android:background="@drawable/button_border"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
         </FrameLayout>
     </RelativeLayout>
 </ScrollView>
