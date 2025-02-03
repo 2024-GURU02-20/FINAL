@@ -32,7 +32,8 @@ class ArchiveFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentArchiveBinding.inflate(inflater, container, false)
 
         binding.addBook.setOnClickListener {
@@ -40,9 +41,9 @@ class ArchiveFragment : Fragment() {
                 val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_main_container)
                 if (currentFragment !is SearchFragment) { // 중복 방지
                     parentFragmentManager.beginTransaction()
-                        .replace(R.id.archive_main_container, SearchFragment())
+                        .replace(R.id.rootlayout, SearchFragment())
                         .addToBackStack(null)
-                        .commitAllowingStateLoss()
+                        .commit()
                 }
             }
         }
