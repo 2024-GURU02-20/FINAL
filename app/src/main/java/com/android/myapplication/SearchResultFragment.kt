@@ -81,9 +81,16 @@ class SearchResultFragment : Fragment() {
         })
 
         // RecyclerView 초기화
-        val layoutManager = GridLayoutManager(context, 2)
+        val layoutManager = GridLayoutManager(context, 2) // 2열 Grid 설정
         val recyclerView = binding.searchResultRecyclerView
         recyclerView.layoutManager = layoutManager
+
+        // 16dp를 px로 변환 (dp → px 변환)
+        val spacingInDp = 16
+        val spacingInPx = (spacingInDp * resources.displayMetrics.density).toInt()
+
+        // ItemDecoration 추가 (아이템 사이 간격 16dp 적용, 가장자리 제외)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, spacingInPx))
 
         // 비동기로 데이터를 로드하고 RecyclerView 업데이트
         fetchItems()
@@ -100,8 +107,18 @@ class SearchResultFragment : Fragment() {
 
                 // UI 업데이트 (main thread에서 RecyclerView 설정)
                 if (isAdded && items != null) {
-                    val adapter = SearchResultBookAdapter(requireContext(), items!!)
+                    val adapter = SearchResultBookAdapter(requireContext(), items!! ) { book ->
+                        // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
+                        val bookInfoFragment = BookInfoFragment.newInstance(
+                            book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                        )
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.rootlayout, bookInfoFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
                     binding.searchResultRecyclerView.adapter = adapter
+
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

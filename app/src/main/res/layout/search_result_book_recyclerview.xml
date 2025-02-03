@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="170dp"
-    android:layout_height="224dp">
+    android:layout_height="224dp"
+    android:id="@+id/search_result_book">
 
     <!-- 흐릿한 배경 -->
     <ImageView
