@@ -3,6 +3,7 @@ package com.android.myapplication.DB
 import com.android.myapplication.DB.User
 import com.android.myapplication.DB.Review
 import androidx.room.*
+import java.util.concurrent.Flow
 
 @Dao
 interface ReviewDao {
@@ -15,12 +16,25 @@ interface ReviewDao {
     @Query("SELECT * FROM user WHERE userId = :id")
     suspend fun getUserById(id: Int): User?
 
+    // 특정 유저의 모든 리뷰 가져오기
     @Query("SELECT * FROM review WHERE userId = :userId")
     suspend fun getReviewsByUserId(userId: Int): List<Review>
+
+    // 특정 리뷰의 별점 가져오기 (실시간 업데이트)
+    @Query("SELECT starRate FROM review WHERE reviewId = :reviewId")
+    fun getStarRate(reviewId: Int): Float
+
+    // 특정 리뷰의 추천 수 가져오기 (실시간 업데이트)
+    @Query("SELECT `like` FROM review WHERE reviewId = :reviewId")
+    suspend fun getLikeCount(reviewId: Int): Int
 
     // isbn 사용
     @Query("SELECT isbn FROM review WHERE userId = :userId")
     suspend fun getIsbnListByUserId(userId: Int): List<String>
+
+    // 특정 책(ISBN)의 리뷰 가져오기 (최신순, 별점 높은 순, 추천 수 높은 순)
+    @Query("SELECT * FROM review WHERE isbn = :isbn ORDER BY createdAt DESC, starRate DESC, `like` DESC")
+    suspend fun getReviewsByIsbn(isbn: String): List<Review>
 
     @Query("DELETE FROM user WHERE userId = :id")
     suspend fun deleteUserById(id: Int)
@@ -28,6 +42,13 @@ interface ReviewDao {
     @Query("DELETE FROM review WHERE reviewId = :id")
     suspend fun deleteReviewById(id: Int)
 
+    // 별점 업데이트
+    @Query("UPDATE review SET starRate = :newStarRate WHERE reviewId = :reviewId")
+    suspend fun updateStarRate(reviewId: Int, newStarRate: Float)
+
+    // 추천 수(좋아요) 업데이트
+    @Query("UPDATE review SET `like` = :newLikeCount WHERE reviewId = :reviewId")
+    suspend fun updateLikeCount(reviewId: Int, newLikeCount: Int)
 
     //은정 추가
     //가장 많은 리뷰를 남긴 유저를 찾고 해당 유저의 ISBN 12개를 가져옴

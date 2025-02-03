@@ -20,4 +20,24 @@ class ReviewRepository(private val reviewDao: ReviewDao) {
     suspend fun getIsbnListByUserId(userId: Int): List<String> {
         return reviewDao.getIsbnListByUserId(userId)
     }
+
+    suspend fun getReviewsByIsbn(isbn: String): List<Review> {
+        return reviewDao.getReviewsByIsbn(isbn)
+    }
+
+    suspend fun getStarRate(reviewId: Int): Float {
+        return reviewDao.getStarRate(reviewId)
+    }
+
+    suspend fun getLikeCount(reviewId: Int): Int {
+        return reviewDao.getLikeCount(reviewId)
+    }
+
+    suspend fun updateStarRate(reviewId: Int, newStarRate: Float) {
+        reviewDao.updateStarRate(reviewId, newStarRate)
+    }
+
+    suspend fun updateLikeCount(reviewId: Int, newLikeCount: Int) {
+        reviewDao.updateLikeCount(reviewId, newLikeCount)
+    }
 }

@@ -1,56 +1,60 @@
 package com.android.myapplication.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.android.myapplication.DB.Review
-import com.android.myapplication.DB.User
-import com.android.myapplication.api.AladinApiService
-import com.android.myapplication.model.AladinResponse
-import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.ReviewRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class ReviewViewModel(private val repository: ReviewRepository, private val apiService: AladinApiService) : ViewModel() {
+class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
 
-    private val _reviews = MutableLiveData<List<Review>>()
-    val reviews: LiveData<List<Review>> get() = _reviews
+    private val _reviews = MutableStateFlow<List<Review>>(emptyList())
+    val reviews = _reviews.asStateFlow()
 
-    fun insertUser(user: User) = viewModelScope.launch {
-        repository.insertUser(user)
+    private val _starRate = MutableStateFlow(0f)
+    val starRate = _starRate.asStateFlow()
+
+    private val _likeCount = MutableStateFlow(0)
+    val likeCount = _likeCount.asStateFlow()
+
+    fun fetchReviewsByIsbn(isbn: String) {
+        viewModelScope.launch {
+            _reviews.value = repository.getReviewsByIsbn(isbn)
+        }
     }
 
-    fun insertReview(review: Review) = viewModelScope.launch {
-        repository.insertReview(review)
+    fun fetchStarRate(reviewId: Int) {
+        viewModelScope.launch {
+            _starRate.value = repository.getStarRate(reviewId)
+        }
     }
 
-    fun loadReviews(userId: Int) = viewModelScope.launch {
-        _reviews.postValue(repository.getReviewsByUserId(userId))
+    fun fetchLikeCount(reviewId: Int) {
+        viewModelScope.launch {
+            _likeCount.value = repository.getLikeCount(reviewId)
+        }
     }
 
-    private val _books = MutableLiveData<List<AladinResponse>>()
-    val books: LiveData<List<AladinResponse>> get() = _books
+    fun addReview(review: Review) {
+        viewModelScope.launch {
+            repository.insertReview(review)
+            fetchReviewsByIsbn(review.isbn)  // 저장 후 최신 데이터 다시 가져오기
+        }
+    }
 
-    fun loadBooksByUser(userId: Int) = viewModelScope.launch {
-        try {
-            // 1. DB에서 isbn 리스트 가져오기
-            val isbnList = withContext(Dispatchers.IO) {
-                repository.getIsbnListByUserId(userId)
-            }
+    fun updateStarRate(reviewId: Int, newStarRate: Float) {
+        viewModelScope.launch {
+            repository.updateStarRate(reviewId, newStarRate)
+            fetchStarRate(reviewId)  // 업데이트 후 값 반영
+        }
+    }
 
-            // 2. API에서 책 정보 가져오기 (비동기 병렬 실행)
-            val bookList = isbnList.map { isbn ->
-                async(Dispatchers.IO) { apiService.searchByKeyword(keyword = isbn, apiKey = "YOUR_ALADIN_API_KEY") }
-            }.awaitAll()  // 모든 API 요청이 완료될 때까지 대기
-
-            // 3. UI 업데이트
-            _books.postValue(bookList)
-
-        } catch (e: Exception) { //  만약 코드 실행 중 오류가 발생하면 catch 블록으로 이동
-            Log.e("ReviewViewModel", "Error loading books: ${e.message}") // 오류 로그 출력(Logcat에서 확인)
+    fun updateLikeCount(reviewId: Int, newLikeCount: Int) {
+        viewModelScope.launch {
+            repository.updateLikeCount(reviewId, newLikeCount)
+            fetchLikeCount(reviewId)  // 업데이트 후 값 반영
         }
     }
 }
