@@ -1,11 +1,13 @@
 package com.android.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import com.android.myapplication.databinding.FragmentSearchBinding
 import com.android.myapplication.databinding.FragmentSearchResultBinding
@@ -38,6 +40,13 @@ class SearchFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
         binding.customTopBar.setTitle("검색")
+
+        // 검색창 auto focus
+        binding.search.isIconified = false // 검색창이 자동으로 열리도록 설정
+        binding.search.requestFocus()
+
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.search, InputMethodManager.SHOW_IMPLICIT)
 
         return binding.root
     }
