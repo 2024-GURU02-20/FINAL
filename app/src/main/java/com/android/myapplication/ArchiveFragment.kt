@@ -152,7 +152,7 @@ class ArchiveFragment : Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-            binding.customProfileView.setData(user.displayName + "님의", "독서 기록입니다", user.photoUrl)
+            binding.customProfileView.setData(user.displayName + "님의", "독서 기록입니다", user.photoUrl, true)
         }
     }
 

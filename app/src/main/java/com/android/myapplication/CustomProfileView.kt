@@ -34,7 +34,7 @@ class CustomProfileView @JvmOverloads constructor(
         }
     }
 
-    fun setData(title: String, subtitle: String, imageUrl: Uri?) {
+    fun setData(title: String, subtitle: String, imageUrl: Uri?, titleTop: Boolean = false) {
         Log.d("로그인 확인", title + subtitle)
         binding.profileTitle.text = title
         binding.profileSubtitle.text = subtitle
@@ -46,6 +46,11 @@ class CustomProfileView @JvmOverloads constructor(
             .into(binding.profileIcon)
         binding.loginBtn.visibility = View.GONE
         binding.profileIcon.visibility = View.VISIBLE
+        if (titleTop == true) {
+            binding.profileTitleTop.text = title
+            binding.profileTitleTop.visibility = View.VISIBLE
+            binding.profileTitle.visibility = View.GONE
+        }
     }
 
     // 외부에서 클릭 리스너를 설정할 수 있도록 함수 추가
