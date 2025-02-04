@@ -14,7 +14,6 @@
         android:src="@drawable/brwhitebox"
         android:layout_gravity="center"/>
 
-    <!-- 리뷰 카드 -->
     <LinearLayout
         android:layout_width="354dp"
         android:layout_height="wrap_content"

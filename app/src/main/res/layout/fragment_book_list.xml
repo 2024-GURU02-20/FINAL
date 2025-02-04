@@ -9,9 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--        패딩 적용안되는디..? -->
-        <!--        급한대로 리니어 레이아웃 만들어서-->
-        <!-- 검색 -->
 
         <com.android.myapplication.CustomProfileView
             android:id="@+id/custom_profile_view"
@@ -140,8 +137,6 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-
-        <!-- RecyclerView를 배경 포함하여 감싸기 -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -307,7 +302,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="53dp">
 
-            <!-- 배경 이미지 -->
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

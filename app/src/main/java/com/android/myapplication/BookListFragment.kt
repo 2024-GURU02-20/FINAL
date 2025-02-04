@@ -1,6 +1,5 @@
 package com.android.myapplication
 
-import BestSellerAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
