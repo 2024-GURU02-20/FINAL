@@ -94,9 +94,9 @@ class ArchiveFragment : Fragment() {
                 container.dayImage.visibility = View.GONE
 
                 // 특정 날짜에만 이미지 표시 (예: 2025년 2월 5일)
-                if (day.date == LocalDate.of(2025, 2, 5)) {
-                    container.dayImage.visibility = View.VISIBLE
-                }
+//                if (day.date == LocalDate.of(2025, 2, 5)) {
+//                    container.dayImage.visibility = View.VISIBLE
+//                }
 
 
                 // 날짜 클릭 이벤트 -> DatePickerDialog 실행
