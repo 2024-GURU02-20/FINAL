@@ -90,24 +90,14 @@
             android:textStyle="bold"
             android:textColor="#000000"/>
 
-        <!-- 읽고 있는 책 이미지 1 -->
+        <!-- 읽고 있는 책 이미지 -->
         <ImageButton
             android:id="@+id/RBimage_button"
             android:layout_width="107dp"
             android:layout_height="157dp"
             android:layout_below="@id/ReadingBook"
-            android:background="@drawable/preview_book_image"
+            android:background="@drawable/exbook"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="20dp" />
-
-        <!-- 읽고 있는 책 이미지 2 -->
-        <ImageButton
-            android:id="@+id/RBimage_button_2"
-            android:layout_width="107dp"
-            android:layout_height="157dp"
-            android:layout_below="@id/ReadingBook"
-            android:background="@drawable/preview_book_image"
-            android:layout_marginStart="150dp"
             android:layout_marginTop="20dp" />
 
         <FrameLayout
