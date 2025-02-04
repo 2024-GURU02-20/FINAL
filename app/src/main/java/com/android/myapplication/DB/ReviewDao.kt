@@ -39,10 +39,13 @@ interface ReviewDao {
 """)
     suspend fun getTopReaderBooks(): List<String>
 
-
-
     //추천 개수가 높은 순서대로 정렬하여 상위 3개의 리뷰만 가져오기
     @Query("SELECT * FROM review ORDER BY `like` DESC LIMIT 3")
     suspend fun getTopLikedReviews(): List<Review>
+
+    // 해당 리뷰의 추천수 1증가 (추천 버튼 클릭 시)
+    @Query("UPDATE review SET `like` = `like` + 1 WHERE reviewId = :reviewId")
+    suspend fun increaseReviewLike(reviewId: Int)
+
 
 }

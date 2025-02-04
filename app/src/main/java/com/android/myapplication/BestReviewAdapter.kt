@@ -4,13 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.myapplication.DB.Review
 import com.android.myapplication.model.BookItem
 import com.bumptech.glide.Glide
 
 class BestReviewAdapter(
-    private var items: List<BookItem> // 책 리스트
+    ///// BookItem
+    private var items: List<Pair<BookItem, Review>>, // 책 정보 + 리뷰 정보
+    private val onRecommendClick: (Int) -> Unit // 추천 버튼 클릭 시 실행할 함수
+    /////
 ) : RecyclerView.Adapter<BestReviewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,6 +24,9 @@ class BestReviewAdapter(
         val reviewContentTextView: TextView = itemView.findViewById(R.id.tvReviewContent)
         val reviewRatingTextView: TextView = itemView.findViewById(R.id.tvReviewRating)
         val reviewLikesTextView: TextView = itemView.findViewById(R.id.tvReviewLikes)
+        /////
+        val recommendButton: LinearLayout = itemView.findViewById(R.id.RecommendBtn)
+        /////
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,28 +35,32 @@ class BestReviewAdapter(
         return ViewHolder(view)
     }
 
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val book = items[position]
+        val (book, review) = items[position]
 
-        // 책 제목, 리뷰 내용, 별점(출판일), 좋아요 개수 설정
+        // 책 정보 및 리뷰 데이터 바인딩
         holder.bookTitleTextView.text = book.title
-        holder.reviewContentTextView.text = book.description  // 책 소개를 리뷰 내용처럼 사용
-        holder.reviewRatingTextView.text = "★ ${book.pubDate}"  // 출판일을 별점 대신 임시 표시
-        holder.reviewLikesTextView.text = "👍 100"  // 좋아요 (임시 값)
-
-        //        holder.reviewContentTextView.text = review.review
-        //        holder.reviewRatingTextView.text = review.starRate.toString()
-        //        holder.reviewLikesTextView.text = review.like.toString()
+        holder.reviewContentTextView.text = review.review
+        holder.reviewRatingTextView.text = "★ ${review.starRate}"
+        holder.reviewLikesTextView.text = review.like.toString()
 
         Glide.with(holder.itemView.context)
             .load(book.cover)
             .into(holder.bookCoverImageView)
+
+        // 추천 버튼 클릭 시 추천 수 증가
+        holder.recommendButton.setOnClickListener {
+            onRecommendClick(review.reviewId)
+        }
     }
 
     override fun getItemCount(): Int = items.size
 
-    // 📌 새롭게 추가된 메서드: 데이터를 업데이트하고 RecyclerView 갱신
-    fun updateReviews(newItems: List<BookItem>) {
+//    // 데이터를 업데이트하고 RecyclerView 갱신
+//    fun updateReviews(newItems: List<BookItem>) {
+    fun updateReviews(newItems: List<Pair<BookItem, Review>>) {
         items = newItems
         notifyDataSetChanged()
     }

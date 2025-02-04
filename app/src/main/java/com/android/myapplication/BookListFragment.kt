@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.Review
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.model.BookItem
@@ -18,6 +19,7 @@ import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
@@ -155,7 +157,9 @@ class BookListFragment : Fragment() {
         //////
         binding.recyclerBestReview.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-            bestReviewAdapter = BestReviewAdapter(emptyList())
+            bestReviewAdapter = BestReviewAdapter(emptyList()) { reviewId ->
+                increaseReviewLike(reviewId) // 버튼 클릭 시 실행
+            }
             adapter = bestReviewAdapter
         }
         ///////////
@@ -216,12 +220,12 @@ class BookListFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
-                val bookList = mutableListOf<BookItem>()
+                val bookList = mutableListOf<Pair<BookItem, Review>>()
 
                 for (review in topReviews) {
                     val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
                     if (response.item.isNotEmpty()) {
-                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                        bookList.add(Pair(response.item[0], review)) // (책 정보, 리뷰 정보) 저장
                     }
                 }
 
@@ -233,6 +237,21 @@ class BookListFragment : Fragment() {
     }
     ////////////
 
+
+    ////////////////
+    // 추천 버튼 클릭 시 추천 수 증가하는 함수 추가
+    private fun increaseReviewLike(reviewId: Int) {
+        val database = AppDatabase.getDatabase(requireContext())
+        val reviewDao = database.reviewDao()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            reviewDao.increaseReviewLike(reviewId) // 추천 수 증가
+            fetchTopReviews() // 다시 데이터 로드하여 UI 갱신
+        }
+    }
+    /////////////////
+
+    /////////////////
 
     // 버튼 클릭 이벤트 설정
     private fun setupButtonListeners() {
