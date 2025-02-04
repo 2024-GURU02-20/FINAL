@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchFragment"
+    android:orientation="vertical"
+    android:paddingStart="28dp"
+    android:paddingEnd="28dp">
 
     <com.android.myapplication.CustomTopBar
         android:id="@+id/custom_top_bar"
@@ -13,6 +17,9 @@
     <androidx.appcompat.widget.SearchView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/search"/>
+        android:id="@+id/search"
+        android:hint="검색어를 입력하세요."
+        android:iconifiedByDefault="false"
+        android:background="@drawable/search_view_bg"/>
 <!--    검색 기록 태그 나열-->
 </LinearLayout>

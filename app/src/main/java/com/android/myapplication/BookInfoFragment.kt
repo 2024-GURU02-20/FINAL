@@ -1,54 +1,80 @@
 package com.android.myapplication
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import android.widget.RadioButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.ReviewDao
 import com.android.myapplication.databinding.FragmentBookInfoBinding
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 class BookInfoFragment : Fragment() {
 
-    // 책 정보를 저장할 변수 선언 (Fragment 간 데이터 전달을 위해 사용)
-    private lateinit var coverUrl: String  // 책 표지 URL
-    private lateinit var title: String  // 책 제목
-    private lateinit var author: String  // 책 저자
-    private lateinit var publisher: String  // 출판사
-    private lateinit var pubDate: String  // 발행일
-    private lateinit var description: String  // 책 소개
-
     private lateinit var binding: FragmentBookInfoBinding
+
+    // 책 정보를 저장할 변수 선언
+    private lateinit var coverUrl: String
+    private lateinit var title: String
+    private lateinit var author: String
+    private lateinit var publisher: String
+    private lateinit var pubDate: String
+    private lateinit var description: String
+    private lateinit var isbn: String
+
+    private lateinit var reviewAdapter: BookinfoReviewRecyclerViewAdapter
+    private lateinit var reviewDao: ReviewDao
+
+    private lateinit var favoriteLineAdapter: QuoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 전달받은 데이터를 arguments에서 꺼내 변수에 저장
+        // arguments에서 데이터 가져오기
         arguments?.let {
-            coverUrl = it.getString(ARG_COVER_URL) ?: "" // 기본값은 빈 문자열
+            coverUrl = it.getString(ARG_COVER_URL) ?: ""
             title = it.getString(ARG_TITLE) ?: ""
             author = it.getString(ARG_AUTHOR) ?: ""
             publisher = it.getString(ARG_PUBLISHER) ?: ""
             pubDate = it.getString(ARG_PUB_DATE) ?: ""
             description = it.getString(ARG_DESCRIPTION) ?: ""
+            isbn = it.getString(ARG_ISBN) ?: ""
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookInfoBinding.inflate(inflater, container, false)
 
+        // 뒤로 가기 버튼 설정
         binding.customTopBar.onBackClick = {
             parentFragmentManager.popBackStack()
         }
         binding.customTopBar.setTitle("")
+
+        binding.addBook.setOnClickListener {
+            val archiveReviewFragment = ArchiveReviewFragment.newInstance(
+                isbn, coverUrl, title, author
+            )
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, archiveReviewFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        reviewDao = AppDatabase.getDatabase(requireContext()).reviewDao()
+
+        setupRecyclerView()
+        setupSortButtons()
+        loadReviews("추천순")
 
         return binding.root
     }
@@ -56,47 +82,109 @@ class BookInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // XML 레이아웃의 UI 요소들을 가져와 변수에 저장
-//        val bookMainTitleTextView: TextView = view.findViewById(R.id.info_book_maintitle) // 상단 제목
-        val bookCoverImageView: ImageView = view.findViewById(R.id.info_book_cover) // 책 표지
-        val bookTitleTextView: TextView = view.findViewById(R.id.info_book_title) // 책 제목
-        val bookAuthorTextView: TextView = view.findViewById(R.id.info_book_author) // 저자
-        val bookPublisherTextView: TextView = view.findViewById(R.id.info_book_publisher) // 출판사
-        val bookPubDateTextView: TextView = view.findViewById(R.id.info_book_pub_date) // 발행일
-        val bookDescriptionTextView: TextView = view.findViewById(R.id.info_book_description) // 책 소개
+        // UI 요소에 데이터 적용
+        Glide.with(requireContext()).load(coverUrl).into(binding.infoBookCover) // 책 표지 이미지
+        Glide.with(requireContext()) // 배경 이미지
+            .load(coverUrl)
+            .override((binding.infoBookBackground.width * 1.5).toInt(), (binding.infoBookBackground.height * 1.5).toInt()) // 50% 확대
+            .centerCrop() // 중앙 크롭
+            .into(binding.infoBookBackground)
 
-        // 데이터 UI에 적용 (Glide를 사용해 책 표지 이미지 설정)
-//        bookMainTitleTextView.text = title
-        Glide.with(requireContext()).load(coverUrl).into(bookCoverImageView) // 책 표지 이미지 로드
-        bookTitleTextView.text = title // 책 제목
-        bookAuthorTextView.text = author // 저자
-        bookPublisherTextView.text = publisher // 출판사
-        bookPubDateTextView.text = pubDate // 발행일
-        bookDescriptionTextView.text = if (description.isNotBlank()) description else "." // 책 소개 (없을 경우 기본 문구 표시 )
+        // 알파값 50% 적용 (0 ~ 255 범위)
+        binding.infoBookBackground.imageAlpha = 127
 
+        binding.infoBookTitle.text = title // 책 제목
+        binding.infoBookAuthor.text = author // 저자
+        binding.infoBookDescription.text = if (description.isNotBlank()) description else "." // 책 소개
+        val publisherDate: String = "$publisher • $pubDate"
+        binding.infoBookPublisherDate.text = publisherDate
+
+        binding.toggleGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.btnRecommend -> {
+                    updateToggleState(binding.btnRecommend, true)
+                    updateToggleState(binding.btnLatest, false)
+                    updateToggleState(binding.btnRating, false)
+                }
+                R.id.btnLatest -> {
+                    updateToggleState(binding.btnRecommend, false)
+                    updateToggleState(binding.btnLatest, true)
+                    updateToggleState(binding.btnRating, false)
+                }
+                R.id.btnRating -> {
+                    updateToggleState(binding.btnRecommend, false)
+                    updateToggleState(binding.btnLatest, false)
+                    updateToggleState(binding.btnRating, true)
+                }
+            }
+        }
+
+    }
+    private fun updateToggleState(button: RadioButton, isSelected: Boolean) {
+        if (isSelected) {
+            button.setBackgroundResource(R.drawable.toggle_button_selected)
+            button.setTextColor(Color.WHITE)
+        } else {
+            button.setBackgroundResource(R.drawable.toggle_button_unselected)
+            button.setTextColor(Color.GRAY)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        reviewAdapter = BookinfoReviewRecyclerViewAdapter(emptyList())
+        binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.reviewRecyclerView.adapter = reviewAdapter
+
+        lifecycleScope.launch {
+            val lines = reviewDao.getFavoriteLinesByIsbn(isbn)
+
+            favoriteLineAdapter = QuoteAdapter(lines)
+            binding.favoriteLineRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.favoriteLineRecyclerView.adapter = favoriteLineAdapter
+        }
+    }
+
+    private fun loadReviews(sortType: String) {
+        lifecycleScope.launch {
+            val reviews = when (sortType) {
+                "최신순" -> reviewDao.getReviewsSortedByDate(isbn)
+                "별점순" -> reviewDao.getReviewsSortedByRating(isbn)
+                else -> reviewDao.getReviewsSortedByLikes(isbn) // 기본값: 추천순
+            }
+            reviewAdapter.updateReviews(reviews)
+
+        }
+    }
+
+    private fun setupSortButtons() {
+        binding.btnRecommend.setOnClickListener { loadReviews("추천순") }
+        binding.btnLatest.setOnClickListener { loadReviews("최신순") }
+        binding.btnRating.setOnClickListener { loadReviews("별점순") }
     }
 
     companion object {
-        // 키 값 정의 (데이터 전달을 위한 변수 이름 지정)
+        // 데이터 키 값
         private const val ARG_COVER_URL = "cover_url"
         private const val ARG_TITLE = "title"
         private const val ARG_AUTHOR = "author"
         private const val ARG_PUBLISHER = "publisher"
         private const val ARG_PUB_DATE = "pub_date"
         private const val ARG_DESCRIPTION = "description"
+        private const val ARG_ISBN = "isbn"
 
-        // BookInfoFragment 인스턴스를 생성하는 메서드 (Fragment에 데이터 전달)
+        // BookInfoFragment 인스턴스 생성 메서드
         fun newInstance(
             coverUrl: String, title: String, author: String, publisher: String,
-            pubDate: String, description: String
+            pubDate: String, description: String, isbn: String
         ) = BookInfoFragment().apply {
             arguments = Bundle().apply {
-                putString(ARG_COVER_URL, coverUrl) // 책 표지 URL 저장
-                putString(ARG_TITLE, title) // 책 제목 저장
-                putString(ARG_AUTHOR, author) // 저자 저장
-                putString(ARG_PUBLISHER, publisher) // 출판사 저장
-                putString(ARG_PUB_DATE, pubDate) // 발행일 저장
-                putString(ARG_DESCRIPTION, description) // 책 소개 저장
+                putString(ARG_COVER_URL, coverUrl)
+                putString(ARG_TITLE, title)
+                putString(ARG_AUTHOR, author)
+                putString(ARG_PUBLISHER, publisher)
+                putString(ARG_PUB_DATE, pubDate)
+                putString(ARG_DESCRIPTION, description)
+                putString(ARG_ISBN, isbn)
             }
         }
     }
