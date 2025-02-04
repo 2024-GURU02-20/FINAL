@@ -61,6 +61,7 @@ class ArchiveReviewFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))
             .get(ReviewViewModel::class.java)
+
     }
 
     override fun onCreateView(
