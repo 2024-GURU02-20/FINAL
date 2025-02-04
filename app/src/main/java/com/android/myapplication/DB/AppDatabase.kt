@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [User::class, Review::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, Review::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reviewDao(): ReviewDao
 
@@ -20,6 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "book_archive_database"
                 )
+                    .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
                 instance

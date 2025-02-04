@@ -26,7 +26,7 @@ class BookInfoFragment : Fragment() {
     private lateinit var description: String
     private lateinit var isbn: String
 
-    private lateinit var reviewAdapter: BookInfoReviewAdapter
+    private lateinit var reviewAdapter: BookinfoReviewRecyclerViewAdapter
     private lateinit var reviewDao: ReviewDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +87,7 @@ class BookInfoFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        reviewAdapter = BookInfoReviewAdapter(emptyList())
+        reviewAdapter = BookinfoReviewRecyclerViewAdapter(emptyList())
         binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.reviewRecyclerView.adapter = reviewAdapter
     }
