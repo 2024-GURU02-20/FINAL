@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.Review
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.model.BookItem
@@ -214,29 +215,109 @@ class BookListFragment : Fragment() {
 
 
     //////////
+    ////1
+//    private fun fetchTopReviews() {
+//        val database = AppDatabase.getDatabase(requireContext())
+//        val reviewDao = database.reviewDao()
+//
+//        lifecycleScope.launch {
+//            try {
+//                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
+//                val bookList = mutableListOf<BookItem>()
+//
+//                for (review in topReviews) {
+//                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
+//                    if (response.item.isNotEmpty()) {
+//                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+//                    }
+//                }
+//
+//                bestReviewAdapter.updateReviews(bookList) // 어댑터에 데이터 전달
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//    }
+
+
+    ////2
+//    private fun fetchTopReviews() {
+//        val database = AppDatabase.getDatabase(requireContext())
+//        val reviewDao = database.reviewDao()
+//
+//        lifecycleScope.launch {
+//            try {
+//                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
+//                val bookList = mutableListOf<BookItem>()
+//
+//                for (review in topReviews) {
+//                    val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
+//                    if (response.item.isNotEmpty()) {
+//                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+//                    }
+//                }
+//
+//                if (bookList.isEmpty()) {
+//                    // /// DB에서 가져온 데이터가 없을 경우, 기본 UI로 표시
+//                    val placeholderBooks = listOf(
+//                        BookItem("초역부처의 말", "", "", "", "초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고...", "", "",""),
+//                        BookItem("초역부처의 말", "", "", "", "초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고...", "", "",""),
+//                        BookItem("초역부처의 말", "", "", "", "초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고...", "", "","")
+//                    )
+//                    bestReviewAdapter.updateReviews(placeholderBooks)
+//                } else {
+//                    bestReviewAdapter.updateReviews(bookList) // 어댑터에 데이터 전달
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+//    }
+
+//////2
     private fun fetchTopReviews() {
         val database = AppDatabase.getDatabase(requireContext())
         val reviewDao = database.reviewDao()
 
         lifecycleScope.launch {
             try {
-                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
-                val bookList = mutableListOf<BookItem>()
+                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 가져오기
+                val reviewList = mutableListOf<Pair<BookItem, Review>>() //  BookItem과 Review를 함께 저장
 
                 for (review in topReviews) {
                     val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
                     if (response.item.isNotEmpty()) {
-                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                        val book = response.item[0] // 첫 번째 검색 결과 가져오기
+                        reviewList.add(Pair(book, review)) //  BookItem과 Review 함께 저장
                     }
                 }
 
-                bestReviewAdapter.updateReviews(bookList) // 어댑터에 데이터 전달
+                if (reviewList.isEmpty()) {
+                    setDefaultUI() // DB 데이터 없을 경우 기본 UI
+                } else {
+                    bestReviewAdapter.updateReviews(reviewList)//  BookItem + Review 전달
+                }
+
             } catch (e: Exception) {
                 e.printStackTrace()
+                setDefaultUI() // 예외 발생 시 기본 UI 출력
             }
         }
     }
+
+    // 기본 UI 설정
+    private fun setDefaultUI() {
+        val defaultReviews = List(3) {
+            Pair(
+                BookItem("초역 부처의 말", "", "", "","","","",""),
+                Review(0, 0, "", 0.0f, "초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고 좋습니다", "", "", 312)
+            )
+        }
+        bestReviewAdapter.updateReviews(defaultReviews)
+    }
+
     ////////////
+
 
 
     // 버튼 클릭 이벤트 설정

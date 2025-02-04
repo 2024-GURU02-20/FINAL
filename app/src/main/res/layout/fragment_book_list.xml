@@ -239,6 +239,8 @@
         </FrameLayout>
 
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -297,40 +299,49 @@
             android:orientation="horizontal"
             android:paddingStart="28dp"/>
 
+
+
         <!-- 베스트 리뷰 -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="53dp">
 
+            <!-- 배경 이미지 -->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bestreviebox"/>"
+                android:src="@drawable/bestreviebox"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="베스트 리뷰"
-                android:textColor="@color/black"
-                android:textFontWeight="700"
-                android:textSize="17sp"
-                android:textStyle="bold"
+                android:orientation="vertical"
                 android:paddingStart="28dp"
-                android:paddingEnd="28dp"
-                android:paddingTop="53dp"
-                android:paddingBottom="24dp"
-                android:fontFamily="@font/pretendard_variable"/>
+                android:paddingEnd="28dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_best_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:paddingStart="28dp"
-                android:paddingEnd="28dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="베스트 리뷰"
+                    android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:paddingTop="53dp"
+                    android:paddingBottom="20dp"
+                    android:fontFamily="@font/pretendard_variable"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_best_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="68dp"/>
+
+            </LinearLayout>
         </FrameLayout>
+
     </LinearLayout>
 
 </ScrollView>

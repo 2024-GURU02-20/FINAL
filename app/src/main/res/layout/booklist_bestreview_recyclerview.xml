@@ -1,104 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="354dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="13dp">
 
-    <!-- 책 표지 -->
+    android:background="@android:color/transparent">
+
+    <!-- 배경 이미지 -->
     <ImageView
-        android:id="@+id/ivBookCover"
-        android:layout_width="52dp"
-        android:layout_height="77dp"
-        android:contentDescription="책 표지"
-        android:scaleType="centerCrop"
-        android:src="@drawable/brbook"
-        android:layout_gravity="center_vertical"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/brwhitebox"
+        android:layout_gravity="center"/>
 
-    <!-- 책 정보 및 리뷰 -->
+    <!-- 리뷰 카드 -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="354dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingStart="13dp"
-        android:paddingEnd="22dp">
+        android:orientation="horizontal"
+        android:padding="13dp"
+        android:background="@android:color/transparent">
 
-        <!-- 책 제목 -->
-        <TextView
-            android:id="@+id/tvBookTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="책 제목"
-            android:paddingBottom="9dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:fontFamily="@font/pretendard_variable"
-            />
+        <!-- 책 표지 -->
+        <ImageView
+            android:id="@+id/ivBookCover"
+            android:layout_width="52dp"
+            android:layout_height="77dp"
+            android:contentDescription="책 표지"
+            android:scaleType="centerCrop"
+            android:src="@drawable/brbook"
+            android:layout_gravity="center_vertical"/>
 
-
-        <!-- 리뷰 내용 -->
-        <TextView
-            android:id="@+id/tvReviewContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고 좋습니다"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:paddingBottom="9dp"/>
-
-        <!-- 별점 및 추천 수 -->
+        <!-- 책 정보 및 리뷰 -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="13dp"
+            android:paddingEnd="22dp">
 
-            <!-- 별점 -->
-            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="58dp"
-                android:layout_height="10dp"
-                android:numStars="5"
-                android:rating="3"
-                android:stepSize="0.5"
-                android:isIndicator="true"
-                app:mrb_progressTint="@color/Primary"
-                app:mrb_progressBackgroundTint="@color/gray1"
-                app:mrb_secondaryProgressTint="@color/gray1" />
+            <!-- 책 제목 -->
+            <TextView
+                android:id="@+id/tvBookTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="책 제목"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:fontFamily="@font/pretendard_variable"/>
 
-            <!-- 가로 간격 조정 -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
+            <!-- 리뷰 내용 -->
+            <TextView
+                android:id="@+id/tvReviewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고 좋습니다"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:paddingBottom="4dp"/>
 
-            <!-- 추천 수 -->
+            <!-- 별점 및 추천 수 -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginStart="8dp">
+                android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="11dp"
-                    android:layout_height="11dp"
-                    android:src="@drawable/recommend" />
+                <!-- 별점 -->
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="58dp"
+                    android:layout_height="10dp"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="0.5"
+                    android:isIndicator="true"
+                    app:mrb_progressTint="@color/Primary"
+                    app:mrb_progressBackgroundTint="@color/gray1"
+                    app:mrb_secondaryProgressTint="@color/gray1" />
 
-                <TextView
-                    android:id="@+id/tvReviewLikes"
+                <!-- 가로 간격 조정 -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <!-- 추천 수 -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="312"
-                    android:textColor="@color/gray1"
-                    android:textSize="12sp"
-                    android:layout_marginStart="4dp"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="8dp">
+
+                    <ImageView
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:src="@drawable/recommend" />
+
+                    <TextView
+                        android:id="@+id/tvReviewLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="312"
+                        android:textColor="@color/gray1"
+                        android:textSize="12sp"
+                        android:layout_marginStart="4dp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>
