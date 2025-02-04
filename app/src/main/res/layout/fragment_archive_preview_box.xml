@@ -125,6 +125,58 @@
                 android:inputType="textMultiLine"
                 android:background="@drawable/textview_border_gray" />
 
+            <!-- 책 리뷰 칸 별점(숫자 표시) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="595dp"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/baseline_star_24" />
+
+                <TextView
+                    android:id="@+id/tvStarRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:textSize="16sp"
+                    android:textColor="#EEB64E"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+
+            <!-- 책 리뷰 칸 추천 수(숫자 표시) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="595dp"
+                android:layout_marginStart="320dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/baseline_thumb_up_24" />
+
+                <TextView
+                    android:id="@+id/tvLikeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textColor="#B8B8b8"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+
             <!-- 마음에 드는 한 줄 텍스트 -->
             <TextView
                 android:id="@+id/favoriteLine"
