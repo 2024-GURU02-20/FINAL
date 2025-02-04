@@ -13,6 +13,10 @@ class ReviewRepository(private val reviewDao: ReviewDao) {
         return reviewDao.insertReview(review)
     }
 
+    suspend fun getReviewByIsbn(isbn: String): List<Review> {
+        return reviewDao.getReviewsByIsbn(isbn)
+    }
+
     suspend fun getReviewsByUserId(userId: Int): List<Review> {
         return reviewDao.getReviewsByUserId(userId)
     }
