@@ -22,6 +22,7 @@ import com.android.myapplication.DB.Review
 import com.android.myapplication.databinding.FragmentArchiveReviewBinding
 import com.android.myapplication.repository.ReviewRepository
 import com.android.myapplication.viewmodel.ReviewViewModel
+import com.bumptech.glide.Glide
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
@@ -71,6 +72,18 @@ class ArchiveReviewFragment : Fragment() {
 
         val database = AppDatabase.getDatabase(requireContext())
         repository = ReviewRepository(database.reviewDao())
+
+        binding.root.post {
+            binding.bookDetail.text = title
+            binding.bookDetail2.text = author
+        }
+
+
+        // Glide를 사용하여 책 표지, 제목, 작가 적용
+        Glide.with(requireContext()).load(coverUrl).into(binding.reviewBookImage) // 책 표지 이미지
+        binding.bookDetail.text = title // 책 제목
+        binding.bookDetail2.text = author // 저자
+
 
         // 사용자가 선택한 책의 리뷰 가져오기
         viewModel.fetchReviewsByIsbn(selectedIsbn)
@@ -175,6 +188,8 @@ class ArchiveReviewFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     // ✅ DatePickerDialog 실행 함수
     private fun showDatePicker(year: Int, month: Int, day: Int) {

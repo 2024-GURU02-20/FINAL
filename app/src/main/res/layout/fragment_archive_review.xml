@@ -51,13 +51,15 @@
         <!-- 책 제목 -->
         <TextView
             android:id="@+id/bookDetail"
-            android:layout_width="78dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/review_book_image"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:layout_marginTop="20dp"
             android:text="책 제목"
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18dp" />
@@ -65,13 +67,15 @@
         <!-- 저자 -->
         <TextView
             android:id="@+id/bookDetail2"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/bookDetail"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:layout_marginTop="-3dp"
+            android:layout_marginTop="8dp"
             android:text="저자"
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp"
             android:textStyle="bold"
             android:textColor="#9F9F9F"
             android:textSize="16sp" />
@@ -177,7 +181,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/favoriteline_textbox" />
+            android:background="@drawable/favoriteline_textview_box" />
 
         <!-- 마음에 드는 한 줄 칸 2 -->
         <EditText
@@ -189,7 +193,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/favoriteline_textbox"/>
+            android:background="@drawable/favoriteline_textview_box"/>
 
 
         <!-- 마음에 드는 한 줄 칸 3 -->
@@ -202,7 +206,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/favoriteline_textbox" />
+            android:background="@drawable/favoriteline_textview_box" />
 
         <!-- 저장하기 버튼 -->
         <Button
