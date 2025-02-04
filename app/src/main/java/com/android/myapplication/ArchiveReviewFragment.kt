@@ -3,6 +3,7 @@ package com.android.myapplication
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,12 +36,14 @@ class ArchiveReviewFragment : Fragment() {
     private var selectedDate: LocalDate? = null // 선택된 날짜 저장 변수
 
     private lateinit var isbn: String
+    private lateinit var coverUrl: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             isbn = it.getString(ArchiveReviewFragment.ARG_ISBN) ?: ""
+            coverUrl = it.getString(ArchiveReviewFragment.ARG_COVER_URL) ?: ""
         }
     }
 
@@ -154,10 +157,11 @@ class ArchiveReviewFragment : Fragment() {
     companion object {
         // 데이터 키 값
         private const val ARG_ISBN = "isbn"
+        private const val ARG_COVER_URL = "coverUrl"
 
         // 인스턴스 생성 메서드
         fun newInstance(
-            isbn: String
+            isbn: String, coverUrl: String
         ) = BookInfoFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_ISBN, isbn)
