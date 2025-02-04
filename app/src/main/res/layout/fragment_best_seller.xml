@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:paddingStart="28dp"/>
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_bestsellerList"
         android:layout_width="match_parent"

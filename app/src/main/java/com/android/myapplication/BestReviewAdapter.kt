@@ -46,6 +46,7 @@ class BestReviewAdapter(
 
     override fun getItemCount(): Int = items.size
 
+
     // 데이터를 업데이트하고 RecyclerView 갱신
     fun updateReviews(newItems: List<Pair<BookItem, Review>>) {
         items = newItems

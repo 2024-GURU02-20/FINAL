@@ -16,7 +16,7 @@ class BookListAdapter(
     private val onItemClick: (BookItem) -> Unit // 클릭 이벤트 콜백 함수
 ) : RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
 
-    // ViewHolder 클래스
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val bookCoverImageView: ImageView = itemView.findViewById(R.id.bl_book_cover) // 책 표지
         val bookTitleTextView: TextView = itemView.findViewById(R.id.bl_book_title) // 책 제목

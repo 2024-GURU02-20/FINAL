@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
         <com.android.myapplication.CustomProfileView
             android:id="@+id/custom_profile_view"
             android:layout_width="match_parent"
@@ -30,8 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="검색어를 입력하세요."
-                android:background="@drawable/search_view_bg"/>
+                android:background="@drawable/search_view_bg"
+                />
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,6 +80,7 @@
                 android:layout_weight="0.4" />
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,13 +96,17 @@
                 android:background="#BDBDBD" />
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="28dp"
             android:paddingEnd="28dp"
-            android:paddingBottom="24dp">
+            android:paddingBottom="24dp"
+            >
+
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -105,6 +114,7 @@
                 android:src="@drawable/yellowbox"
                 android:layout_gravity="center_vertical"
                 android:paddingEnd="6dp"/>
+
 
             <TextView
                 android:layout_width="0dp"
@@ -143,12 +153,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingStart="28dp"/>
+                android:paddingStart="28dp" />
+
         </FrameLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:paddingHorizontal="28dp">
             <View
                 android:layout_width="match_parent"
@@ -165,6 +181,7 @@
             android:orientation="horizontal"
             android:paddingStart="28dp"
             android:paddingEnd="28dp"
+
             android:paddingBottom="24dp">
 
             <ImageView
@@ -195,16 +212,36 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_newbook"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="28dp"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:paddingTop="51dp"
+                android:src="@drawable/newgreenbox"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_newbook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="28dp"/>
+
+        </FrameLayout>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:paddingHorizontal="28dp">
             <View
                 android:layout_width="match_parent"
@@ -214,13 +251,50 @@
                 android:background="#BDBDBD" />
         </LinearLayout>
 
-        <!-- 다독왕 선정 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/crown"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="6dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="다독왕 선정"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/pretendard_variable"
+                android:layout_gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btnMoreinfo3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/moreinfobutton"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_mostread"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="28dp"/>
+
+
 
         <!-- 베스트리뷰 부분 -->
         <FrameLayout

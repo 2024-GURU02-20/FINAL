@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <!-- 상단 -->
     <com.android.myapplication.CustomTopBar
         android:id="@+id/custom_top_bar"
         android:layout_width="wrap_content"

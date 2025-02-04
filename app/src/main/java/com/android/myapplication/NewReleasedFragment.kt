@@ -53,7 +53,6 @@ class NewReleasedFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_newreleasedList)
         setupRecyclerView()
 
-        // API 호출 및 데이터 로드
         fetchNewReleases()
     }
 
