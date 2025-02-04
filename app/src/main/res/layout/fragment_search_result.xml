@@ -1,4 +1,4 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,43 +8,44 @@
     android:paddingEnd="28dp"
     android:orientation="vertical"
     >
-    <LinearLayout
+    <com.android.myapplication.CustomTopBar
+        android:id="@+id/custom_top_bar"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <androidx.appcompat.widget.SearchView
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
-        <com.android.myapplication.CustomTopBar
-            android:id="@+id/custom_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.SearchView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/search"
-            android:hint="검색어를 입력하세요."
-            android:iconifiedByDefault="false"
-            android:layout_marginBottom="36dp"
-            android:theme="@style/CustomSearchViewStyle"
-            android:background="@drawable/search_view_bg"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체"
-            android:fontFamily="@font/pretendard_variable"
-            android:textSize="17dp"
-            android:textFontWeight="700"
-            android:textColor="@color/black"
-            android:layout_marginBottom="16sp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_result_recyclerView"
+        android:layout_width="match_parent"
+        android:id="@+id/search"
+        android:hint="검색어를 입력하세요."
+        android:iconifiedByDefault="false"
+        android:layout_marginBottom="36dp"
+        android:theme="@style/CustomSearchViewStyle"
+        android:background="@drawable/search_view_bg"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체"
+                android:fontFamily="@font/pretendard_variable"
+                android:textSize="17dp"
+                android:textFontWeight="700"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_result_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>
