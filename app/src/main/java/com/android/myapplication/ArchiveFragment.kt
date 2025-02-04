@@ -93,10 +93,10 @@ class ArchiveFragment : Fragment() {
                 // 날짜 이미지 기본값: 이미지 없음 (초기화)
                 container.dayImage.visibility = View.GONE
 
-                // 특정 날짜에만 이미지 표시 (예: 2025년 2월 5일)
-//                if (day.date == LocalDate.of(2025, 2, 5)) {
-//                    container.dayImage.visibility = View.VISIBLE
-//                }
+                // 특정 날짜에만 이미지 표시 (예: 2025년 2월 1일)
+                if (day.date == LocalDate.of(2025, 2, 1)) {
+                    container.dayImage.visibility = View.VISIBLE
+                }
 
                 // 날짜 클릭 이벤트 -> DatePickerDialog 실행
                 container.dayText.setOnClickListener {
@@ -120,7 +120,7 @@ class ArchiveFragment : Fragment() {
         }
 
 
-        binding.customProfileView.setOnClickListener {
+        binding.customProfileView.setOnLoginClickListener {
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -152,7 +152,7 @@ class ArchiveFragment : Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-            binding.customProfileView.setData(user.displayName + "님의", "독서 기록입니다", user.photoUrl)
+            binding.customProfileView.setData(user.displayName + "님의", "독서 기록입니다", user.photoUrl, true)
         }
     }
 

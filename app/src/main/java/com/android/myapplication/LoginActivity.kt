@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.User
 import com.android.myapplication.databinding.ActivityLoginBinding
 import com.android.myapplication.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,6 +20,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -91,15 +95,34 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // 로그인 성공, 메인 화면으로 이동
                     val user = auth.currentUser
+                    user?.let {
+                        val email = it.email ?: ""
+                        val nickname = it.displayName ?: "사용자"
+                        val profileImage = it.photoUrl?.toString() ?: ""
+
+                        // 백그라운드에서 DB 처리 실행
+                        lifecycleScope.launch {
+                            val db = AppDatabase.getDatabase(applicationContext)
+                            val userDao = db.userDao()
+
+                            // 기존 유저 있는지 확인
+                            val existingUser = userDao.getUserByEmail(email)
+
+                            if (existingUser == null) {
+                                // 유저가 없으면 추가
+                                val newUser = User( userId = 0, email = email, nickname = nickname, profileImage = profileImage)
+                                userDao.insertUser(newUser)
+                            }
+                        }
+                    }
                     navigateToMain()
                 } else {
-                    // 로그인 실패 처리
                     Log.w("GoogleSignIn", "signInWithCredential:failure", task.exception)
                 }
             }
     }
+
 
     private fun navigateToMain() {
         // 메인 화면으로 이동하는 코드 추가 (예: MainActivity로 이동)
