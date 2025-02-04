@@ -45,34 +45,20 @@ class ArchivePreviewBoxFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.selectedBookReview.collect { review ->
                 if (review != null) {
-                    binding.bookDetail.text = review.review // ✅ 사용자가 남긴 리뷰 표시
-                    binding.favoriteLine.text = "마음에 드는 구절: ${review.favoriteLine}" // ✅ 마음에 드는 한 줄 추가
+                    binding.bookDetail.text = review.review // 사용자가 남긴 리뷰 표시
+                    binding.favoriteLine.text = "마음에 드는 구절: ${review.favoriteLine}" // 마음에 드는 한 줄 추가
 
-//                    // ✅ 별점 앞에 baseline_star_24.xml 아이콘 추가
-//                    binding.tvStarRate.setCompoundDrawablesWithIntrinsicBounds(
-//                        R.drawable.baseline_star_24, 0, 0, 0
-//                    )
-//                    binding.tvStarRate.text = "${review.starRate}"
-//
-//                    // ✅ 추천 수 앞에 baseline_thumb_up_24.xml 아이콘 추가
-//                    binding.tvLikeCount.setCompoundDrawablesWithIntrinsicBounds(
-//                        R.drawable.baseline_thumb_up_24, 0, 0, 0
-//                    )
-//                    binding.tvLikeCount.text = "${review.likeCount}"
-//
-//                } else {
-//                    binding.tvReviewText.text = "등록된 리뷰 없음"
-//                    binding.tvFavoriteLine.text = "" // ❌ 등록된 구절 없음
-//
-//                    binding.tvStarRate.setCompoundDrawablesWithIntrinsicBounds(
-//                        R.drawable.baseline_star_24, 0, 0, 0
-//                    )
-//                    binding.tvStarRate.text = "0.0"
-//
-//                    binding.tvLikeCount.setCompoundDrawablesWithIntrinsicBounds(
-//                        R.drawable.baseline_thumb_up_24, 0, 0, 0
-//                    )
-//                    binding.tvLikeCount.text = "0"
+                    // ✅ 별점 숫자 업데이트
+                    binding.tvStarRate.text = review.starRate.toString()
+
+                    // ✅ 추천 수 숫자 업데이트
+                    binding.tvLikeCount.text = review.likeCount.toString()
+                } else {
+                    binding.bookDetail.text = "등록된 리뷰 없음"
+                    binding.favoriteLine.text = "" // 등록된 구절 없음
+
+                    binding.tvStarRate.text = "0.0"
+                    binding.tvLikeCount.text = "0"
 
                 }
             }

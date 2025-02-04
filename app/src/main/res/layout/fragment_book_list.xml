@@ -1,25 +1,42 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.android.myapplication.CustomProfileView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/custom_profile_view"/>
+        <!--        패딩 적용안되는디..? -->
+        <!--        급한대로 리니어 레이아웃 만들어서-->
         <!-- 검색 -->
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search"
+        <com.android.myapplication.CustomProfileView
+            android:id="@+id/custom_profile_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="검색어를 입력하세요."
-            android:background="@drawable/search_view_bg"/>
+            android:paddingStart="29.31dp"
+            android:paddingTop="102dp"
+            android:paddingEnd="29.31dp"
+            android:paddingBottom="17dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="29.31dp"
+            android:paddingEnd="29.31dp">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="검색어를 입력하세요."
+                android:background="@drawable/search_view_bg"
+                />
+        </LinearLayout>
+
 
 
         <LinearLayout
@@ -31,182 +48,315 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3" />
+                android:layout_weight="0.4" />
 
             <!-- 책 아카이빙 버튼 -->
             <LinearLayout
                 android:id="@+id/homebtnGotoArchive"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/baseline_circle_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="책 아카이빙"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="사용자의 독서 기록 보관함"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                android:orientation="vertical"
+                android:background="@drawable/gotobookarchive">
             </LinearLayout>
+
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/homebtnGotoArchive"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:gravity="center"-->
+            <!--                android:orientation="vertical">-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="40dp"-->
+            <!--                    android:layout_height="40dp"-->
+            <!--                    android:src="@drawable/baseline_circle_24" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="책 아카이빙"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="사용자의 독서 기록 보관함"-->
+            <!--                    android:textColor="@android:color/darker_gray"-->
+            <!--                    android:textSize="12sp" />-->
+            <!--            </LinearLayout>-->
 
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3" />
+                android:layout_weight="0.1" />
 
             <!-- 책 추천 버튼 -->
             <LinearLayout
                 android:id="@+id/homebtnGotoRecommend"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/baseline_circle_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="책 추천"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="사용자 맞춤형 책 추천"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
+                android:orientation="vertical"
+                android:background="@drawable/gotobookrecommend">
             </LinearLayout>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3" />
+                android:layout_weight="0.4" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="29.31dp"
+            android:paddingEnd="29.31dp"
+            android:paddingBottom="24dp"
+            >
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/yellowbox"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="6dp"/>
+
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/pretendard_variable"
                 android:text="베스트셀러"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnMoreinfo1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="더보기"
-                android:textColor="@color/black"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:src="@drawable/moreinfobutton"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
 
+        <!-- RecyclerView를 배경 포함하여 감싸기 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-<!--    이후 .kt에서 레이아웃 매니저로 GridLayoutManager를 설정-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_bestseller"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:paddingTop="51dp"
+                android:src="@drawable/bsyellowbox"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_bestseller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="29.31dp"
+                />
+        </FrameLayout>
+
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
 
         <!-- 신간 리스트 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="29.31dp"
+            android:paddingEnd="29.31dp"
+
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/greenbox"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="6dp"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="신간 리스트"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/pretendard_variable"
+                android:text="신간"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnMoreinfo2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="더보기"
-                android:textColor="@color/black"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:src="@drawable/moreinfobutton"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
-        <!-- 다독왕 선정 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_newbook"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:paddingTop="51dp"
+                android:src="@drawable/newgreenbox"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_newbook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="29.31dp"/>
+
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="29.31dp"
+            android:paddingEnd="29.31dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/crown"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="6dp"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="다독왕 선정"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/pretendard_variable"
+                android:layout_gravity="center"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnMoreinfo3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="더보기"
-                android:textColor="@color/black"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:src="@drawable/moreinfobutton"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_mostread"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal"
+            android:paddingStart="29.31dp"/>
 
         <!-- 베스트 리뷰 -->
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="베스트 리뷰"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:paddingTop="53dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_best_review"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bestreviebox"/>"
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="베스트 리뷰"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:paddingStart="29.31dp"
+                android:paddingEnd="29.31dp"
+                android:paddingTop="53dp"
+                android:paddingBottom="24dp"
+                android:fontFamily="@font/pretendard_variable"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_best_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="29.31dp"/>
+        </FrameLayout>
     </LinearLayout>
 
 </ScrollView>

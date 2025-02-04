@@ -9,13 +9,16 @@
     <com.android.myapplication.CustomTopBar
         android:id="@+id/custom_top_bar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingStart="28dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_topreaderList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"/>
 
 
 </LinearLayout>
