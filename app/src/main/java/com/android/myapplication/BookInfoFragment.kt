@@ -1,9 +1,11 @@
 package com.android.myapplication
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +30,8 @@ class BookInfoFragment : Fragment() {
 
     private lateinit var reviewAdapter: BookinfoReviewRecyclerViewAdapter
     private lateinit var reviewDao: ReviewDao
+
+    private lateinit var favoriteLineAdapter: QuoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,12 +88,50 @@ class BookInfoFragment : Fragment() {
         binding.infoBookDescription.text = if (description.isNotBlank()) description else "." // 책 소개
         val publisherDate: String = "$publisher • $pubDate"
         binding.infoBookPublisherDate.text = publisherDate
+
+        binding.toggleGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.btnRecommend -> {
+                    updateToggleState(binding.btnRecommend, true)
+                    updateToggleState(binding.btnLatest, false)
+                    updateToggleState(binding.btnRating, false)
+                }
+                R.id.btnLatest -> {
+                    updateToggleState(binding.btnRecommend, false)
+                    updateToggleState(binding.btnLatest, true)
+                    updateToggleState(binding.btnRating, false)
+                }
+                R.id.btnRating -> {
+                    updateToggleState(binding.btnRecommend, false)
+                    updateToggleState(binding.btnLatest, false)
+                    updateToggleState(binding.btnRating, true)
+                }
+            }
+        }
+
+    }
+    private fun updateToggleState(button: RadioButton, isSelected: Boolean) {
+        if (isSelected) {
+            button.setBackgroundResource(R.drawable.toggle_button_selected)
+            button.setTextColor(Color.WHITE)
+        } else {
+            button.setBackgroundResource(R.drawable.toggle_button_unselected)
+            button.setTextColor(Color.GRAY)
+        }
     }
 
     private fun setupRecyclerView() {
         reviewAdapter = BookinfoReviewRecyclerViewAdapter(emptyList())
         binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.reviewRecyclerView.adapter = reviewAdapter
+
+        lifecycleScope.launch {
+            val lines = reviewDao.getFavoriteLinesByIsbn(isbn)
+
+            favoriteLineAdapter = QuoteAdapter(lines)
+            binding.favoriteLineRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.favoriteLineRecyclerView.adapter = favoriteLineAdapter
+        }
     }
 
     private fun loadReviews(sortType: String) {
@@ -100,6 +142,7 @@ class BookInfoFragment : Fragment() {
                 else -> reviewDao.getReviewsSortedByLikes(isbn) // 기본값: 추천순
             }
             reviewAdapter.updateReviews(reviews)
+
         }
     }
 
