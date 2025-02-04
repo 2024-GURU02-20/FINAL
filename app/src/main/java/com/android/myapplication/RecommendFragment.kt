@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class RecommendFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var moreInfoAdapter: MoreInfoAdapter
+    private lateinit var recommendAdapter: RecommendAdapter
     private lateinit var viewModel: AladinViewModel
 
     private lateinit var binding: FragmentRecommendBinding
@@ -38,8 +38,7 @@ class RecommendFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentRecommendBinding.inflate(inflater, container, false)
 
         val user = FirebaseAuth.getInstance().currentUser
@@ -59,22 +58,20 @@ class RecommendFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             Log.d("로그인 확인", user.photoUrl.toString())
-            Log.d("CustomProfileView", "customProfileView.visibility: ${binding.customProfileView.visibility}")
-
-            binding.customProfileView.setData( "추천받으세요!", "원하는 책을", user.photoUrl)
+            binding.customProfileView.setData("추천받으세요!", "원하는 책을", user.photoUrl)
         }
 
         // RecyclerView 초기화
         recyclerView = view.findViewById(R.id.recycler_bestseller)
         setupRecyclerView()
 
-        // API에서 추천 도서 불러오기 (fetchBestSellers 사용)
-        fetchBestSellers()
+        // API에서 추천 도서 불러오기
+        fetchRecommendedBooks()
     }
 
     private fun setupRecyclerView() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout 사용
-        moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
+        recommendAdapter = RecommendAdapter(emptyList()) { book ->
             val bookInfoFragment = BookInfoFragment.newInstance(
                 book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
             )
@@ -83,32 +80,20 @@ class RecommendFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-        recyclerView.adapter = moreInfoAdapter
+        recyclerView.adapter = recommendAdapter
     }
 
-//    private fun fetchBestSellers() {
-//        val apiKey = BuildConfig.ALADIN_API_KEY
-//        lifecycleScope.launch {
-//            try {
-//                // 추천 목록을 fetchBestSellers()로 가져옴
-//                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
-//                moreInfoAdapter.updateBooks(bestSellersResponse.item) // 어댑터 업데이트
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-    private fun fetchBestSellers() {
+    private fun fetchRecommendedBooks() {
         val apiKey = BuildConfig.ALADIN_API_KEY
         lifecycleScope.launch {
             try {
-                // 베스트셀러 데이터 가져오기
-                val bestSellersResponse = viewModel.fetchBestSellers(apiKey)
+                // API에서 베스트셀러 데이터 가져와서 추천 목록으로 사용
+                val recommendedBooksResponse = viewModel.fetchBestSellers(apiKey)
 
                 // 최대 9개까지만 표시
-                val limitedBooks = bestSellersResponse.item.take(9)
+                val limitedBooks = recommendedBooksResponse.item.take(9)
 
-                moreInfoAdapter.updateBooks(limitedBooks) // 어댑터에 데이터 전달
+                recommendAdapter.updateBooks(limitedBooks) // 어댑터에 데이터 전달
             } catch (e: Exception) {
                 e.printStackTrace()
             }

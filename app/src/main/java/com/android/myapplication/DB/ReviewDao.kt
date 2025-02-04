@@ -63,7 +63,6 @@ interface ReviewDao {
     @Query("SELECT favoriteLine FROM review WHERE isbn = :isbn LIMIT 3")
     suspend fun getFavoriteLinesByIsbn(isbn: String): List<String>
 
-    //은정 추가
     //가장 많은 리뷰를 남긴 유저를 찾고 해당 유저의 ISBN 12개를 가져옴
     //LIMIT 12 → 최대 12개만 가져오도록 설정
     @Query("""
