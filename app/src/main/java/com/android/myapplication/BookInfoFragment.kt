@@ -61,16 +61,22 @@ class BookInfoFragment : Fragment() {
         binding.customTopBar.onBackClick = {
             parentFragmentManager.popBackStack()
         }
+
         binding.customTopBar.setTitle("")
 
         binding.addBook.setOnClickListener {
-            val archiveReviewFragment = ArchiveReviewFragment.newInstance(
-                isbn, coverUrl, title, author
-            )
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.rootlayout, archiveReviewFragment)
-                .addToBackStack(null)
-                .commit()
+            requireActivity().runOnUiThread {
+                val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_review_container)
+                if (currentFragment !is ArchiveReviewFragment) { // 중복 방지
+                    val archiveReviewFragment = ArchiveReviewFragment.newInstance(
+                        isbn, coverUrl, title, author
+                    )
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.rootlayout, archiveReviewFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+            }
         }
 
         reviewDao = AppDatabase.getDatabase(requireContext()).reviewDao()

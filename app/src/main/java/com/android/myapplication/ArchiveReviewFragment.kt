@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
@@ -35,13 +37,12 @@ class ArchiveReviewFragment : Fragment() {
     private var _binding: FragmentArchiveReviewBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ReviewViewModel by viewModels() // ✅ ViewModel 연결
+    private lateinit var viewModel: ReviewViewModel
     private lateinit var repository: ReviewRepository
 
     private var selectedDate: LocalDate? = null // 선택된 날짜 저장 변수
     private val selectedIsbn = "9781234567890"  // 사용자가 선택한 책의 ISBN (테스트용)
     private val selectedBookTitle = "테스트용 책 제목"  // 실제 데이터에서는 API 또는 DB에서 가져와야 함
-
     private lateinit var isbn: String
     private lateinit var coverUrl: String
     private lateinit var title: String
@@ -56,6 +57,9 @@ class ArchiveReviewFragment : Fragment() {
             title = it.getString(ArchiveReviewFragment.ARG_TITLE) ?: ""
             author = it.getString(ArchiveReviewFragment.ARG_AUTHOR) ?: ""
         }
+
+        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application))
+            .get(ReviewViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -88,21 +92,9 @@ class ArchiveReviewFragment : Fragment() {
             }
         }
 
-        // ✅ 책 리뷰 화면 이동
+        // ✅ 뒤로 가기 버튼 동작
         binding.ReviewImageView.setOnClickListener {
-            requireActivity().runOnUiThread {
-                val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_review_container)
-                if (currentFragment !is BookInfoFragment) {
-                    // 선택된 날짜 초기화
-                    selectedDate = null
-                    binding.calendarView.notifyCalendarChanged() // 캘린더 UI 업데이트
-
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.rootlayout, BookInfoFragment()) // book_info 화면으로 이동
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
+            parentFragmentManager.popBackStack() // ✅ BookInfoFragment로 복귀
         }
 
         // ✅ 리뷰 저장 버튼 클릭 시
@@ -214,7 +206,7 @@ class ArchiveReviewFragment : Fragment() {
         // 인스턴스 생성 메서드
         fun newInstance(
             isbn: String, coverUrl: String, title: String, author:String
-        ) = BookInfoFragment().apply {
+        ) = ArchiveReviewFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_ISBN, isbn)
                 putString(ARG_COVER_URL, coverUrl)
