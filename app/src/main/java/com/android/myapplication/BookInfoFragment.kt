@@ -1,13 +1,17 @@
 package com.android.myapplication
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.ReviewDao
 import com.android.myapplication.databinding.FragmentBookInfoBinding
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 class BookInfoFragment : Fragment() {
 
@@ -20,6 +24,10 @@ class BookInfoFragment : Fragment() {
     private lateinit var publisher: String
     private lateinit var pubDate: String
     private lateinit var description: String
+    private lateinit var isbn: String
+
+    private lateinit var reviewAdapter: BookInfoReviewAdapter
+    private lateinit var reviewDao: ReviewDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +40,7 @@ class BookInfoFragment : Fragment() {
             publisher = it.getString(ARG_PUBLISHER) ?: ""
             pubDate = it.getString(ARG_PUB_DATE) ?: ""
             description = it.getString(ARG_DESCRIPTION) ?: ""
+            isbn = it.getString(ARG_ISBN) ?: ""
         }
     }
 
@@ -47,10 +56,15 @@ class BookInfoFragment : Fragment() {
         }
         binding.customTopBar.setTitle("")
 
+        reviewDao = AppDatabase.getDatabase(requireContext()).reviewDao()
+
+        setupRecyclerView()
+        setupSortButtons()
+        loadReviews("추천순")
+
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -72,6 +86,29 @@ class BookInfoFragment : Fragment() {
         binding.infoBookPublisherDate.text = publisherDate
     }
 
+    private fun setupRecyclerView() {
+        reviewAdapter = BookInfoReviewAdapter(emptyList())
+        binding.reviewRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.reviewRecyclerView.adapter = reviewAdapter
+    }
+
+    private fun loadReviews(sortType: String) {
+        lifecycleScope.launch {
+            val reviews = when (sortType) {
+                "최신순" -> reviewDao.getReviewsSortedByDate(isbn)
+                "별점순" -> reviewDao.getReviewsSortedByRating(isbn)
+                else -> reviewDao.getReviewsSortedByLikes(isbn) // 기본값: 추천순
+            }
+            reviewAdapter.updateReviews(reviews)
+        }
+    }
+
+    private fun setupSortButtons() {
+        binding.btnRecommend.setOnClickListener { loadReviews("추천순") }
+        binding.btnLatest.setOnClickListener { loadReviews("최신순") }
+        binding.btnRating.setOnClickListener { loadReviews("별점순") }
+    }
+
     companion object {
         // 데이터 키 값
         private const val ARG_COVER_URL = "cover_url"
@@ -80,11 +117,12 @@ class BookInfoFragment : Fragment() {
         private const val ARG_PUBLISHER = "publisher"
         private const val ARG_PUB_DATE = "pub_date"
         private const val ARG_DESCRIPTION = "description"
+        private const val ARG_ISBN = "isbn"
 
         // BookInfoFragment 인스턴스 생성 메서드
         fun newInstance(
             coverUrl: String, title: String, author: String, publisher: String,
-            pubDate: String, description: String
+            pubDate: String, description: String, isbn: String
         ) = BookInfoFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_COVER_URL, coverUrl)
@@ -93,6 +131,7 @@ class BookInfoFragment : Fragment() {
                 putString(ARG_PUBLISHER, publisher)
                 putString(ARG_PUB_DATE, pubDate)
                 putString(ARG_DESCRIPTION, description)
+                putString(ARG_ISBN, isbn)
             }
         }
     }

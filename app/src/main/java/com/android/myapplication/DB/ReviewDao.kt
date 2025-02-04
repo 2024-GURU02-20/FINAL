@@ -3,6 +3,7 @@ package com.android.myapplication.DB
 import com.android.myapplication.DB.User
 import com.android.myapplication.DB.Review
 import androidx.room.*
+import com.android.myapplication.model.ReviewItem
 
 @Dao
 interface ReviewDao {
@@ -27,6 +28,15 @@ interface ReviewDao {
 
     @Query("DELETE FROM review WHERE reviewId = :id")
     suspend fun deleteReviewById(id: Int)
+
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY likeCount DESC LIMIT 3")
+    suspend fun getReviewsSortedByLikes(isbn: String): List<ReviewItem>
+
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY createdAt DESC LIMIT 3")
+    suspend fun getReviewsSortedByDate(isbn: String): List<ReviewItem>
+
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY starRate DESC LIMIT 3")
+    suspend fun getReviewsSortedByRating(isbn: String): List<ReviewItem>
 
 
     //은정 추가

@@ -22,5 +22,5 @@ data class Review(
     val review: String,
     val favoriteLine: String,
     val createdAt: String,
-    val like: Int
+    val likeCount: Int
 )
