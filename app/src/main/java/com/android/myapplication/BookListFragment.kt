@@ -189,7 +189,6 @@ class BookListFragment : Fragment() {
         }
     }
 
-
     private fun fetchTopReviews() {
         val database = AppDatabase.getDatabase(requireContext())
         val reviewDao = database.reviewDao()

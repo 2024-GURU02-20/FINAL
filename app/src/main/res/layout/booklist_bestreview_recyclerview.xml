@@ -21,7 +21,6 @@
         android:padding="13dp"
         android:background="@android:color/transparent">
 
-        <!-- 책 표지 -->
         <ImageView
             android:id="@+id/ivBookCover"
             android:layout_width="52dp"

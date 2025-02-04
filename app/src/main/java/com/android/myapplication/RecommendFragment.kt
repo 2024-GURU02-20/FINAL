@@ -23,13 +23,11 @@ class RecommendFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recommendAdapter: RecommendAdapter
     private lateinit var viewModel: AladinViewModel
-
     private lateinit var binding: FragmentRecommendBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ViewModel 초기화
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)

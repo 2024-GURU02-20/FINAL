@@ -23,7 +23,6 @@ class BestSellerFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var moreInfoAdapter: MoreInfoAdapter
     private lateinit var viewModel: AladinViewModel
-
     private lateinit var binding: FragmentBestSellerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

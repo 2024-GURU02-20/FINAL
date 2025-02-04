@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    이 세개를 반복해야하니까 여기서는 세개 써주는건가..? 페이지네이션에서 리사이클러뷰 활용하는거임?? -->
-<!--    일단 물어보니 1개쓰란다... -->
-
-
-
-    <!--  한줄 1-->
-<!--    여기는 ellipsize 없어도 되겟지.. -->
-
     <TextView
         android:id="@+id/tvBookInfoBl"
         android:layout_width="wrap_content"

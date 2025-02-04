@@ -22,7 +22,6 @@ class TopReaderFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var topReaderAdapter: MoreInfoAdapter // 기존 MoreInfoAdapter 사용
     private lateinit var viewModel: AladinViewModel
-
     private lateinit var binding: FragmentTopReaderPickBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
