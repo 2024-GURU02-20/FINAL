@@ -56,6 +56,7 @@ class ArchiveReviewFragment : Fragment() {
             title = it.getString(ArchiveReviewFragment.ARG_TITLE) ?: ""
             author = it.getString(ArchiveReviewFragment.ARG_AUTHOR) ?: ""
         }
+
     }
 
     override fun onCreateView(
