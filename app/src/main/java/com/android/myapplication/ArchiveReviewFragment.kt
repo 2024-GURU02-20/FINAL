@@ -13,30 +13,39 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
-import com.android.myapplication.DB.User
-import com.android.myapplication.databinding.FragmentArchiveBinding
 import com.android.myapplication.databinding.FragmentArchiveReviewBinding
-import com.android.myapplication.databinding.FragmentSearchBinding
-import com.android.myapplication.databinding.FragmentSearchResultBinding
+import com.android.myapplication.repository.ReviewRepository
+import com.android.myapplication.viewmodel.ReviewViewModel
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.Locale
+import java.util.Date
 
 class ArchiveReviewFragment : Fragment() {
-    private lateinit var binding: FragmentArchiveReviewBinding
+    private var _binding: FragmentArchiveReviewBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: ReviewViewModel by viewModels() // ✅ ViewModel 연결
+    private lateinit var repository: ReviewRepository
+
     private var selectedDate: LocalDate? = null // 선택된 날짜 저장 변수
+    private val selectedIsbn = "9781234567890"  // 사용자가 선택한 책의 ISBN (테스트용)
+    private val selectedBookTitle = "테스트용 책 제목"  // 실제 데이터에서는 API 또는 DB에서 가져와야 함
 
     private lateinit var isbn: String
     private lateinit var coverUrl: String
+    private lateinit var title: String
+    private lateinit var author: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +53,42 @@ class ArchiveReviewFragment : Fragment() {
         arguments?.let {
             isbn = it.getString(ArchiveReviewFragment.ARG_ISBN) ?: ""
             coverUrl = it.getString(ArchiveReviewFragment.ARG_COVER_URL) ?: ""
+            title = it.getString(ArchiveReviewFragment.ARG_TITLE) ?: ""
+            author = it.getString(ArchiveReviewFragment.ARG_AUTHOR) ?: ""
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentArchiveReviewBinding.inflate(inflater, container, false)
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        _binding = FragmentArchiveReviewBinding.inflate(inflater, container, false)
 
+        val database = AppDatabase.getDatabase(requireContext())
+        repository = ReviewRepository(database.reviewDao())
+
+        // 사용자가 선택한 책의 리뷰 가져오기
+        viewModel.fetchReviewsByIsbn(selectedIsbn)
+
+        // UI 업데이트 (선택한 책의 리뷰 반영)
+        lifecycleScope.launch {
+            viewModel.selectedBookReview.collect { review ->
+                if (review != null) {
+                    binding.bookDetail.text = "책 제목: $selectedBookTitle"  //  책 제목 표시
+                    binding.reviewInput.setText(review.review)
+                    binding.favoriteLineInput.setText("마음에 드는 구절: ${review.favoriteLine}")
+                    binding.ratingBar.rating = review.starRate
+                } else {
+                    binding.bookDetail.text = "등록된 리뷰 없음"
+                    binding.reviewInput.setText("")
+                    binding.favoriteLineInput.setText("")
+                    binding.ratingBar.rating = 0f
+                }
+            }
+        }
+
+        // ✅ 책 리뷰 화면 이동
         binding.ReviewImageView.setOnClickListener {
             requireActivity().runOnUiThread {
                 val currentFragment = parentFragmentManager.findFragmentById(R.id.archive_review_container)
@@ -69,8 +105,22 @@ class ArchiveReviewFragment : Fragment() {
             }
         }
 
-        // 저장하기 버튼 클릭 -> 저장 완료! Toast 메시지
+        // ✅ 리뷰 저장 버튼 클릭 시
         binding.storeButton.setOnClickListener {
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val currentDate = sdf.format(Date())
+
+            val newReview = Review(
+                reviewId = 0,  // Room에서 자동 생성
+                userId = 1, // 테스트용 사용자 ID
+                isbn = selectedIsbn, // 선택한 책의 ISBN
+                starRate = binding.ratingBar.rating,
+                review = binding.reviewInput.text.toString(),
+                favoriteLine = binding.favoriteLineInput.text.toString(),
+                createdAt = currentDate,
+                likeCount = 0
+            )
+            viewModel.addReview(newReview)
             Toast.makeText(requireContext(), "저장 완료!", Toast.LENGTH_SHORT).show()
         }
 
@@ -158,14 +208,24 @@ class ArchiveReviewFragment : Fragment() {
         // 데이터 키 값
         private const val ARG_ISBN = "isbn"
         private const val ARG_COVER_URL = "coverUrl"
+        private const val ARG_TITLE = "title"
+        private const val ARG_AUTHOR = "author"
 
         // 인스턴스 생성 메서드
         fun newInstance(
-            isbn: String, coverUrl: String
+            isbn: String, coverUrl: String, title: String, author:String
         ) = BookInfoFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_ISBN, isbn)
+                putString(ARG_COVER_URL, coverUrl)
+                putString(ARG_TITLE, title)
+                putString(ARG_AUTHOR, author)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

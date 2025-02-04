@@ -10,6 +10,9 @@ import kotlinx.coroutines.launch
 
 class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
 
+    private val _selectedBookReview = MutableStateFlow<Review?>(null) // ✅ Review 단일 객체
+    val selectedBookReview = _selectedBookReview.asStateFlow()
+
     private val _reviews = MutableStateFlow<List<Review>>(emptyList())
     val reviews = _reviews.asStateFlow()
 
@@ -25,6 +28,13 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
         }
     }
 
+    fun addReview(review: Review) {
+        viewModelScope.launch {
+            repository.insertReview(review)
+            fetchReviewsByIsbn(review.isbn)  // 저장 후 해당 책의 리뷰 다시 가져오기
+        }
+    }
+
     fun fetchStarRate(reviewId: Int) {
         viewModelScope.launch {
             _starRate.value = repository.getStarRate(reviewId)
@@ -34,13 +44,6 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
     fun fetchLikeCount(reviewId: Int) {
         viewModelScope.launch {
             _likeCount.value = repository.getLikeCount(reviewId)
-        }
-    }
-
-    fun addReview(review: Review) {
-        viewModelScope.launch {
-            repository.insertReview(review)
-            fetchReviewsByIsbn(review.isbn)  // 저장 후 최신 데이터 다시 가져오기
         }
     }
 

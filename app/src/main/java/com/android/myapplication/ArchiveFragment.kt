@@ -98,7 +98,6 @@ class ArchiveFragment : Fragment() {
 //                    container.dayImage.visibility = View.VISIBLE
 //                }
 
-
                 // 날짜 클릭 이벤트 -> DatePickerDialog 실행
                 container.dayText.setOnClickListener {
                     showDatePicker(day.date.year, day.date.monthValue, day.date.dayOfMonth)

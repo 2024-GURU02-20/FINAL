@@ -62,7 +62,7 @@ class BookInfoFragment : Fragment() {
 
         binding.addBook.setOnClickListener {
             val archiveReviewFragment = ArchiveReviewFragment.newInstance(
-                isbn, coverUrl
+                isbn, coverUrl, title, author
             )
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, archiveReviewFragment)
