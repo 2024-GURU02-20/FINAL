@@ -34,6 +34,16 @@ class ArchiveReviewFragment : Fragment() {
     private lateinit var binding: FragmentArchiveReviewBinding
     private var selectedDate: LocalDate? = null // 선택된 날짜 저장 변수
 
+    private lateinit var isbn: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            isbn = it.getString(ArchiveReviewFragment.ARG_ISBN) ?: ""
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -139,5 +149,19 @@ class ArchiveReviewFragment : Fragment() {
     class DayViewContainer(view: View) : ViewContainer(view) {
         val dayText: TextView = view.findViewById(R.id.day_text)
         val dayImage: ImageView = view.findViewById(R.id.day_image)
+    }
+
+    companion object {
+        // 데이터 키 값
+        private const val ARG_ISBN = "isbn"
+
+        // 인스턴스 생성 메서드
+        fun newInstance(
+            isbn: String
+        ) = BookInfoFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_ISBN, isbn)
+            }
+        }
     }
 }

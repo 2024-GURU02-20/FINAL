@@ -60,6 +60,16 @@ class BookInfoFragment : Fragment() {
         }
         binding.customTopBar.setTitle("")
 
+        binding.addBook.setOnClickListener {
+            val archiveReviewFragment = ArchiveReviewFragment.newInstance(
+                isbn
+            )
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.rootlayout, archiveReviewFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
         reviewDao = AppDatabase.getDatabase(requireContext()).reviewDao()
 
         setupRecyclerView()
