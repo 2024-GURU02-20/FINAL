@@ -1,5 +1,6 @@
 package com.android.myapplication.DB
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ForeignKey
@@ -22,5 +23,5 @@ data class Review(
     val review: String,
     val favoriteLine: String,
     val createdAt: String,
-    val likeCount: Int
+    @ColumnInfo(name = "like") val likeCount: Int
 )
