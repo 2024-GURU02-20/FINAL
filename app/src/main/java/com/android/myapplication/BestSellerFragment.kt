@@ -1,6 +1,5 @@
 package com.android.myapplication
 
-import BestSellerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,6 @@ class BestSellerFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var moreInfoAdapter: MoreInfoAdapter
     private lateinit var viewModel: AladinViewModel
-
     private lateinit var binding: FragmentBestSellerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

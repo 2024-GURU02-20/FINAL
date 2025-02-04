@@ -177,16 +177,22 @@
             </LinearLayout>
 
 
+            <ImageView
+                android:layout_width="412dp"
+                android:layout_height="287dp"
+                android:layout_marginTop="670dp"
+                android:background="@drawable/favoriteline_box" />
+
             <!-- 마음에 드는 한 줄 텍스트 -->
             <TextView
                 android:id="@+id/favoriteLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="730dp"
+                android:layout_marginTop="700dp"
                 android:text="마음에 드는 한 줄"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <!-- 마음에 드는 한 줄 칸 1 -->
@@ -195,10 +201,10 @@
                 android:layout_width="354dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="775dp"
+                android:layout_marginTop="735dp"
                 android:layout_marginEnd="30dp"
                 android:inputType="textMultiLine"
-                android:background="@drawable/textview_border_green" />
+                android:background="@drawable/favoriteline_textview_box" />
 
             <!-- 마음에 드는 한 줄 칸 2 -->
             <EditText
@@ -206,10 +212,10 @@
                 android:layout_width="354dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="870dp"
+                android:layout_marginTop="830dp"
                 android:layout_marginEnd="30dp"
                 android:inputType="textMultiLine"
-                android:background="@drawable/textview_border_green" />
+                android:background="@drawable/favoriteline_textview_box" />
 
             <!-- 수정하기 버튼 -->
             <Button
@@ -221,7 +227,7 @@
                 android:layout_centerHorizontal="true"
                 android:drawablePadding="4dp"
                 android:text="수정하기"
-                android:layout_marginTop="1200dp"
+                android:layout_marginTop="1010dp"
                 android:layout_marginStart="131dp"
                 android:background="@drawable/button_border"
                 android:textColor="@color/white"

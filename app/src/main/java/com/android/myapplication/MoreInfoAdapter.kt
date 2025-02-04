@@ -30,16 +30,14 @@ class MoreInfoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = items[position]
 
-        // 책 정보 적용
         holder.bookTitleTextView.text = book.title
         holder.bookAuthorTextView.text = book.author
 
-        // Glide를 사용해 책 표지 로드
         Glide.with(holder.itemView.context)
             .load(book.cover)
             .into(holder.bookCoverImageView)
 
-        // 책 클릭 이벤트 설정
+        // 책 클릭
         holder.itemView.findViewById<LinearLayout>(R.id.moreinfo_bookcover).setOnClickListener {
             onItemClick(book)
         }

@@ -1,16 +1,27 @@
 package com.android.myapplication.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
 import com.android.myapplication.repository.ReviewRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
+// ✅ 기존 ViewModel에서 `repository`를 생성자로 받지 않고 내부에서 초기화
+class ReviewViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _selectedBookReview = MutableStateFlow<Review?>(null) // ✅ Review 단일 객체
+    private val repository: ReviewRepository
+
+    init {
+        // ✅ 내부에서 Repository를 초기화
+        val reviewDao = AppDatabase.getDatabase(application).reviewDao()
+        repository = ReviewRepository(reviewDao)
+    }
+
+    private val _selectedBookReview = MutableStateFlow<Review?>(null)
     val selectedBookReview = _selectedBookReview.asStateFlow()
 
     private val _reviews = MutableStateFlow<List<Review>>(emptyList())
@@ -31,7 +42,7 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
     fun addReview(review: Review) {
         viewModelScope.launch {
             repository.insertReview(review)
-            fetchReviewsByIsbn(review.isbn)  // 저장 후 해당 책의 리뷰 다시 가져오기
+            fetchReviewsByIsbn(review.isbn)
         }
     }
 
@@ -50,14 +61,14 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
     fun updateStarRate(reviewId: Int, newStarRate: Float) {
         viewModelScope.launch {
             repository.updateStarRate(reviewId, newStarRate)
-            fetchStarRate(reviewId)  // 업데이트 후 값 반영
+            fetchStarRate(reviewId)
         }
     }
 
     fun updateLikeCount(reviewId: Int, newLikeCount: Int) {
         viewModelScope.launch {
             repository.updateLikeCount(reviewId, newLikeCount)
-            fetchLikeCount(reviewId)  // 업데이트 후 값 반영
+            fetchLikeCount(reviewId)
         }
     }
 }

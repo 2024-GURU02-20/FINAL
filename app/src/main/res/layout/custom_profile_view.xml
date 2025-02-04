@@ -15,6 +15,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/profile_title_top"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:fontFamily="@font/pretendard_variable"
+            android:textFontWeight="700"
+            android:text="커멘터리"
+            android:textSize="28sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/profile_subtitle"
             android:textColor="@color/black"
             android:fontFamily="@font/pretendard_variable"

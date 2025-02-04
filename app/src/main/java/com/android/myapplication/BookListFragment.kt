@@ -1,6 +1,5 @@
 package com.android.myapplication
 
-import BestSellerAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.myapplication.DB.AppDatabase
+import com.android.myapplication.DB.Review
 import com.android.myapplication.api.RetrofitClient
 import com.android.myapplication.databinding.FragmentBookListBinding
 import com.android.myapplication.model.BookItem
@@ -23,18 +23,11 @@ class BookListFragment : Fragment() {
 
     private lateinit var binding: FragmentBookListBinding
     private lateinit var viewModel: AladinViewModel
-
-    // RecyclerView에서 사용할 Adapter 선언
     private lateinit var bestSeller: BookListAdapter
     private lateinit var newReleased: BookListAdapter
-
-    /////
     private lateinit var topReader: BookListAdapter // 다독왕 책 리스트용 어댑터
-    /////
-
-    ////////
     private lateinit var bestReviewAdapter: BestReviewAdapter
-    ////////
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,22 +74,16 @@ class BookListFragment : Fragment() {
             bottomNavigationView.selectedItemId = R.id.recommend
         }
 
-        // RecyclerView 초기화
         initRecyclerViews()
 
         setupButtonListeners()
 
-        // API 데이터 로드
         fetchBooks()
 
-        /////
         fetchTopReaderBooks() // 다독왕 책 가져오기
-        /////
 
-
-        /////////
         fetchTopReviews() // 베스트 리뷰 가져오기 추가
-        /////////
+
 
         return binding.root
     }
@@ -137,8 +124,6 @@ class BookListFragment : Fragment() {
 
         }
 
-
-        /////
         // 다독왕 RecyclerView 설정
         binding.recyclerMostread.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
@@ -154,15 +139,12 @@ class BookListFragment : Fragment() {
             adapter = topReader
         }
 
-
-
-        ////////
         binding.recyclerBestReview.apply {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
             bestReviewAdapter = BestReviewAdapter(emptyList())
             adapter = bestReviewAdapter
         }
-        ///////////
+
     }
 
     // API에서 데이터를 가져와 RecyclerView에 업데이트하는 함수
@@ -183,10 +165,7 @@ class BookListFragment : Fragment() {
         }
     }
 
-
-    //////
     // 다독왕의 책 목록 가져오기
-    //private fun fetchTopReaderBooks() {
     fun fetchTopReaderBooks() {
         val database = AppDatabase.getDatabase(requireContext())
         val reviewDao = database.reviewDao()
@@ -209,34 +188,30 @@ class BookListFragment : Fragment() {
             }
         }
     }
-    /////////
 
-
-
-    //////////
     private fun fetchTopReviews() {
         val database = AppDatabase.getDatabase(requireContext())
         val reviewDao = database.reviewDao()
 
         lifecycleScope.launch {
             try {
-                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 3개 가져오기
-                val bookList = mutableListOf<BookItem>()
+                val topReviews = reviewDao.getTopLikedReviews() // 추천 많은 순으로 가져오기
+                val reviewList = mutableListOf<Pair<BookItem, Review>>() // BookItem과 Review를 함께 저장
 
                 for (review in topReviews) {
                     val response = viewModel.searchBooks(BuildConfig.ALADIN_API_KEY, review.isbn)
                     if (response.item.isNotEmpty()) {
-                        bookList.add(response.item[0]) // 첫 번째 검색 결과 추가
+                        val book = response.item[0] // 첫 번째 검색 결과 가져오기
+                        reviewList.add(Pair(book, review))
                     }
                 }
 
-                bestReviewAdapter.updateReviews(bookList) // 어댑터에 데이터 전달
+                bestReviewAdapter.updateReviews(reviewList)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
-    ////////////
 
 
     // 버튼 클릭 이벤트 설정
@@ -265,13 +240,12 @@ class BookListFragment : Fragment() {
                 .commit()
         }
 
-        binding.customProfileView.setOnClickListener {
+        binding.customProfileView.setOnLoginClickListener {
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)
             }
-
         }
     }
 }
