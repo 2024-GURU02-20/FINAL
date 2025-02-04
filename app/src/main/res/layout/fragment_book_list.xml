@@ -86,33 +86,6 @@
                 android:orientation="vertical"
                 android:background="@drawable/gotobookrecommend">
             </LinearLayout>
-<!--            <LinearLayout-->
-<!--                android:id="@+id/homebtnGotoRecommend"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="40dp"-->
-<!--                    android:layout_height="40dp"-->
-<!--                    android:src="@drawable/baseline_circle_24" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="책 추천"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="사용자 맞춤형 책 추천"-->
-<!--                    android:textColor="@android:color/darker_gray"-->
-<!--                    android:textSize="12sp" />-->
-<!--            </LinearLayout>-->
 
             <View
                 android:layout_width="0dp"
