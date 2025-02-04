@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
-<!--   상단바 빼오기 -->
+    <com.android.myapplication.CustomTopBar
+        android:id="@+id/custom_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <androidx.appcompat.widget.SearchView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

@@ -2,8 +2,8 @@
 <shape xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="ExtraText">
-    <solid android:color="#F9F9F9" />
+    <solid android:color="#FFFFFF" />
     <stroke
-        android:width="2dp" android:color="#E4E4E4" /> <!-- 테두리 색상 회색 -->
+        android:width="2dp" android:color="#89C292" /> <!-- 테두리 색상 녹색 -->
     <corners android:radius="8dp" /> <!-- 모서리를 둥글게 -->
 </shape>

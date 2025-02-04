@@ -1,199 +1,221 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <!-- 뒤로 가기 버튼 -->
-    <ImageView
-        android:id="@+id/ReviewImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="31dp"
-        android:src="@drawable/baseline_arrow_back_ios_new_24" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- 기록 작성 텍스트 -->
-    <TextView
-        android:id="@+id/archive_review_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ReviewImageView"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:text="기록 작성"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="22dp"
-        android:textStyle="bold" />
+        <!-- 뒤로 가기 버튼 -->
+        <ImageView
+            android:id="@+id/ReviewImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/baseline_arrow_back_ios_new_24"/>
 
-    <!-- 책 이미지 버튼 -->
-    <ImageButton
-        android:id="@+id/review_book_image"
-        android:layout_width="151dp"
-        android:layout_height="223dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_below="@id/archive_review_main"
-        android:background="@drawable/preview_book_image"
-        android:layout_centerHorizontal="true" />
+        <!-- 기록 작성 텍스트 -->
+        <TextView
+            android:id="@+id/archive_review_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ReviewImageView"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:text="기록 작성"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-    <!-- 책 제목 -->
-    <TextView
-        android:id="@+id/bookDetail"
-        android:layout_width="78dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/review_book_image"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:text="책 제목"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="18dp" />
+        <!-- 책 이미지 버튼 -->
+        <ImageButton
+            android:id="@+id/review_book_image"
+            android:layout_width="151dp"
+            android:layout_height="223dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_below="@id/archive_review_main"
+            android:background="@drawable/preview_book_image"
+            android:layout_centerHorizontal="true" />
 
-    <!-- 저자 -->
-    <TextView
-        android:id="@+id/bookDetail2"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_below="@id/bookDetail"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:layout_marginTop="-3dp"
-        android:text="저자"
-        android:textStyle="bold"
-        android:textColor="#9F9F9F"
-        android:textSize="16dp" />
+        <!-- 책 제목 -->
+        <TextView
+            android:id="@+id/bookDetail"
+            android:layout_width="78dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/review_book_image"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:text="책 제목"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
-    <!-- border line gray -->
-    <View
-        android:layout_width="354dp"
-        android:layout_height="2dp"
-        android:layout_below="@id/bookDetail2"
-        android:layout_marginTop="35dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/border_line_gray"/>
+        <!-- 저자 -->
+        <TextView
+            android:id="@+id/bookDetail2"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/bookDetail"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_marginTop="-3dp"
+            android:text="저자"
+            android:textStyle="bold"
+            android:textColor="#9F9F9F"
+            android:textSize="16dp" />
 
-    <!-- 별점 -->
-    <TextView
-        android:id="@+id/review_starRate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:layout_below="@+id/bookDetail2"
-        android:layout_marginStart="28dp"
-        android:text="별점"
-        android:textColor="@color/black"
-        android:textSize="17dp"
-        android:textStyle="bold" />
+        <!-- border line gray -->
+        <View
+            android:layout_width="354dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/bookDetail2"
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/border_line_gray"/>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/review_starRate"
-        android:layout_marginStart="-32.5dp"
-        android:layout_marginTop="-5dp"
-        android:numStars="5"
-        android:rating="4"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:stepSize="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bookDetail2"
+            android:orientation="vertical"
+            android:layout_marginTop="70dp">
 
-    <!-- 리뷰 텍스트 -->
-    <TextView
-        android:id="@+id/write_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/ratingBar"
-        android:layout_marginStart="28dp"
-        android:text="리뷰"
-        android:textColor="@color/black"
-        android:textSize="17dp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/monthTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="29dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
 
-    <!-- 리뷰 입력란 -->
-    <EditText
-        android:id="@+id/reviewInput"
-        android:layout_width="354dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/write_review"
-        android:layout_marginStart="28dp"
-        android:background="@drawable/textview_border_dark"
-        android:inputType="textMultiLine" />
+            <com.kizitonwose.calendar.view.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                app:cv_dayViewResource="@layout/calendar_day_view"/>
+        </LinearLayout>
 
-    <!-- 마음에 드는 한 줄 텍스트 -->
-    <TextView
-        android:id="@+id/favoriteLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reviewInput"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="28dp"
-        android:text="마음에 드는 한 줄"
-        android:textColor="@color/black"
-        android:textSize="17dp"
-        android:textStyle="bold" />
+        <!-- 리뷰 텍스트 -->
+        <TextView
+            android:id="@+id/write_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="560dp"
+            android:layout_below="@+id/bookDetail2"
+            android:layout_marginStart="28dp"
+            android:text="리뷰"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
+        <!-- 별점 -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/write_review"
+            android:layout_marginStart="-33.5dp"
+            android:layout_marginTop="-5dp"
+            android:numStars="5"
+            android:rating="4"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:stepSize="1" />
 
-    <!-- 마음에 드는 한 줄 칸 1 -->
-    <EditText
-        android:id="@+id/favoriteLineInput"
-        android:layout_width="354dp"
-        android:layout_height="84dp"
-        android:layout_below="@id/favoriteLine"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
-        android:inputType="textMultiLine" />
+        <!-- 리뷰 입력란 -->
+        <EditText
+            android:id="@+id/reviewInput"
+            android:layout_width="354dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="28dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/textview_border_gray" />
 
-    <!-- 마음에 드는 한 줄 칸 2 -->
-    <EditText
-        android:id="@+id/favoriteLineInput2"
-        android:layout_width="354dp"
-        android:layout_height="84dp"
-        android:layout_below="@id/favoriteLineInput"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
-        android:inputType="textMultiLine" />
+        <!-- 마음에 드는 한 줄 텍스트 -->
+        <TextView
+            android:id="@+id/favoriteLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewInput"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="28dp"
+            android:text="마음에 드는 한 줄"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
 
-    <!-- 마음에 드는 한 줄 칸 3 -->
-    <EditText
-        android:id="@+id/favoriteLineInput3"
-        android:layout_width="354dp"
-        android:layout_height="84dp"
-        android:layout_below="@id/favoriteLineInput2"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/textview_border_dark"
-        android:inputType="textMultiLine" />
+        <!-- 마음에 드는 한 줄 칸 1 -->
+        <EditText
+            android:id="@+id/favoriteLineInput"
+            android:layout_width="354dp"
+            android:layout_height="84dp"
+            android:layout_below="@id/favoriteLine"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/textview_border_green" />
 
-    <Button
-        android:id="@+id/store_review"
-        android:layout_width="152dp"
-        android:layout_height="32dp"
-        android:layout_below="@id/favoriteLineInput3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_border"
-        android:drawablePadding="4dp"
-        android:text="저장하기"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="14dp" />
+        <!-- 마음에 드는 한 줄 칸 2 -->
+        <EditText
+            android:id="@+id/favoriteLineInput2"
+            android:layout_width="354dp"
+            android:layout_height="84dp"
+            android:layout_below="@id/favoriteLineInput"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/textview_border_green"/>
 
 
-</RelativeLayout>
+        <!-- 마음에 드는 한 줄 칸 3 -->
+        <EditText
+            android:id="@+id/favoriteLineInput3"
+            android:layout_width="354dp"
+            android:layout_height="84dp"
+            android:layout_below="@id/favoriteLineInput2"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/textview_border_green" />
+
+        <!-- 저장하기 버튼 -->
+        <Button
+            android:id="@+id/storeButton"
+            android:layout_width="152dp"
+            android:layout_height="32dp"
+            android:layout_below="@id/favoriteLineInput3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_border"
+            android:drawablePadding="4dp"
+            android:text="저장하기"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <FrameLayout
+            android:id="@+id/archive_review_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</ScrollView>

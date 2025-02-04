@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.api.RetrofitClient
+import com.android.myapplication.databinding.FragmentTopReaderPickBinding
 import com.android.myapplication.model.BookItem
 import com.android.myapplication.repository.AladinRepository
 import com.android.myapplication.viewmodel.AladinViewModel
@@ -21,6 +22,8 @@ class TopReaderFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var topReaderAdapter: MoreInfoAdapter // 기존 MoreInfoAdapter 사용
     private lateinit var viewModel: AladinViewModel
+
+    private lateinit var binding: FragmentTopReaderPickBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +38,20 @@ class TopReaderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_top_reader_pick, container, false)
+        binding = FragmentTopReaderPickBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 뒤로 가기 버튼 설정
-        val btnGobackHome: ImageButton = view.findViewById(R.id.btnGobackHome)
-        btnGobackHome.setOnClickListener {
+        // 뒤로가기
+        binding.customTopBar.onBackClick = {
             parentFragmentManager.popBackStack()
         }
+
+        binding.customTopBar.setTitle("다독왕 선정")
 
         // RecyclerView 초기화
         recyclerView = view.findViewById(R.id.recycler_topreaderList)

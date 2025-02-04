@@ -16,26 +16,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profile_subtitle"
+            android:textColor="@color/black"
             android:fontFamily="@font/pretendard_variable"
             android:textFontWeight="400"
-            android:text=""
+            android:text="당신의 독서 기록,"
             android:textSize="24sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profile_title"
+            android:textColor="@color/black"
             android:fontFamily="@font/pretendard_variable"
             android:textFontWeight="700"
-            android:text="로그인하기 →"
+            android:text="커멘터리"
             android:textSize="28sp"/>
-
     </LinearLayout>
 
     <ImageView
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:background="@drawable/circle"
+        android:visibility="gone"
         android:src="@drawable/profile"
         android:scaleType="centerCrop"
         android:id="@+id/profile_icon"/>
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bg"
+        android:backgroundTint="@color/gray0"
+        android:text="로그인"
+        android:textSize="12dp"
+        android:textColor="@color/gray1"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
+
 </LinearLayout>
