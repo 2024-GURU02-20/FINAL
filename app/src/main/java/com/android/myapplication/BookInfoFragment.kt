@@ -2,6 +2,7 @@ package com.android.myapplication
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,8 @@ class BookInfoFragment : Fragment() {
             description = it.getString(ARG_DESCRIPTION) ?: ""
             isbn = it.getString(ARG_ISBN) ?: ""
         }
+
+        Log.d("태그", isbn)
     }
 
     override fun onCreateView(
