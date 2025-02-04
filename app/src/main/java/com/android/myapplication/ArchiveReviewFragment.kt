@@ -44,7 +44,8 @@ class ArchiveReviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentArchiveReviewBinding.inflate(inflater, container, false)
 
         val database = AppDatabase.getDatabase(requireContext())
@@ -57,7 +58,7 @@ class ArchiveReviewFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.selectedBookReview.collect { review ->
                 if (review != null) {
-                    binding.bookDetail.text = "책 제목: $selectedBookTitle"  // ✅ 책 제목 표시
+                    binding.bookDetail.text = "책 제목: $selectedBookTitle"  //  책 제목 표시
                     binding.reviewInput.setText(review.review)
                     binding.favoriteLineInput.setText("마음에 드는 구절: ${review.favoriteLine}")
                     binding.ratingBar.rating = review.starRate
