@@ -148,15 +148,16 @@
                 android:paddingTop="51dp"
                 android:src="@drawable/bsyellowbox"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_bestseller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="28dp" />
+
         </FrameLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_bestseller"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="28dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
