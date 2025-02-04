@@ -33,9 +33,9 @@ class BestReviewAdapter(
 
         // 책 제목, 리뷰 내용, 별점(출판일), 좋아요 개수 설정
         holder.bookTitleTextView.text = book.title
-        holder.reviewContentTextView.text = book.description  // 책 소개를 리뷰 내용처럼 사용
-        holder.reviewRatingTextView.text = "★ ${book.pubDate}"  // 출판일을 별점 대신 임시 표시
-        holder.reviewLikesTextView.text = "👍 100"  // 좋아요 (임시 값)
+        holder.reviewContentTextView.text = "리뷰내용"  // 책 소개를 리뷰 내용처럼 사용
+        holder.reviewRatingTextView.text = "별점"  // 출판일을 별점 대신 임시 표시
+        holder.reviewLikesTextView.text = "좋아요개수"  // 좋아요 (임시 값)
 
         Glide.with(holder.itemView.context)
             .load(book.cover)
