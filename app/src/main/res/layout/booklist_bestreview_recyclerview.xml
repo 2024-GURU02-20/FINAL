@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="354dp"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="13dp">
@@ -13,7 +13,8 @@
         android:layout_height="77dp"
         android:contentDescription="책 표지"
         android:scaleType="centerCrop"
-        android:src="@drawable/brbook" />
+        android:src="@drawable/brbook"
+        android:layout_gravity="center_vertical"/>
 
     <!-- 책 정보 및 리뷰 -->
     <LinearLayout
@@ -30,11 +31,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="책 제목"
+            android:paddingBottom="9dp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="12sp"
             android:fontFamily="@font/pretendard_variable"
-            android:paddingBottom="11dp"/>
+            />
+
 
         <!-- 리뷰 내용 -->
         <TextView
@@ -46,7 +49,7 @@
             android:text="초역이 어쩌구 저쩌구 하는 사람들과 말하고 논하는 것보다 너무도 쉽고 의미심장한 문장들로 구성되어 있으므로 읽고 사색하고 좋습니다"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:paddingBottom="12dp"/>
+            android:paddingBottom="9dp"/>
 
         <!-- 별점 및 추천 수 -->
         <LinearLayout
@@ -93,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="312"
                     android:textColor="@color/gray1"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:layout_marginStart="4dp"/>
             </LinearLayout>
         </LinearLayout>
