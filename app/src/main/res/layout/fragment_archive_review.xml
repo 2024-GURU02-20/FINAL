@@ -146,13 +146,20 @@
             android:inputType="textMultiLine"
             android:background="@drawable/textview_border_gray" />
 
+
+        <ImageView
+            android:layout_width="412dp"
+            android:layout_height="385dp"
+            android:layout_marginTop="1200dp"
+            android:background="@drawable/favoriteline_box" />
+
         <!-- 마음에 드는 한 줄 텍스트 -->
         <TextView
             android:id="@+id/favoriteLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/reviewInput"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="100dp"
             android:layout_marginStart="28dp"
             android:text="마음에 드는 한 줄"
             android:textColor="@color/black"
@@ -167,10 +174,10 @@
             android:layout_height="84dp"
             android:layout_below="@id/favoriteLine"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/textview_border_green" />
+            android:background="@drawable/favoriteline_textbox" />
 
         <!-- 마음에 드는 한 줄 칸 2 -->
         <EditText
@@ -182,7 +189,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/textview_border_green"/>
+            android:background="@drawable/favoriteline_textbox"/>
 
 
         <!-- 마음에 드는 한 줄 칸 3 -->
@@ -195,7 +202,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:inputType="textMultiLine"
-            android:background="@drawable/textview_border_green" />
+            android:background="@drawable/favoriteline_textbox" />
 
         <!-- 저장하기 버튼 -->
         <Button
@@ -204,7 +211,7 @@
             android:layout_height="32dp"
             android:layout_below="@id/favoriteLineInput3"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/button_border"
             android:drawablePadding="4dp"
             android:text="저장하기"
