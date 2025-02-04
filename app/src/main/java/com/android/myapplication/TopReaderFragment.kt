@@ -28,7 +28,6 @@ class TopReaderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ViewModel 초기화
         val apiService = RetrofitClient.aladinApi
         val repository = AladinRepository(apiService)
         viewModel = AladinViewModel(repository)
@@ -53,7 +52,6 @@ class TopReaderFragment : Fragment() {
 
         binding.customTopBar.setTitle("다독왕 선정")
 
-        // RecyclerView 초기화
         recyclerView = view.findViewById(R.id.recycler_topreaderList)
         setupRecyclerView()
 
@@ -82,7 +80,7 @@ class TopReaderFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                val topReaderIsbnList = reviewDao.getTopReaderBooks() // 가장 많이 읽은 유저의 ISBN 리스트(10개)
+                val topReaderIsbnList = reviewDao.getTopReaderBooks() // 가장 많이 읽은 유저의 ISBN 리스트(9개)
                 val bookList = mutableListOf<BookItem>()
 
                 for (isbn in topReaderIsbnList) {

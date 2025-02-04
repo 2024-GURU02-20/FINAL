@@ -2,35 +2,80 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:orientation="vertical">
+    android:orientation="vertical">
 
     <com.android.myapplication.CustomProfileView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/custom_profile_view"/>
+        android:id="@+id/custom_profile_view"
+        android:paddingStart="28dp"
+        android:paddingTop="102dp"
+        android:paddingEnd="28dp"/>
 
+    <!-- 버튼을 감싸는 부모 LinearLayout (중앙 정렬) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="24dp">
+
+        <!-- 책 추천 버튼 (양옆 padding 적용) -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/homebtnGotoArchive"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:paddingStart="28dp"
+            android:paddingEnd="28dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/bookrecommend">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="추천 목록"
+                android:text="책 추천 받기"
                 android:textSize="16sp"
-                android:textStyle="bold" />
-
-
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
+    </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_bestseller"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingBottom="24dp"
+        android:paddingTop="56dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:src="@drawable/yellowbox"
+            android:layout_gravity="center_vertical"
+            android:paddingEnd="6dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_variable"
+            android:text="추천 목록"
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
 
+    </LinearLayout>
+
+    <!-- 책 목록 RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_bestseller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"/>
 </LinearLayout>

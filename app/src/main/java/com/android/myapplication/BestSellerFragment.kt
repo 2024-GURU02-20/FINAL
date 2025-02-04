@@ -1,6 +1,5 @@
 package com.android.myapplication
 
-import BestSellerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
