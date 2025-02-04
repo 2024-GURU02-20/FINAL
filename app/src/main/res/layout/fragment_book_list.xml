@@ -296,7 +296,7 @@
 
 
 
-        <!-- 베스트 리뷰 -->
+        <!-- 베스트리뷰 부분 -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
