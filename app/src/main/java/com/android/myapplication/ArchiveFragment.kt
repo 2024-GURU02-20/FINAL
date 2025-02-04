@@ -120,7 +120,7 @@ class ArchiveFragment : Fragment() {
         }
 
 
-        binding.customProfileView.setOnClickListener {
+        binding.customProfileView.setOnLoginClickListener {
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)

@@ -43,12 +43,8 @@ class RecommendFragment : Fragment() {
         binding = FragmentRecommendBinding.inflate(inflater, container, false)
 
         val user = FirebaseAuth.getInstance().currentUser
-//        if (user != null) {
-//            Log.d("로그인 확인", user.photoUrl.toString())
-//            binding.customProfileView.setData( "추천받으세요!", "원하는 책을", user.photoUrl)
-//        }
 
-        binding.customProfileView.setOnClickListener {
+        binding.customProfileView.setOnLoginClickListener {
             if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)

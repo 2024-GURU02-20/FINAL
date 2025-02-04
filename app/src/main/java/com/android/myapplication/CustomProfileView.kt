@@ -20,25 +20,36 @@ class CustomProfileView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
+
     private val binding: CustomProfileViewBinding
+    var onLoginClick: (() -> Unit)? = null  // 콜백 함수 선언
 
     init {
-        // XML을 ViewBinding을 통해 연결
         val inflater = LayoutInflater.from(context)
         binding = CustomProfileViewBinding.inflate(inflater, this, true)
+
+        // loginButton 클릭 이벤트 -> 콜백 함수 실행
+        binding.loginBtn.setOnClickListener {
+            onLoginClick?.invoke()
+        }
     }
 
-    fun setData(title: String, subtitle:String, imageUrl: Uri?) {
+    fun setData(title: String, subtitle: String, imageUrl: Uri?) {
         Log.d("로그인 확인", title + subtitle)
         binding.profileTitle.text = title
         binding.profileSubtitle.text = subtitle
         Glide.with(context)
             .load(imageUrl)
-            .placeholder(R.drawable.profile) // 로딩 중 표시할 기본 이미지
-            .error(R.drawable.profile) // 에러 발생 시 기본 이미지
+            .placeholder(R.drawable.profile)
+            .error(R.drawable.profile)
             .circleCrop()
             .into(binding.profileIcon)
         binding.loginBtn.visibility = View.GONE
         binding.profileIcon.visibility = View.VISIBLE
+    }
+
+    // 외부에서 클릭 리스너를 설정할 수 있도록 함수 추가
+    fun setOnLoginClickListener(listener: () -> Unit) {
+        onLoginClick = listener
     }
 }
