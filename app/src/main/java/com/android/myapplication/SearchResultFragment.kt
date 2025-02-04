@@ -110,7 +110,7 @@ class SearchResultFragment : Fragment() {
                     val adapter = SearchResultBookAdapter(requireContext(), items!! ) { book ->
                         // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
                         val bookInfoFragment = BookInfoFragment.newInstance(
-                            book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                            book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
                         )
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.rootlayout, bookInfoFragment)

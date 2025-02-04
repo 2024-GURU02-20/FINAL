@@ -3,6 +3,7 @@ package com.android.myapplication.DB
 import com.android.myapplication.DB.User
 import com.android.myapplication.DB.Review
 import androidx.room.*
+import com.android.myapplication.model.ReviewItem
 import java.util.concurrent.Flow
 
 @Dao
@@ -42,6 +43,15 @@ interface ReviewDao {
     @Query("DELETE FROM review WHERE reviewId = :id")
     suspend fun deleteReviewById(id: Int)
 
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY `like` DESC LIMIT 3")
+    suspend fun getReviewsSortedByLikes(isbn: String): List<ReviewItem>
+
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY createdAt DESC LIMIT 3")
+    suspend fun getReviewsSortedByDate(isbn: String): List<ReviewItem>
+
+    @Query("SELECT * FROM Review WHERE isbn = :isbn ORDER BY starRate DESC LIMIT 3")
+    suspend fun getReviewsSortedByRating(isbn: String): List<ReviewItem>
+
     // 별점 업데이트
     @Query("UPDATE review SET starRate = :newStarRate WHERE reviewId = :reviewId")
     suspend fun updateStarRate(reviewId: Int, newStarRate: Float)
@@ -49,6 +59,9 @@ interface ReviewDao {
     // 추천 수(좋아요) 업데이트
     @Query("UPDATE review SET `like` = :newLikeCount WHERE reviewId = :reviewId")
     suspend fun updateLikeCount(reviewId: Int, newLikeCount: Int)
+
+    @Query("SELECT favoriteLine FROM review WHERE isbn = :isbn LIMIT 3")
+    suspend fun getFavoriteLinesByIsbn(isbn: String): List<String>
 
     //은정 추가
     //가장 많은 리뷰를 남긴 유저를 찾고 해당 유저의 ISBN 12개를 가져옴

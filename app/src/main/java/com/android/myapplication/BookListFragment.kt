@@ -100,7 +100,7 @@ class BookListFragment : Fragment() {
             bestSeller = BookListAdapter(emptyList()) { book ->
                 // 책 클릭 시 BookInfoFragment로 이동 (책 정보를 전달)
                 val bookInfoFragment = BookInfoFragment.newInstance(
-                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
                 )
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.rootlayout, bookInfoFragment)
@@ -115,7 +115,7 @@ class BookListFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
             newReleased = BookListAdapter(emptyList()) { book ->
                 val bookInfoFragment = BookInfoFragment.newInstance(
-                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
                 )
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.rootlayout, bookInfoFragment)
@@ -132,7 +132,7 @@ class BookListFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
             topReader= BookListAdapter(emptyList()) { book ->
                 val bookInfoFragment = BookInfoFragment.newInstance(
-                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                    book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
                 )
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.rootlayout, bookInfoFragment)

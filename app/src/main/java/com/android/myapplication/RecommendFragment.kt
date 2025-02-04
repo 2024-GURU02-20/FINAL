@@ -80,7 +80,7 @@ class RecommendFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 GridLayout 사용
         moreInfoAdapter = MoreInfoAdapter(emptyList()) { book ->
             val bookInfoFragment = BookInfoFragment.newInstance(
-                book.cover, book.title, book.author, book.publisher, book.pubDate, book.description
+                book.cover, book.title, book.author, book.publisher, book.pubDate, book.description, book.isbn
             )
             parentFragmentManager.beginTransaction()
                 .replace(R.id.rootlayout, bookInfoFragment)

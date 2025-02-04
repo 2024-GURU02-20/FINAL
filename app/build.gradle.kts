@@ -123,5 +123,8 @@ dependencies {
     // navigation 관련
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+
+    // rating bar
+    implementation("me.zhanghai.android.materialratingbar:library:1.4.0")
 }
 apply(plugin = "com.google.gms.google-services")

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="6dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/gradient_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- 리본 아이콘 -->
+        <ImageView
+            android:id="@+id/ribbon_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_ribbon"
+            android:scaleType="fitCenter"/>
+
+        <!-- 인용구 텍스트 -->
+        <TextView
+            android:id="@+id/quote_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="그녀는 다시 한 번 집안의 물건들을 둘러보았다. 그것들은 그녀의 것이 아니었다. 그녀의 삶이 자신의 것이 아니었던 것과 꼭 같았다."
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/pretendard_variable"
+            android:lineSpacingExtra="4dp"
+            android:layout_below="@id/ribbon_icon"
+            android:paddingTop="8dp"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

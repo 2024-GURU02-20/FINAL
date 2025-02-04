@@ -3,6 +3,7 @@ package com.android.myapplication
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -40,6 +41,22 @@ class ArchiveReviewFragment : Fragment() {
     private var selectedDate: LocalDate? = null // 선택된 날짜 저장 변수
     private val selectedIsbn = "9781234567890"  // 사용자가 선택한 책의 ISBN (테스트용)
     private val selectedBookTitle = "테스트용 책 제목"  // 실제 데이터에서는 API 또는 DB에서 가져와야 함
+
+    private lateinit var isbn: String
+    private lateinit var coverUrl: String
+    private lateinit var title: String
+    private lateinit var author: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            isbn = it.getString(ArchiveReviewFragment.ARG_ISBN) ?: ""
+            coverUrl = it.getString(ArchiveReviewFragment.ARG_COVER_URL) ?: ""
+            title = it.getString(ArchiveReviewFragment.ARG_TITLE) ?: ""
+            author = it.getString(ArchiveReviewFragment.ARG_AUTHOR) ?: ""
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -185,6 +202,26 @@ class ArchiveReviewFragment : Fragment() {
     class DayViewContainer(view: View) : ViewContainer(view) {
         val dayText: TextView = view.findViewById(R.id.day_text)
         val dayImage: ImageView = view.findViewById(R.id.day_image)
+    }
+
+    companion object {
+        // 데이터 키 값
+        private const val ARG_ISBN = "isbn"
+        private const val ARG_COVER_URL = "coverUrl"
+        private const val ARG_TITLE = "title"
+        private const val ARG_AUTHOR = "author"
+
+        // 인스턴스 생성 메서드
+        fun newInstance(
+            isbn: String, coverUrl: String, title: String, author:String
+        ) = BookInfoFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_ISBN, isbn)
+                putString(ARG_COVER_URL, coverUrl)
+                putString(ARG_TITLE, title)
+                putString(ARG_AUTHOR, author)
+            }
+        }
     }
 
     override fun onDestroyView() {
