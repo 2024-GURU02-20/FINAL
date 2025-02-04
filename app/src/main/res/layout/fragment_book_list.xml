@@ -44,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="7dp">
 
             <View
                 android:layout_width="0dp"
@@ -60,35 +61,6 @@
                 android:orientation="vertical"
                 android:background="@drawable/gotobookarchive">
             </LinearLayout>
-
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/homebtnGotoArchive"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:gravity="center"-->
-            <!--                android:orientation="vertical">-->
-
-            <!--                <ImageView-->
-            <!--                    android:layout_width="40dp"-->
-            <!--                    android:layout_height="40dp"-->
-            <!--                    android:src="@drawable/baseline_circle_24" />-->
-
-            <!--                <TextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="책 아카이빙"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    android:textStyle="bold" />-->
-
-            <!--                <TextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="사용자의 독서 기록 보관함"-->
-            <!--                    android:textColor="@android:color/darker_gray"-->
-            <!--                    android:textSize="12sp" />-->
-            <!--            </LinearLayout>-->
-
 
             <View
                 android:layout_width="0dp"

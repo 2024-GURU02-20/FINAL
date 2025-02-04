@@ -75,5 +75,7 @@
         android:id="@+id/recycler_bestseller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"/>
 </LinearLayout>
