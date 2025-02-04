@@ -10,7 +10,7 @@
         android:id="@+id/custom_top_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="29.31dp"/>
+        android:paddingStart="28dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView

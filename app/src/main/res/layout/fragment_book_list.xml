@@ -1,26 +1,26 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--        패딩 적용안되는디..? -->
+        <!--        급한대로 리니어 레이아웃 만들어서-->
+        <!-- 검색 -->
         <com.android.myapplication.CustomProfileView
+            android:id="@+id/custom_profile_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/custom_profile_view"
-            android:paddingTop="102dp"
             android:paddingStart="29.31dp"
+            android:paddingTop="102dp"
             android:paddingEnd="29.31dp"
-            android:paddingBottom="17dp"/>
+            android:paddingBottom="17dp" />
 
-<!--        패딩 적용안되는디..? -->
-<!--        급한대로 리니어 레이아웃 만들어서-->
-        <!-- 검색 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,32 +61,32 @@
             </LinearLayout>
 
             <!--            <LinearLayout-->
-<!--                android:id="@+id/homebtnGotoArchive"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="vertical">-->
+            <!--                android:id="@+id/homebtnGotoArchive"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:gravity="center"-->
+            <!--                android:orientation="vertical">-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="40dp"-->
-<!--                    android:layout_height="40dp"-->
-<!--                    android:src="@drawable/baseline_circle_24" />-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="40dp"-->
+            <!--                    android:layout_height="40dp"-->
+            <!--                    android:src="@drawable/baseline_circle_24" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="책 아카이빙"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textStyle="bold" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="책 아카이빙"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textStyle="bold" />-->
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="사용자의 독서 기록 보관함"-->
-<!--                    android:textColor="@android:color/darker_gray"-->
-<!--                    android:textSize="12sp" />-->
-<!--            </LinearLayout>-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="사용자의 독서 기록 보관함"-->
+            <!--                    android:textColor="@android:color/darker_gray"-->
+            <!--                    android:textSize="12sp" />-->
+            <!--            </LinearLayout>-->
 
 
             <View
@@ -114,10 +114,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="29.31dp"
             android:paddingEnd="29.31dp"
-            android:paddingTop="80dp"
             android:paddingBottom="24dp"
             >
 
@@ -173,6 +189,23 @@
                 />
         </FrameLayout>
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
+
         <!-- 신간 리스트 -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,7 +213,7 @@
             android:orientation="horizontal"
             android:paddingStart="29.31dp"
             android:paddingEnd="29.31dp"
-            android:paddingTop="53dp"
+
             android:paddingBottom="24dp">
 
             <ImageView
@@ -195,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/pretendard_variable"
-                android:text="신간 리스트"
+                android:text="신간"
                 android:textColor="@color/black"
                 android:textFontWeight="700"
                 android:textSize="17sp"
@@ -229,8 +262,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="29.31dp"/>
-                />
+
         </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingHorizontal="28dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="30dp"
+                android:background="#BDBDBD" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -238,7 +287,6 @@
             android:orientation="horizontal"
             android:paddingStart="29.31dp"
             android:paddingEnd="29.31dp"
-            android:paddingTop="53dp"
             android:paddingBottom="24dp">
 
             <ImageView
