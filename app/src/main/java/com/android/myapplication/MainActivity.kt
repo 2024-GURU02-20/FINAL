@@ -21,6 +21,7 @@ import com.android.myapplication.DB.AppDatabase
 import com.android.myapplication.DB.Review
 import com.android.myapplication.DB.User
 
+// room db 사용하므로 더미 데이터를 앱 실행시 삽입하는 것으로 처리
 fun addDummyData(context: Context) {
     val db = AppDatabase.getDatabase(context)
     val userDao = db.userDao()
