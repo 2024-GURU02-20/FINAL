@@ -75,5 +75,11 @@ interface ReviewDao {
     @Query("SELECT * FROM review ORDER BY `like` DESC LIMIT 3")
     suspend fun getTopLikedReviews(): List<Review>
 
+    @Query("SELECT * FROM review WHERE userId = :userId AND isbn = :isbn LIMIT 1")
+    suspend fun getReviewsByUserAndIsbn(userId: Int, isbn: String): List<Review>
+//
+//    // 해당 리뷰의 추천수 1증가 (추천 버튼 클릭 시)
+//    @Query("UPDATE review SET `like` = `like` + 1 WHERE reviewId = :reviewId")
+//    suspend fun increaseReviewLike(reviewId: Int)
 
 }

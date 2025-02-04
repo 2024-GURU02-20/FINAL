@@ -40,7 +40,8 @@ class RecommendFragment : Fragment() {
         binding = FragmentRecommendBinding.inflate(inflater, container, false)
 
         val user = FirebaseAuth.getInstance().currentUser
-        binding.customProfileView.setOnClickListener {
+
+        binding.customProfileView.setOnLoginClickListener {
             if (user == null) {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)
